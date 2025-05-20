@@ -158,12 +158,12 @@ class SampleSettingTab extends PluginSettingTab {
 
 
 		new Setting(containerEl)
-				.addButton((btn) =>
-				  btn
-					.setButtonText('Submit')
-					.onClick(() => {
-						new SampleModal(this.app).open();
-					}));
+			.addButton((btn) =>
+				btn
+				.setButtonText('Submit')
+				.onClick(() => {
+					new SampleModal(this.app).open();
+				}));
 		// let containerEl.second: HTMLElement;
 		let tryElement = this.containerEl.createEl("div");
 		new Setting(tryElement).setName('Setting #3')

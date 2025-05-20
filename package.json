@@ -1,8 +1,8 @@
 {
 	"name": "Personal Research Plugin",
-	"version": "1.0.0",
+	"version": "0.0.1",
 	"description": "Personal Research Plugin. It will have compatibility with latex and self testing plugin.",
-	"main": "main.js",
+	"main": "src/main.js",
 	"scripts": {
 		"dev": "node esbuild.config.mjs",
 		"build": "tsc -noEmit -skipLibCheck && node esbuild.config.mjs production",
