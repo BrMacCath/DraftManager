@@ -1,17 +1,11 @@
 import { App, Editor, MarkdownView, Modal, Notice, Plugin, PluginSettingTab, Setting } from 'obsidian';
-
+import { FolderSuggest } from './settings/suggesters/folderSuggester';
+import { text } from 'stream/consumers';
 // Remember to rename these classes and interfaces!
 
-interface MyPluginSettings {
-	mySetting: string;
-}
-
-const DEFAULT_SETTINGS: MyPluginSettings = {
-	mySetting: 'default'
-}
 
 export default class ResearchPlugin extends Plugin {
-	settings: MyPluginSettings;
+	settings: ResearchPluginSettings;
 
 	async onload() {
 		await this.loadSettings();
@@ -107,19 +101,40 @@ class SampleModal extends Modal {
 	}
 }
 
-class SampleSettingTab extends PluginSettingTab {
-	plugin: MyPlugin;
+interface ResearchPluginSettings {
+	mySetting: string;
+	secondSetting:string;
+	draftFolders:string[];
+	templates_folder:string;
+	user_scripts_folder:string;
+	test_type:[startloc:string,endloc:string];
+}
 
-	constructor(app: App, plugin: MyPlugin) {
+const DEFAULT_SETTINGS: ResearchPluginSettings = {
+	mySetting: 'default',
+	secondSetting: 'Not Default',
+	draftFolders: [],
+	templates_folder:"",
+	user_scripts_folder:"",
+	test_type: ["",""]
+}
+
+
+class SampleSettingTab extends PluginSettingTab {
+	plugin: ResearchPlugin;
+    second: HTMLElement;
+	constructor(app: App, plugin: ResearchPlugin) {
 		super(app, plugin);
 		this.plugin = plugin;
+		
 	}
 
 	display(): void {
 		const {containerEl} = this;
 
 		containerEl.empty();
-
+		this.add_template_folder_setting();
+		this.add_draft_folder_setting()
 		new Setting(containerEl)
 			.setName('Setting #1')
 			.setDesc('It\'s a secret')
@@ -130,5 +145,96 @@ class SampleSettingTab extends PluginSettingTab {
 					this.plugin.settings.mySetting = value;
 					await this.plugin.saveSettings();
 				}));
+		new Setting(containerEl)
+			.setName('Setting #2')
+			.setDesc('It\'s a secret')
+			.addText(text => text
+				.setPlaceholder('Enter your secret')
+				.setValue(this.plugin.settings.secondSetting)
+				.onChange(async (value) => {
+					this.plugin.settings.secondSetting = value;
+					await this.plugin.saveSettings();
+				}));
+
+
+		new Setting(containerEl)
+				.addButton((btn) =>
+				  btn
+					.setButtonText('Submit')
+					.onClick(() => {
+						new SampleModal(this.app).open();
+					}));
+		// let containerEl.second: HTMLElement;
+		let tryElement = this.containerEl.createEl("div");
+		new Setting(tryElement).setName('Setting #3')
+		.setDesc('It\'s a secret')
+		.addText(text => text
+			.setPlaceholder('Enter your secret'))
+		new Setting(tryElement).setName('Setting #4')
+		.setDesc('It\'s a secret')
+		.addText(text => text
+			.setPlaceholder('Enter your secret'))
+
+
+		// tryElement.createEl("search").addSearch((cb) => {
+		// 	new FolderSuggest(this.app, cb.inputEl);
+		// 	cb.setPlaceholder("Example: folder1/folder2")
+		// 		.setValue(this.plugin.settings.templates_folder)
+		// 		.onChange((new_folder) => {
+		// 			// Trim folder and Strip ending slash if there
+		// 			new_folder = new_folder.trim()
+		// 			new_folder = new_folder.replace(/\/$/, "");
+
+		// 			this.plugin.settings.templates_folder = new_folder;
+		// 			this.plugin.saveSettings();
+		// 		});
+		// 	// @ts-ignore
+		// });
+		
+		tryElement.createEl("search");
+		tryElement.createEl("input");
+		tryElement.createEl("button").setText("Save conditions");
 	}
+
+
+	add_template_folder_setting(): void {
+        new Setting(this.containerEl)
+            .setName("Template folder location")
+            .setDesc("Files in this folder will be available as templates.")
+            .addSearch((cb) => {
+                new FolderSuggest(this.app, cb.inputEl);
+                cb.setPlaceholder("Example: folder1/folder2")
+                    .setValue(this.plugin.settings.templates_folder)
+                    .onChange((new_folder) => {
+                        // Trim folder and Strip ending slash if there
+                        new_folder = new_folder.trim()
+                        new_folder = new_folder.replace(/\/$/, "");
+
+                        this.plugin.settings.templates_folder = new_folder;
+                        this.plugin.saveSettings();
+                    });
+                // @ts-ignore
+                cb.containerEl.addClass("templater_search");
+            });
+    }
+	add_draft_folder_setting(): void {
+        new Setting(this.containerEl)
+            .setName("Template folder location again")
+            .setDesc("Files in this folder will be available as templates. yes")
+            .addSearch((cb) => {
+                new FolderSuggest(this.app, cb.inputEl);
+                cb.setPlaceholder("Example: folder1/folder2")
+                    .setValue(this.plugin.settings.draftFolders[0])
+                    .onChange((new_folder) => {
+                        // Trim folder and Strip ending slash if there
+                        new_folder = new_folder.trim()
+                        new_folder = new_folder.replace(/\/$/, "");
+
+                        this.plugin.settings.draftFolders.push(new_folder);
+                        this.plugin.saveSettings();
+                    });
+                // @ts-ignore
+                cb.containerEl.addClass("templater_search");
+            });
+    }
 }
