@@ -1,6 +1,7 @@
 import { App, Editor, MarkdownView, Modal, Notice, Plugin, PluginSettingTab, Setting } from 'obsidian';
 import { FolderSuggest } from './settings/suggesters/folderSuggester';
 import { text } from 'stream/consumers';
+import subFolderArrangement from 'types/choices/subFolderArrangement';
 // Remember to rename these classes and interfaces!
 
 
@@ -27,7 +28,7 @@ export default class ResearchPlugin extends Plugin {
 			id: 'open-sample-modal-simple',
 			name: 'Open sample modal (simple)',
 			callback: () => {
-				new SampleModal(this.app).open();
+				new SampleModal(this.app,this).open();
 			}
 		});
 		// This adds an editor command that can perform some operation on the current editor instance
@@ -50,7 +51,7 @@ export default class ResearchPlugin extends Plugin {
 					// If checking is true, we're simply "checking" if the command can be run.
 					// If checking is false, then we want to actually perform the operation.
 					if (!checking) {
-						new SampleModal(this.app).open();
+						new SampleModal(this.app,this).open();
 					}
 
 					// This command will only show up in Command Palette when the check function returns true
@@ -86,13 +87,24 @@ export default class ResearchPlugin extends Plugin {
 }
 
 class SampleModal extends Modal {
-	constructor(app: App) {
-		super(app);
+	plugin: ResearchPlugin;
+	constructor(app: App,plugin: ResearchPlugin) {
+		super(app,plugin);
+		this.plugin = plugin;
 	}
 
 	onOpen() {
 		const {contentEl} = this;
-		contentEl.setText('Woah!');
+		new Setting(contentEl)
+			.setName('Setting #2')
+			.setDesc('Test Modal Value')
+			.addText(text => text
+				.setPlaceholder('Enter your secret')
+				.setValue(this.plugin.settings.testModal)
+				.onChange(async (value) => {
+					this.plugin.settings.testModal = value;
+					await this.plugin.saveSettings();
+				}));
 	}
 
 	onClose() {
@@ -108,6 +120,9 @@ interface ResearchPluginSettings {
 	templates_folder:string;
 	user_scripts_folder:string;
 	test_type:[startloc:string,endloc:string];
+	testModal: string;
+	testFolder: subFolderArrangement[];
+
 }
 
 const DEFAULT_SETTINGS: ResearchPluginSettings = {
@@ -116,7 +131,9 @@ const DEFAULT_SETTINGS: ResearchPluginSettings = {
 	draftFolders: [],
 	templates_folder:"",
 	user_scripts_folder:"",
-	test_type: ["",""]
+	test_type: ["",""],
+	testModal: "",
+	testFolder: []
 }
 
 
@@ -157,24 +174,15 @@ class SampleSettingTab extends PluginSettingTab {
 				}));
 
 
-		new Setting(containerEl)
+		new Setting(containerEl).setDesc("Testing")
 			.addButton((btn) =>
 				btn
 				.setButtonText('Submit')
 				.onClick(() => {
-					new SampleModal(this.app).open();
+					new SampleModal(this.app,this.plugin).open();
 				}));
 		// let containerEl.second: HTMLElement;
 		let tryElement = this.containerEl.createEl("div");
-		new Setting(tryElement).setName('Setting #3')
-		.setDesc('It\'s a secret')
-		.addText(text => text
-			.setPlaceholder('Enter your secret'))
-		new Setting(tryElement).setName('Setting #4')
-		.setDesc('It\'s a secret')
-		.addText(text => text
-			.setPlaceholder('Enter your secret'))
-
 
 		// tryElement.createEl("search").addSearch((cb) => {
 		// 	new FolderSuggest(this.app, cb.inputEl);
