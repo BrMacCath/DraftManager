@@ -112,6 +112,67 @@ class SampleModal extends Modal {
 		contentEl.empty();
 	}
 }
+class AddFolder extends Modal {
+	plugin: ResearchPlugin;
+	constructor(app: App,plugin: ResearchPlugin) {
+		super(app,plugin);
+		this.plugin = plugin;
+	}
+
+	onOpen() {
+		const {contentEl} = this;
+		new Setting(contentEl)
+			.setName('Setting #2')
+			.setDesc('Test Modal Value')
+			.addText(text => text
+				.setPlaceholder('Enter your secret')
+				.setValue(this.plugin.settings.testModal)
+				.onChange(async (value) => {
+					this.plugin.settings.testModal = value;
+					await this.plugin.saveSettings();
+				}));
+	}
+
+	onClose() {
+		const {contentEl} = this;
+		contentEl.empty();
+	}
+}
+
+
+class changeTextExample extends Modal {
+	text: string;
+	index: number;
+	stringArray: string[];
+	plugin: ResearchPlugin;
+	constructor(app: App,text: string,index: number,stringArray:string[],plugin:ResearchPlugin) {
+		super(app,text);
+		this.text = text;
+		this.index = index;
+		this.stringArray = stringArray;
+		this.plugin = plugin;
+	}
+
+	onOpen() {
+		const {contentEl} = this;
+		new Setting(contentEl)
+			.setName('Setting #2')
+			.setDesc('Test Modal Value')
+			.addText(text => text
+				.setPlaceholder('Enter your secret')
+				.setValue(this.text)
+				.onChange(async (value) => {
+					this.stringArray[this.index] = value;
+					await this.plugin.saveSettings();
+				}));
+	}
+
+	onClose() {
+		const {contentEl} = this;
+		contentEl.empty();
+	}
+}
+
 
 interface ResearchPluginSettings {
 	mySetting: string;
@@ -122,6 +183,7 @@ interface ResearchPluginSettings {
 	test_type:[startloc:string,endloc:string];
 	testModal: string;
 	testFolder: subFolderArrangement[];
+	exampleStrings: string[];
 
 }
 
@@ -133,7 +195,8 @@ const DEFAULT_SETTINGS: ResearchPluginSettings = {
 	user_scripts_folder:"",
 	test_type: ["",""],
 	testModal: "",
-	testFolder: []
+	testFolder: [],
+	exampleStrings:["test","this"]
 }
 
 
@@ -197,8 +260,12 @@ class SampleSettingTab extends PluginSettingTab {
 		// 			this.plugin.saveSettings();
 		// 		});
 		// 	// @ts-ignore
-		// });
-		
+		// }); 
+		this.plugin.settings.exampleStrings.forEach( (text,index) => {new Setting(containerEl).setDesc(text).addButton((btn =>{
+			btn.setButtonText("Change this value").onClick(() => {new changeTextExample(this.app,text,index,this.plugin.settings.exampleStrings,this.plugin).open()} )// Opens a modal that allows you to change the texto
+		})) })
+
+
 		tryElement.createEl("search");
 		tryElement.createEl("input");
 		tryElement.createEl("button").setText("Save conditions");
