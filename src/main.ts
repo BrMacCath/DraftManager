@@ -89,7 +89,7 @@ export default class ResearchPlugin extends Plugin {
 class SampleModal extends Modal {
 	plugin: ResearchPlugin;
 	constructor(app: App,plugin: ResearchPlugin) {
-		super(app,plugin);
+		super(app);
 		this.plugin = plugin;
 	}
 
@@ -112,32 +112,33 @@ class SampleModal extends Modal {
 		contentEl.empty();
 	}
 }
-class AddFolder extends Modal {
-	plugin: ResearchPlugin;
-	constructor(app: App,plugin: ResearchPlugin) {
-		super(app,plugin);
-		this.plugin = plugin;
-	}
+// This is going to be used to add a folder to our groupings. Right now it is not useful.
+// class AddFolder extends Modal {
+// 	plugin: ResearchPlugin;
+// 	constructor(app: App,plugin: ResearchPlugin) {
+// 		super(app,plugin);
+// 		this.plugin = plugin;
+// 	}
 
-	onOpen() {
-		const {contentEl} = this;
-		new Setting(contentEl)
-			.setName('Setting #2')
-			.setDesc('Test Modal Value')
-			.addText(text => text
-				.setPlaceholder('Enter your secret')
-				.setValue(this.plugin.settings.testModal)
-				.onChange(async (value) => {
-					this.plugin.settings.testModal = value;
-					await this.plugin.saveSettings();
-				}));
-	}
+// 	onOpen() {
+// 		const {contentEl} = this;
+// 		new Setting(contentEl)
+// 			.setName('Setting #2')
+// 			.setDesc('Test Modal Value')
+// 			.addText(text => text
+// 				.setPlaceholder('Enter your secret')
+// 				.setValue(this.plugin.settings.testModal)
+// 				.onChange(async (value) => {
+// 					this.plugin.settings.testModal = value;
+// 					await this.plugin.saveSettings();
+// 				}));
+// 	}
 
-	onClose() {
-		const {contentEl} = this;
-		contentEl.empty();
-	}
-}
+// 	onClose() {
+// 		const {contentEl} = this;
+// 		contentEl.empty();
+// 	}
+// }
 
 
 class changeTextExample extends Modal {
@@ -146,7 +147,7 @@ class changeTextExample extends Modal {
 	stringArray: string[];
 	plugin: ResearchPlugin;
 	constructor(app: App,text: string,index: number,stringArray:string[],plugin:ResearchPlugin) {
-		super(app,text);
+		super(app);
 		this.text = text;
 		this.index = index;
 		this.stringArray = stringArray;
@@ -264,8 +265,17 @@ class SampleSettingTab extends PluginSettingTab {
 		this.plugin.settings.exampleStrings.forEach( (text,index) => {new Setting(containerEl).setDesc(text).addButton((btn =>{
 			btn.setButtonText("Change this value").onClick(() => {new changeTextExample(this.app,text,index,this.plugin.settings.exampleStrings,this.plugin).open()} )// Opens a modal that allows you to change the texto
 		})) })
-
-
+		console.log(this.plugin.settings.testFolder)
+		this.plugin.settings.testFolder.forEach( (folder) => {
+			new Setting(containerEl).setDesc(folder.folderName).addButton( (btn)=> {
+				btn.setButtonText("Change this value: Test Folder")
+			})
+		} )
+		new Setting(containerEl).setDesc("Add a folder template").addButton((btn)=>{
+			btn.setButtonText("Folder Button").onClick(() =>{
+				this.plugin.settings.testFolder.push({folderName:"Test Folder",id:"yes",subFolders:true,haveDrafts:true});
+			}  )
+		})
 		tryElement.createEl("search");
 		tryElement.createEl("input");
 		tryElement.createEl("button").setText("Save conditions");
