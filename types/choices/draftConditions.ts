@@ -1,4 +1,4 @@
-interface draftStyle {"Peterson":string}
+import draftStyle from "./draftStyle";
 
 export default interface draftConditions{
     draftStyle:draftStyle;
