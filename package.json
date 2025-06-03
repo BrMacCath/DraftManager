@@ -24,6 +24,7 @@
 	},
 	"dependencies": {
 		"@microsoft/tsdoc": "^0.15.1",
-		"popper.js": "^1.16.1"
+		"popper.js": "^1.16.1",
+		"uuid": "^11.1.0"
 	}
 }

@@ -2,6 +2,7 @@ import { App, Editor, MarkdownView, Modal, Notice, Plugin, PluginSettingTab, Set
 import { FolderSuggest } from './settings/suggesters/folderSuggester';
 import { text } from 'stream/consumers';
 import subFolderArrangement from 'types/choices/subFolderArrangement';
+import { v4 as v4 } from 'uuid';
 // Remember to rename these classes and interfaces!
 
 
@@ -11,63 +12,8 @@ export default class ResearchPlugin extends Plugin {
 	async onload() {
 		await this.loadSettings();
 
-		// This creates an icon in the left ribbon.
-		const ribbonIconEl = this.addRibbonIcon('dice', 'Sample Plugin', (evt: MouseEvent) => {
-			// Called when the user clicks the icon.
-			new Notice('This is a notice!');
-		});
-		// Perform additional things with the ribbon
-		ribbonIconEl.addClass('my-plugin-ribbon-class');
-
-		// This adds a status bar item to the bottom of the app. Does not work on mobile apps.
-		const statusBarItemEl = this.addStatusBarItem();
-		statusBarItemEl.setText('Status Bar Text');
-
-		// This adds a simple command that can be triggered anywhere
-		this.addCommand({
-			id: 'open-sample-modal-simple',
-			name: 'Open sample modal (simple)',
-			callback: () => {
-				new SampleModal(this.app,this).open();
-			}
-		});
-		// This adds an editor command that can perform some operation on the current editor instance
-		this.addCommand({
-			id: 'sample-editor-command',
-			name: 'Sample editor command',
-			editorCallback: (editor: Editor, view: MarkdownView) => {
-				console.log(editor.getSelection());
-				editor.replaceSelection('Sample Editor Command');
-			}
-		});
-		// This adds a complex command that can check whether the current state of the app allows execution of the command
-		this.addCommand({
-			id: 'open-sample-modal-complex',
-			name: 'Open sample modal (complex)',
-			checkCallback: (checking: boolean) => {
-				// Conditions to check
-				const markdownView = this.app.workspace.getActiveViewOfType(MarkdownView);
-				if (markdownView) {
-					// If checking is true, we're simply "checking" if the command can be run.
-					// If checking is false, then we want to actually perform the operation.
-					if (!checking) {
-						new SampleModal(this.app,this).open();
-					}
-
-					// This command will only show up in Command Palette when the check function returns true
-					return true;
-				}
-			}
-		});
-
 		// This adds a settings tab so the user can configure various aspects of the plugin
 		this.addSettingTab(new SampleSettingTab(this.app, this));
-
-		// If the plugin hooks up any global DOM events (on parts of the app that doesn't belong to this plugin)
-		// Using this function will automatically remove the event listener when this plugin is disabled.
-		this.registerDomEvent(document, 'click', (evt: MouseEvent) => {
-			console.log('click', evt);
-		});
 
 		// When registering intervals, this function will automatically clear the interval when the plugin is disabled.
 		this.registerInterval(window.setInterval(() => console.log('setInterval'), 5 * 60 * 1000));
@@ -86,118 +32,92 @@ export default class ResearchPlugin extends Plugin {
 	}
 }
 
-class SampleModal extends Modal {
-	plugin: ResearchPlugin;
-	constructor(app: App,plugin: ResearchPlugin) {
-		super(app);
-		this.plugin = plugin;
-	}
 
-	onOpen() {
-		const {contentEl} = this;
-		new Setting(contentEl)
-			.setName('Setting #2')
-			.setDesc('Test Modal Value')
-			.addText(text => text
-				.setPlaceholder('Enter your secret')
-				.setValue(this.plugin.settings.testModal)
-				.onChange(async (value) => {
-					this.plugin.settings.testModal = value;
-					await this.plugin.saveSettings();
-				}));
-	}
-
-	onClose() {
-		const {contentEl} = this;
-		contentEl.empty();
-	}
-}
 // This is going to be used to add a folder to our groupings. Right now it is not useful.
-// class AddFolder extends Modal {
-// 	plugin: ResearchPlugin;
-// 	constructor(app: App,plugin: ResearchPlugin) {
-// 		super(app,plugin);
-// 		this.plugin = plugin;
-// 	}
-
-// 	onOpen() {
-// 		const {contentEl} = this;
-// 		new Setting(contentEl)
-// 			.setName('Setting #2')
-// 			.setDesc('Test Modal Value')
-// 			.addText(text => text
-// 				.setPlaceholder('Enter your secret')
-// 				.setValue(this.plugin.settings.testModal)
-// 				.onChange(async (value) => {
-// 					this.plugin.settings.testModal = value;
-// 					await this.plugin.saveSettings();
-// 				}));
-// 	}
-
-// 	onClose() {
-// 		const {contentEl} = this;
-// 		contentEl.empty();
-// 	}
-// }
-
-
-class changeTextExample extends Modal {
-	text: string;
-	index: number;
-	stringArray: string[];
+class UpdateFolder extends Modal {
 	plugin: ResearchPlugin;
-	constructor(app: App,text: string,index: number,stringArray:string[],plugin:ResearchPlugin) {
+	folder: subFolderArrangement;
+	settings: SampleSettingTab;
+	constructor(app: App,plugin: ResearchPlugin,folder:subFolderArrangement,settings:SampleSettingTab) {
 		super(app);
-		this.text = text;
-		this.index = index;
-		this.stringArray = stringArray;
 		this.plugin = plugin;
+		this.folder = folder;
+		this.settings=settings;
 	}
 
 	onOpen() {
 		const {contentEl} = this;
+		contentEl.createEl("h1").setText("Adjust Folder Settings");
 		new Setting(contentEl)
-			.setName('Setting #2')
-			.setDesc('Test Modal Value')
+			.setName('Folder Name')
 			.addText(text => text
-				.setPlaceholder('Enter your secret')
-				.setValue(this.text)
+				.setPlaceholder(this.folder.folderName)
+				.setValue(this.folder.folderName)
 				.onChange(async (value) => {
-					this.stringArray[this.index] = value;
+					this.folder.folderName = value;
+					this.settings.display();
 					await this.plugin.saveSettings();
 				}));
-	}
+		new Setting(contentEl).setName("Subfolders")
+		.setDesc("Does this folder have subfolders?")
+		.addToggle( (cb) => cb.setValue(this.folder.subFolders)
+		.onChange(async (value)=>{
+			this.folder.subFolders = value;
+			await this.plugin.saveSettings();}
+		)
+		
+	)
+	new Setting(contentEl).setName("Drafts")
+		.setDesc("Will you be using drafts in your situation?")
+		.addToggle( (cb) => cb.setValue(this.folder.haveDrafts)
+		.onChange(async (value)=>{
+			this.folder.haveDrafts = value;
+			await this.plugin.saveSettings();}
+		)
+	)
+	new Setting(contentEl).setDesc("Update draft conditions").addButton((btn) => {
+		btn.setButtonText("Draft Settings").onClick( () =>{
+			// Make a modal that talks about the draft settings
+		} )
+	})
 
+	let deleteBtn = new Setting(contentEl).setName("Delete Folder?")
+		.setDesc("Do you wish to delete this folder?")
+		.addButton((cb) =>{
+			cb.setButtonText("Delete").onClick( () =>{
+				this.plugin.settings.testFolder = this.plugin.settings.testFolder.filter(fold => fold.id != this.folder.id)
+				this.plugin.saveSettings()
+				this.settings.display();
+				this.close()
+			} ) 
+		} )
+	deleteBtn.setClass("rp-delete")
+	
+	}
+	
 	onClose() {
 		const {contentEl} = this;
 		contentEl.empty();
 	}
 }
-
 
 interface ResearchPluginSettings {
-	mySetting: string;
-	secondSetting:string;
 	draftFolders:string[];
 	templates_folder:string;
 	user_scripts_folder:string;
 	test_type:[startloc:string,endloc:string];
 	testModal: string;
 	testFolder: subFolderArrangement[];
-	exampleStrings: string[];
 
 }
 
 const DEFAULT_SETTINGS: ResearchPluginSettings = {
-	mySetting: 'default',
-	secondSetting: 'Not Default',
 	draftFolders: [],
 	templates_folder:"",
 	user_scripts_folder:"",
 	test_type: ["",""],
 	testModal: "",
 	testFolder: [],
-	exampleStrings:["test","this"]
 }
 
 
@@ -214,73 +134,28 @@ class SampleSettingTab extends PluginSettingTab {
 		const {containerEl} = this;
 
 		containerEl.empty();
-		this.add_template_folder_setting();
-		this.add_draft_folder_setting()
-		new Setting(containerEl)
-			.setName('Setting #1')
-			.setDesc('It\'s a secret')
-			.addText(text => text
-				.setPlaceholder('Enter your secret')
-				.setValue(this.plugin.settings.mySetting)
-				.onChange(async (value) => {
-					this.plugin.settings.mySetting = value;
-					await this.plugin.saveSettings();
-				}));
-		new Setting(containerEl)
-			.setName('Setting #2')
-			.setDesc('It\'s a secret')
-			.addText(text => text
-				.setPlaceholder('Enter your secret')
-				.setValue(this.plugin.settings.secondSetting)
-				.onChange(async (value) => {
-					this.plugin.settings.secondSetting = value;
-					await this.plugin.saveSettings();
-				}));
+		new Setting(containerEl).setName("Plugin Settings")
+		//this.add_template_folder_setting();
 
-
-		new Setting(containerEl).setDesc("Testing")
-			.addButton((btn) =>
-				btn
-				.setButtonText('Submit')
-				.onClick(() => {
-					new SampleModal(this.app,this.plugin).open();
-				}));
-		// let containerEl.second: HTMLElement;
-		let tryElement = this.containerEl.createEl("div");
-
-		// tryElement.createEl("search").addSearch((cb) => {
-		// 	new FolderSuggest(this.app, cb.inputEl);
-		// 	cb.setPlaceholder("Example: folder1/folder2")
-		// 		.setValue(this.plugin.settings.templates_folder)
-		// 		.onChange((new_folder) => {
-		// 			// Trim folder and Strip ending slash if there
-		// 			new_folder = new_folder.trim()
-		// 			new_folder = new_folder.replace(/\/$/, "");
-
-		// 			this.plugin.settings.templates_folder = new_folder;
-		// 			this.plugin.saveSettings();
-		// 		});
-		// 	// @ts-ignore
-		// }); 
-		this.plugin.settings.exampleStrings.forEach( (text,index) => {new Setting(containerEl).setDesc(text).addButton((btn =>{
-			btn.setButtonText("Change this value").onClick(() => {new changeTextExample(this.app,text,index,this.plugin.settings.exampleStrings,this.plugin).open()} )// Opens a modal that allows you to change the texto
-		})) })
-		console.log(this.plugin.settings.testFolder)
 		this.plugin.settings.testFolder.forEach( (folder) => {
-			new Setting(containerEl).setDesc(folder.folderName).addButton( (btn)=> {
-				btn.setButtonText("Change this value: Test Folder")
+			let btnFold =new Setting(containerEl).setDesc(folder.folderName).addButton( (btn)=> {
+				// Create a folder modal that allows you to edit it.
+				btn.setButtonText("Update Folder").onClick(() => {new UpdateFolder(this.app,this.plugin,folder,this).open()})
 			})
+			btnFold.setClass("rp-button")
 		} )
-		new Setting(containerEl).setDesc("Add a folder template").addButton((btn)=>{
-			btn.setButtonText("Folder Button").onClick(() =>{
-				this.plugin.settings.testFolder.push({folderName:"Test Folder",id:"yes",subFolders:true,haveDrafts:true});
-			}  )
-		})
-		tryElement.createEl("search");
-		tryElement.createEl("input");
-		tryElement.createEl("button").setText("Save conditions");
-	}
 
+		let btnTest =new Setting(containerEl).setDesc("Add a folder template").addButton((btn)=>{
+			btn.setButtonText("Folder Button").onClick(() =>{
+				this.plugin.settings.testFolder.push({folderName:"Test Folder",id:v4(),subFolders:true,haveDrafts:true});
+				this.plugin.saveSettings();
+				this.display();
+			}  )
+		
+		})
+		btnTest.setClass("rp-button");
+		let testText=new Setting(containerEl).setDesc("Test input").addTextArea((cb)=>{});
+	}
 
 	add_template_folder_setting(): void {
         new Setting(this.containerEl)
@@ -302,24 +177,5 @@ class SampleSettingTab extends PluginSettingTab {
                 cb.containerEl.addClass("templater_search");
             });
     }
-	add_draft_folder_setting(): void {
-        new Setting(this.containerEl)
-            .setName("Template folder location again")
-            .setDesc("Files in this folder will be available as templates. yes")
-            .addSearch((cb) => {
-                new FolderSuggest(this.app, cb.inputEl);
-                cb.setPlaceholder("Example: folder1/folder2")
-                    .setValue(this.plugin.settings.draftFolders[0])
-                    .onChange((new_folder) => {
-                        // Trim folder and Strip ending slash if there
-                        new_folder = new_folder.trim()
-                        new_folder = new_folder.replace(/\/$/, "");
 
-                        this.plugin.settings.draftFolders.push(new_folder);
-                        this.plugin.saveSettings();
-                    });
-                // @ts-ignore
-                cb.containerEl.addClass("templater_search");
-            });
-    }
 }

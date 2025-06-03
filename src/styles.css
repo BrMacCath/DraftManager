@@ -1,0 +1,9 @@
+.rp-button{
+    --interactive-normal: #7852ee;
+    --interactive-hover: #a882ff;
+}
+
+.rp-delete{
+    --interactive-normal: #fb464c;
+    --interactive-hover: #fb464c;
+}
