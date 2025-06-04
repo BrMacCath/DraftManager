@@ -4,6 +4,7 @@ import { DraftTab } from "../tabs/settingTab";
 import { Modal,App,Setting } from "obsidian";
 import { FolderSuggest } from "../suggesters/folderSuggester";
 import { UpdateDraftSettings } from "./updateDraftSettings";
+import { UpdateSubFolder } from "./updateSubfolder";
 
 export class UpdateFolder extends Modal {
 	plugin: ResearchPlugin;
@@ -64,7 +65,10 @@ export class UpdateFolder extends Modal {
             .setDesc("Change Subfolder Conditions")
             .addButton((cb) => {
                 cb.setButtonText("Update");
-                cb.setClass("rp-button")
+                cb.setClass("rp-button");
+                cb.onClick( () =>{
+                    new UpdateSubFolder(this.app,this.plugin,this.folder.subFolderArrangement,this.folder.folderName,this.settings).open()
+                } )
             } )
         if(!this.folder.haveSubFolders){
             subFoldArrange.settingEl.classList.add("rp-hidden");
