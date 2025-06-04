@@ -31,7 +31,7 @@ export class DraftTab extends PluginSettingTab {
         new Setting(containerEl).setDesc("Add a folder template").addButton((btn)=>{
 			btn.setButtonText("Folder Button").onClick(() =>{
 				let subfolderTemp:draftConditions = {draftStyle:{name:"Peterson"},haveComments:true, commentNotifier:"-",rewriteLineNotifier:">"};
-				this.plugin.settings.folders.push({folderName:"Test Folder",id:v4(),subFolders:true,haveDrafts:true,bibliography: "",draftConditions:subfolderTemp});
+				this.plugin.settings.folders.push({folderName:"",id:v4(),haveSubFolders:true,haveDrafts:true,bibliography: "",draftConditions:subfolderTemp,subFolderArrangement:{excludeFolders:[],folderArrangement:[]}});
 				this.plugin.saveSettings();
 				this.display();
 			}  )
@@ -51,7 +51,6 @@ export class DraftTab extends PluginSettingTab {
                         // Trim folder and Strip ending slash if there
                         new_folder = new_folder.trim()
                         new_folder = new_folder.replace(/\/$/, "");
-
                         this.plugin.settings.templates_folder = new_folder;
                         this.plugin.saveSettings();
                     });

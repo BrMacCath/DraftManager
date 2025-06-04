@@ -48,7 +48,6 @@ export class UpdateDraftSettings extends Modal{
             console.log("This activated");
             commentSetting.setClass("rp-hidden");
         }
-
     }
 
     onClose() {
