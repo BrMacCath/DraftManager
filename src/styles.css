@@ -7,3 +7,7 @@
     --interactive-normal: #fb464c;
     --interactive-hover: #fb464c;
 }
+.rp-hidden{
+    display: none;
+    transition-duration: 1500ms;
+}

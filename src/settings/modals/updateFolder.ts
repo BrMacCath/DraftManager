@@ -3,7 +3,7 @@ import FolderArrangement from "types/choices/folderArrangement";
 import { DraftTab } from "../tabs/settingTab";
 import { Modal,App,Setting } from "obsidian";
 import { FolderSuggest } from "../suggesters/folderSuggester";
-
+import { UpdateDraftSettings } from "./updateDraftSettings";
 
 export class UpdateFolder extends Modal {
 	plugin: ResearchPlugin;
@@ -47,24 +47,36 @@ export class UpdateFolder extends Modal {
 		)
 		
 	)
+    new Setting(contentEl).setName("Bibliography").addTextArea((cb)=>{
+        cb.setValue(this.folder.bibliography)
+        .onChange(async (value)=>{
+            this.folder.bibliography = value;
+            await this.plugin.saveSettings();
+        })
+	})
+
 	new Setting(contentEl).setName("Drafts")
 		.setDesc("Will you be using drafts in your situation?")
 		.addToggle( (cb) => cb.setValue(this.folder.haveDrafts)
 		.onChange(async (value)=>{
 			this.folder.haveDrafts = value;
+            draftConditionsTab.settingEl.classList.toggle("rp-hidden")
 			await this.plugin.saveSettings();}
 		)
 	)
-	new Setting(contentEl).setDesc("Update draft conditions").addButton((btn) => {
-		btn.setButtonText("Draft Settings").onClick( () =>{
+    let draftConditionsTab =new Setting(contentEl).setName("Update draft conditions.").addButton((btn) => {
+		btn.setButtonText("Update").onClick( () =>{
 			// Make a modal that talks about the draft settings
+            new UpdateDraftSettings(this.app,this.folder.draftConditions,this.settings).open()
 		} )
+        btn.setClass("rp-button")
 	})
-	new Setting(contentEl).setDesc("Bibliography").addTextArea((cb)=>{
-		//cb.setPlaceholder(this.folder.)
-	})
+    if(!this.folder.haveDrafts){
+        draftConditionsTab.settingEl.classList.add("rp-hidden");
+    }
+	
 
-	let deleteBtn = new Setting(contentEl).setName("Delete Folder?")
+	new Setting(contentEl).setName("Delete Folder?")
 		.setDesc("Do you wish to delete this folder?")
 		.addButton((cb) =>{
 			cb.setButtonText("Delete").onClick( () =>{
@@ -73,8 +85,8 @@ export class UpdateFolder extends Modal {
 				this.settings.display();
 				this.close()
 			} ) 
-		} )
-	deleteBtn.setClass("rp-delete")
+            cb.setClass("rp-delete");
+	} )
 	
 	}
 	

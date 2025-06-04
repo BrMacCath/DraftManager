@@ -5,5 +5,6 @@ export default interface FolderArrangement {
 	id: string;
     subFolders: boolean;
     haveDrafts: boolean;
+    bibliography: string;
     draftConditions: draftConditions;
 }

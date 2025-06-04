@@ -12,12 +12,10 @@ export class DraftTab extends PluginSettingTab {
 	constructor(app: App, plugin: ResearchPlugin) {
 		super(app, plugin);
 		this.plugin = plugin;
-		
 	}
 
 	display(): void {
 		const {containerEl} = this;
-
 		containerEl.empty();
 		new Setting(containerEl).setName("Plugin Settings")
 		//this.add_template_folder_setting();
@@ -26,21 +24,19 @@ export class DraftTab extends PluginSettingTab {
 			let btnFold =new Setting(containerEl).setDesc(folder.folderName).addButton( (btn)=> {
 				// Create a folder modal that allows you to edit it.
 				btn.setButtonText("Update Folder").onClick(() => {new UpdateFolder(this.app,this.plugin,folder,this).open()})
+                btn.setClass("rp-button");
 			})
-			btnFold.setClass("rp-button")
 		} )
 
-		let btnTest =new Setting(containerEl).setDesc("Add a folder template").addButton((btn)=>{
+        new Setting(containerEl).setDesc("Add a folder template").addButton((btn)=>{
 			btn.setButtonText("Folder Button").onClick(() =>{
-				let subfolderTemp:draftConditions = {draftStyle:{name:"Peterson"}, commentNotifier:"-",rewriteLineNotifier:">"};
-				this.plugin.settings.folders.push({folderName:"Test Folder",id:v4(),subFolders:true,haveDrafts:true,draftConditions:subfolderTemp});
+				let subfolderTemp:draftConditions = {draftStyle:{name:"Peterson"},haveComments:true, commentNotifier:"-",rewriteLineNotifier:">"};
+				this.plugin.settings.folders.push({folderName:"Test Folder",id:v4(),subFolders:true,haveDrafts:true,bibliography: "",draftConditions:subfolderTemp});
 				this.plugin.saveSettings();
 				this.display();
 			}  )
-		
+            btn.setClass("rp-button");
 		})
-		btnTest.setClass("rp-button");
-		let testText=new Setting(containerEl).setDesc("Test input").addTextArea((cb)=>{});
 	}
 
 	add_template_folder_setting(): void {
@@ -63,5 +59,4 @@ export class DraftTab extends PluginSettingTab {
                 cb.containerEl.addClass("templater_search");
             });
     }
-
 }
