@@ -1,7 +1,7 @@
 import ResearchPlugin from "src/main";
 import FolderArrangement from "types/choices/folderArrangement";
 import { DraftTab } from "../tabs/settingTab";
-import { Modal,App,Setting,Notice } from "obsidian";
+import { Modal,App,Setting,Notice,SearchComponent } from "obsidian";
 import { FolderSuggest } from "../suggesters/folderSuggester";
 import { UpdateDraftSettings } from "./updateDraftSettings";
 import { UpdateSubFolder } from "./updateSubfolder";
@@ -34,13 +34,13 @@ export class UpdateFolder extends Modal {
             .addSearch((cb) => {
                 new FolderSuggest(this.app, cb.inputEl);
                 cb.setPlaceholder(this.folder.folderName)
-                    .setValue(this.plugin.settings.templates_folder)
+                    .setValue(this.folder.folderName)
                     .onChange((new_folder) => {
                         // Trim folder and Strip ending slash if there
                         new_folder = new_folder.trim()
                         new_folder = new_folder.replace(/\/$/, "");
 
-                        this.checkFolderCanBeAdded(new_folder)
+                        this.checkFolderCanBeAdded(new_folder,cb,this.folder.folderName);
 						this.settings.display();
                     });
                 // @ts-ignore
@@ -108,10 +108,11 @@ export class UpdateFolder extends Modal {
         }
     }
 
-    checkFolderCanBeAdded(new_folder:string):void{
+    checkFolderCanBeAdded(new_folder:string,cb:SearchComponent,oldName:string):void{
 		for(let i = 0; i <this.plugin.settings.folders.length; i++){
 			if (new_folder == this.plugin.settings.folders[i].folderName && this.plugin.settings.folders[i].id !=this.folder.id){
 				new Notice("This folder is already on the list");
+                cb.setValue(oldName);
 				return;
 			}
 		}
