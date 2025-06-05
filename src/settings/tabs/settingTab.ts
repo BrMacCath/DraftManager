@@ -28,9 +28,8 @@ export class DraftTab extends PluginSettingTab {
                 btn.setClass("rp-button");
 			})
 		} )
-		let folderElement = new Setting(containerEl)
-		
-		let searchElement =folderElement.setName("Add a folder template")
+		let folderTextName = "Math";
+		new Setting(containerEl).setName("Add a folder template")
 		.setDesc("Choose which folder you wish to add")
 		.addSearch((cb)=>{
 			new FolderSuggest(this.app, cb.inputEl);
@@ -40,19 +39,16 @@ export class DraftTab extends PluginSettingTab {
                         // Trim folder and Strip ending slash if there
                         new_folder = new_folder.trim()
                         new_folder = new_folder.replace(/\/$/, "");
+						folderTextName = new_folder;
                         this.plugin.saveSettings();
                     });
                 // @ts-ignore
                 cb.containerEl.addClass("templater_search");
-		})
-		
-
-		folderElement.addButton((btn)=>{
+		}).addButton((btn)=>{
 			btn.setButtonText("Folder Button").onClick(() =>{
-				let searchText = searchElement.controlEl.firstElementChild;
-				console.log(searchText)
+				console.log(folderTextName)
 				let subfolderTemp:draftConditions = {draftStyle:{name:this.plugin.settings.defaultDraft},haveComments:true, commentNotifier:"-",rewriteLineNotifier:">"};
-				this.plugin.settings.folders.push({folderName:"",id:v4(),haveSubFolders:true,haveDrafts:true,bibliography: "",draftConditions:subfolderTemp,subFolderArrangement:{excludeFolders:[],folderArrangement:[]}});
+				this.plugin.settings.folders.push({folderName:folderTextName,id:v4(),haveSubFolders:true,haveDrafts:true,bibliography: "",draftConditions:this.plugin.settings.defaultFolder,subFolderArrangement:{excludeFolders:[],folderArrangement:[]}});
 				this.plugin.saveSettings();
 				this.display();
 			}  )
@@ -61,6 +57,8 @@ export class DraftTab extends PluginSettingTab {
 		this.createDefaultDraftSettings()
 
 	}
+
+
 	createDefaultDraftSettings():void{
 		const {containerEl} = this;
 		new Setting(containerEl).setName("Default Folder conditions").setHeading();
