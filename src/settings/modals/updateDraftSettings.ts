@@ -1,7 +1,7 @@
 import { Modal,App, Setting } from "obsidian";
 import draftConditions from "types/choices/draftConditions";
 import { DraftTab } from "../tabs/settingTab";
-
+import { draftOptions } from "types/choices/draftOptions";
 export class UpdateDraftSettings extends Modal{
     draftConditions:draftConditions;
     settings: DraftTab;
@@ -15,6 +15,16 @@ export class UpdateDraftSettings extends Modal{
         contentEl.createEl("h1").setText("Draft Settings")
         new Setting(contentEl).setName("Draft Style")
         .setDesc("Choose how you wihs Drafts to be made")
+        .addDropdown((dropdown) =>{
+            for (let i=0; i< draftOptions.length;i++){
+                dropdown.addOption(draftOptions[i],draftOptions[i])
+            }
+            dropdown.setValue(this.draftConditions.draftStyle.name);
+            dropdown.onChange(async (value) =>{
+                this.draftConditions.draftStyle.name = value;
+                await this.settings.plugin.saveSettings();
+            })
+        })
 
         new Setting(contentEl).setName("New line signifier")
         .setDesc("How to indicate a new line in your draft").addText((cb) =>{

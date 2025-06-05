@@ -5,9 +5,15 @@ import { TextInputSuggest } from "./suggest";
 
 export class SubFolderSuggest extends TextInputSuggest<TFolder> {
     folder:string;
+    sliceLength:number;
     constructor(app: App, inputEl: HTMLInputElement | HTMLTextAreaElement,folder:string) {
         super(app, inputEl);
         this.folder = folder.toLowerCase();
+        if(folder.length == 0){
+            this.sliceLength=0;
+        }else{
+            this.sliceLength = folder.length+1;
+        }
     }
 
     getSuggestions(inputStr: string): TFolder[] {
@@ -31,11 +37,11 @@ export class SubFolderSuggest extends TextInputSuggest<TFolder> {
     }
 
     renderSuggestion(file: TFolder, el: HTMLElement): void {
-        const text = file.path.slice(this.folder.length + 1);
+        const text = file.path.slice(this.sliceLength);
         if (text == ""){
             el.setText("/")
         }else{
-        el.setText(file.path.slice(this.folder.length+1));
+        el.setText(text);
     }}
 
     selectSuggestion(file: TFolder): void {
