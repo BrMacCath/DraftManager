@@ -1,4 +1,6 @@
+import draftStyle from "types/choices/draftStyle";
 import FolderArrangement from "../../types/choices/folderArrangement";
+import draftConditions from "types/choices/draftConditions";
 
 export default interface ResearchPluginSettings {
 	draftFolders:string[];
@@ -6,6 +8,7 @@ export default interface ResearchPluginSettings {
 	user_scripts_folder:string;
 	folders: FolderArrangement[];
 	defaultDraft: string;
+	defaultFolder:draftConditions;
 }
 
 export const DEFAULT_SETTINGS: ResearchPluginSettings = {
@@ -13,5 +16,6 @@ export const DEFAULT_SETTINGS: ResearchPluginSettings = {
 	templates_folder:"",
 	user_scripts_folder:"",
 	folders: [],
-	defaultDraft: "Peterson"
+	defaultDraft: "Peterson",
+	defaultFolder: {draftStyle:{name:"Peterson"},haveComments:true, commentNotifier:"-",rewriteLineNotifier:">"}
 }

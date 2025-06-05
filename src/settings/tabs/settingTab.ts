@@ -7,7 +7,6 @@ import { UpdateFolder } from "../modals/updateFolder";
 import { draftOptions } from "types/choices/draftOptions";
 export class DraftTab extends PluginSettingTab {
 	plugin: ResearchPlugin;
-    second: HTMLElement;
 	constructor(app: App, plugin: ResearchPlugin) {
 		super(app, plugin);
 		this.plugin = plugin;
@@ -59,7 +58,11 @@ export class DraftTab extends PluginSettingTab {
 			}  )
             btn.setClass("rp-button");
 		})
+		this.createDefaultDraftSettings()
 
+	}
+	createDefaultDraftSettings():void{
+		const {containerEl} = this;
 		new Setting(containerEl).setName("Default Folder conditions").setHeading();
 		new Setting(containerEl).setName("Draft Style")
 				.setDesc("Choose how you wish Drafts to be made")
@@ -67,12 +70,42 @@ export class DraftTab extends PluginSettingTab {
 					for (let i=0; i< draftOptions.length;i++){
 						dropdown.addOption(draftOptions[i],draftOptions[i])
 					}
-					dropdown.setValue(this.plugin.settings.defaultDraft);
+					dropdown.setValue(this.plugin.settings.defaultFolder.draftStyle.name);
 					dropdown.onChange(async (value) =>{
-						this.plugin.settings.defaultDraft = value;
+						this.plugin.settings.defaultFolder.draftStyle.name = value;
 						await this.plugin.saveSettings();
 					})
-				})
-	}
+				});
+			
+        new Setting(containerEl).setName("New line signifier")
+        .setDesc("How to indicate a new line in your draft").addText((cb) =>{
+            cb.setValue(this.plugin.settings.defaultFolder.rewriteLineNotifier).onChange(async(value)=>{
+                this.plugin.settings.defaultFolder.rewriteLineNotifier = value;
+                await this.plugin.saveSettings();
+            })
+        } )
 
+        new Setting(containerEl).setName("Comment lines.")
+        .setDesc("Do you wish to have comments in your drafts.").addToggle((cb) =>{
+            cb.setValue(this.plugin.settings.defaultFolder.haveComments).onChange(async(value)=>{
+                this.plugin.settings.defaultFolder.haveComments = value;
+                commentSetting.settingEl.classList.toggle("rp-hidden");
+                await this.plugin.saveSettings();
+            })
+        } )
+
+        let commentSetting =new Setting(containerEl);
+        commentSetting.setName("Comment Signifier")
+        .setDesc("How to indicate a comment in your draft").addText((cb) =>{
+            cb.setValue(this.plugin.settings.defaultFolder.commentNotifier).onChange(async(value)=>{
+                this.plugin.settings.defaultFolder.commentNotifier = value;
+                await this.plugin.saveSettings();
+                
+            })
+            
+        } )
+        if(!this.plugin.settings.defaultFolder.haveComments){
+            commentSetting.setClass("rp-hidden");
+        }
+	}
 }

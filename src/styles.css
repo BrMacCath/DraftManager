@@ -11,3 +11,8 @@
     display: none;
     transition-duration: 1500ms;
 }
+
+.rp-bib-wrapper {
+    width: 100%;
+    margin-bottom: 0.75rem;
+}

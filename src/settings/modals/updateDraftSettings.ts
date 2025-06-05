@@ -53,9 +53,7 @@ export class UpdateDraftSettings extends Modal{
             })
             
         } )
-        console.log(this.draftConditions.haveComments)
         if(!this.draftConditions.haveComments){
-            console.log("This activated");
             commentSetting.setClass("rp-hidden");
         }
     }
