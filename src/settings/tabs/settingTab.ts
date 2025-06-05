@@ -27,13 +27,13 @@ export class DraftTab extends PluginSettingTab {
                 btn.setClass("rp-button");
 			})
 		} )
-		let folderTextName = "/";
+		let folderTextName = "";
 		new Setting(containerEl).setName("Add a folder template")
 		.setDesc("Choose which folder you wish to add")
 		.addSearch((cb)=>{
 			new FolderSuggest(this.app, cb.inputEl);
                 cb.setPlaceholder("Example: folder1/folder2")
-                    .setValue("/")
+                    .setValue("")
                     .onChange((new_folder) => {
                         // Trim folder and Strip ending slash if there
                         new_folder = new_folder.trim()
