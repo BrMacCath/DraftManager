@@ -1,7 +1,6 @@
-import { PluginSettingTab,App,Setting } from "obsidian";
+import { PluginSettingTab,App,Setting, Notice } from "obsidian";
 import ResearchPlugin from "src/main";
 import { FolderSuggest } from "../suggesters/folderSuggester";
-import draftConditions from "types/choices/draftConditions";
 import { v4 } from "uuid";
 import { UpdateFolder } from "../modals/updateFolder";
 import { draftOptions } from "types/choices/draftOptions";
@@ -28,13 +27,13 @@ export class DraftTab extends PluginSettingTab {
                 btn.setClass("rp-button");
 			})
 		} )
-		let folderTextName = "Math";
+		let folderTextName = "/";
 		new Setting(containerEl).setName("Add a folder template")
 		.setDesc("Choose which folder you wish to add")
 		.addSearch((cb)=>{
 			new FolderSuggest(this.app, cb.inputEl);
                 cb.setPlaceholder("Example: folder1/folder2")
-                    .setValue("Math")
+                    .setValue("/")
                     .onChange((new_folder) => {
                         // Trim folder and Strip ending slash if there
                         new_folder = new_folder.trim()
@@ -46,18 +45,24 @@ export class DraftTab extends PluginSettingTab {
                 cb.containerEl.addClass("templater_search");
 		}).addButton((btn)=>{
 			btn.setButtonText("Folder Button").onClick(() =>{
-				console.log(folderTextName)
-				let subfolderTemp:draftConditions = {draftStyle:{name:this.plugin.settings.defaultDraft},haveComments:true, commentNotifier:"-",rewriteLineNotifier:">"};
-				this.plugin.settings.folders.push({folderName:folderTextName,id:v4(),haveSubFolders:true,haveDrafts:true,bibliography: "",draftConditions:this.plugin.settings.defaultFolder,subFolderArrangement:{excludeFolders:[],folderArrangement:[]}});
-				this.plugin.saveSettings();
-				this.display();
+				this.checkFolderCanBeAdded(folderTextName)
 			}  )
             btn.setClass("rp-button");
 		})
 		this.createDefaultDraftSettings()
-
 	}
 
+	checkFolderCanBeAdded(new_folder:string):void{
+		for(let i = 0; i <this.plugin.settings.folders.length; i++){
+			if (new_folder == this.plugin.settings.folders[i].folderName){
+				new Notice("This folder is already on the list");
+				return;
+			}
+		}
+		this.plugin.settings.folders.push({folderName:new_folder,id:v4(),haveSubFolders:true,haveDrafts:true,bibliography: "",draftConditions:this.plugin.settings.defaultFolder,subFolderArrangement:{excludeFolders:[],folderArrangement:[]}});
+		this.plugin.saveSettings();
+		this.display();
+	}
 
 	createDefaultDraftSettings():void{
 		const {containerEl} = this;
