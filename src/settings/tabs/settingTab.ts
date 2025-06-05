@@ -14,6 +14,7 @@ export class DraftTab extends PluginSettingTab {
 
 	display(): void {
 		const {containerEl} = this;
+		this.sortFolderOrder();
 		containerEl.empty();
 		new Setting(containerEl).setName("Plugin Settings")
 		.setDesc("Choose which folders.").setHeading();
@@ -64,6 +65,14 @@ export class DraftTab extends PluginSettingTab {
 		this.display();
 	}
 
+	sortFolderOrder():void{
+		console.log(this.plugin.settings.folders)
+		this.plugin.settings.folders.sort( (a,b) => a.folderName.localeCompare(b.folderName));
+		console.log(this.plugin.settings.folders)
+		this.plugin.saveSettings()
+	}
+
+
 	createDefaultDraftSettings():void{
 		const {containerEl} = this;
 		new Setting(containerEl).setName("Default Folder conditions").setHeading();
@@ -110,5 +119,23 @@ export class DraftTab extends PluginSettingTab {
         if(!this.plugin.settings.defaultFolder.haveComments){
             commentSetting.setClass("rp-hidden");
         }
+		new Setting(containerEl).setName("Unformatted Drafts Location")
+        .setDesc("Where will you store the unformatted drafts").addText((cb) =>{
+            cb.setValue(this.plugin.settings.defaultFolder.draftStorage).onChange(async(value)=>{
+                this.plugin.settings.defaultFolder.draftStorage = value;
+                await this.plugin.saveSettings();
+                
+            })
+            
+        } );
+		new Setting(containerEl).setName("Draft File Signifier")
+        .setDesc("How to indicate a file is a unformatted draft file").addText((cb) =>{
+            cb.setValue(this.plugin.settings.defaultFolder.draftFileIndicator).onChange(async(value)=>{
+                this.plugin.settings.defaultFolder.draftFileIndicator = value;
+                await this.plugin.saveSettings();
+            })
+            
+        } )
+
 	}
 }

@@ -5,4 +5,6 @@ export default interface draftConditions{
     haveComments: boolean;
     commentNotifier:string;
     rewriteLineNotifier:string;
+    draftStorage: string,
+	draftFileIndicator: string
 }

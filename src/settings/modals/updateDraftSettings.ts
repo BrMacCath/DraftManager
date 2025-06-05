@@ -56,6 +56,23 @@ export class UpdateDraftSettings extends Modal{
         if(!this.draftConditions.haveComments){
             commentSetting.setClass("rp-hidden");
         }
+        new Setting(contentEl).setName("Unformatted Drafts Location")
+        .setDesc("Where will you store the unformatted drafts").addText((cb) =>{
+            cb.setValue(this.draftConditions.draftStorage).onChange(async(value)=>{
+                this.draftConditions.draftStorage = value;
+                await this.settings.plugin.saveSettings();
+                
+            })
+            
+        } );
+		new Setting(contentEl).setName("Draft File Signifier")
+        .setDesc("How to indicate a file is a unformatted draft file").addText((cb) =>{
+            cb.setValue(this.draftConditions.draftFileIndicator).onChange(async(value)=>{
+                this.draftConditions.draftFileIndicator = value;
+                await this.settings.plugin.saveSettings();
+            })
+            
+        } )
     }
 
     onClose() {
