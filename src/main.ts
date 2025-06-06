@@ -18,7 +18,7 @@ export default class ResearchPlugin extends Plugin {
 		// When registering intervals, this function will automatically clear the interval when the plugin is disabled.
 		this.registerInterval(window.setInterval(() => console.log('setInterval'), 5 * 60 * 1000));
 		this.addCommand({id:"New Draft",name:"New Draft",callback: async ()=>{
-			new chooseFolder(this.app,this).open()
+			new chooseFolder(this.app,this.settings,this).open()
 		}})
 	}
 

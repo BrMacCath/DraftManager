@@ -1,45 +1,47 @@
 import {App, Modal,Setting } from "obsidian"
-import { folderListSuggest } from "../suggesters/folderListSuggest";
 import ResearchPluginSettings from "../researchPluginSettings";
 import ResearchPlugin from "src/main";
-import { chooseSubFolder } from "./chooseSubfolder";
-export class chooseFolder extends Modal{
+import { SubFolderSuggest } from "../suggesters/subFolderSuggester";
+export class chooseSubFolder extends Modal{
     settings: ResearchPluginSettings;
-    plugin: ResearchPlugin
-    constructor(app: App,settings:ResearchPluginSettings,plugin:ResearchPlugin) {
+    plugin: ResearchPlugin;
+    folder: string;
+    constructor(app: App,settings:ResearchPluginSettings,plugin:ResearchPlugin,folder:string) {
         super(app);
         this.settings=settings;
         this.plugin = plugin;
+        this.folder = folder;
     }
     onOpen(): void {
         const containerEl=this.modalEl;
-        containerEl.createEl("h1").setText("Select Folder" );
-        let folderTextName = this.settings.folders[0].folderName;
+        containerEl.createEl("h1").setText("Select Folder from " + this.folder);
+        let folderTextName = "";
         new Setting(containerEl).setName("Select your folder")
         .setDesc("Choose which folder you wish to add from your list.")
         .addSearch((cb)=>{
-            new folderListSuggest(this.app, cb.inputEl,this.settings.folders);
+            new SubFolderSuggest(this.app, cb.inputEl,this.folder);
                 cb.setPlaceholder("Example: folder1/folder2")
-                    .setValue(this.settings.folders[0].folderName)
+                    .setValue("")
                     .onChange((new_folder) => {
                         // Trim folder and Strip ending slash if there
                         new_folder = new_folder.trim()
                         new_folder = new_folder.replace(/\/$/, "");
                         folderTextName = new_folder;
+                        this.plugin.saveSettings();
                     });
                 // @ts-ignore
                 cb.containerEl.addClass("templater_search");
         }).addButton((btn)=>{
             btn.setButtonText("Folder Button").onClick(() =>{
-                new chooseSubFolder(this.app,this.settings,this.plugin,folderTextName).open()
-                this.close()
+                // This will need to be figured out later.
             }  )
             btn.setClass("rp-button");
         })
     }
+
     onClose() {
-		const {contentEl} = this;
-		contentEl.empty();
-	}
+        const {contentEl} = this;
+        contentEl.empty();
+    }
 
 }
