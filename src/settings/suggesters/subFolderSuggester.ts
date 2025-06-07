@@ -1,6 +1,6 @@
 // Credits go to Liam's Periodic Notes Plugin: https://github.com/liamcain/obsidian-periodic-notes
 
-import { App, TAbstractFile, TFolder } from "obsidian";
+import { App, TAbstractFile, TFolder,TFile } from "obsidian";
 import { TextInputSuggest } from "./suggest";
 
 export class SubFolderSuggest extends TextInputSuggest<TFolder> {
@@ -8,7 +8,7 @@ export class SubFolderSuggest extends TextInputSuggest<TFolder> {
     sliceLength:number;
     constructor(app: App, inputEl: HTMLInputElement | HTMLTextAreaElement,folder:string) {
         super(app, inputEl);
-        this.folder = folder.toLowerCase();
+        this.folder = folder;
         if(folder.length == 0){
             this.sliceLength=0;
         }else{
@@ -17,8 +17,18 @@ export class SubFolderSuggest extends TextInputSuggest<TFolder> {
     }
 
     getSuggestions(inputStr: string): TFolder[] {
+        let test = this.app.vault.getFileByPath(this.folder);
+        const testTFolder = this.app.vault.getAllLoadedFiles().filter((folder: TAbstractFile) => {
+                return folder instanceof TFolder;
+            })
+        const printTest = testTFolder[0].children.filter( (file: TAbstractFile) => {return file instanceof TFile &&  file.extension === "md"})
+
+        for(let i = 0; i < printTest.length; i++){
+            console.log(printTest[i].name)
+        }
+
         const abstractFiles = this.app.vault.getAllLoadedFiles().filter( (folder: TAbstractFile) =>{
-            return folder.path.toLowerCase().contains(this.folder )
+            return folder.path.toLowerCase().contains(this.folder.toLowerCase() )
         }  );
         //this.app.vault.getFolderByPath
         const folders: TFolder[] = [];

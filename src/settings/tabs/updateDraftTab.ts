@@ -1,14 +1,17 @@
 import { App,Setting } from "obsidian";
 import ResearchPlugin from "src/main";
-export class DefaultDraftConditions extends Setting {
+export class UpdateDraftConditions extends HTMLElement {
     app:App;
     containerEl:HTMLElement;
     plugin: ResearchPlugin;
-    constructor(app: App, plugin: ResearchPlugin,containerEl:HTMLElement) {
-        super(containerEl);
+    constructor(app: App, plugin: ResearchPlugin) {
+        super();
         this.app=app;
-        this.containerEl=containerEl;
         this.plugin = plugin;
     }
     
+    show(): void {
+        new Setting(this).setDesc("Got her yeahhhhh")
+    }
+
 }

@@ -4,6 +4,8 @@ import { FolderSuggest } from "../suggesters/folderSuggester";
 import { v4 } from "uuid";
 import { UpdateFolder } from "../modals/updateFolder";
 import { draftOptions } from "types/choices/draftOptions";
+import { UpdateDraftSettings } from "../modals/updateDraftSettings";
+import { UpdateDraftConditions } from "./updateDraftTab";
 export class DraftTab extends PluginSettingTab {
 	plugin: ResearchPlugin;
 	constructor(app: App, plugin: ResearchPlugin) {
@@ -51,6 +53,7 @@ export class DraftTab extends PluginSettingTab {
             btn.setClass("rp-button");
 		})
 		this.createDefaultDraftSettings()
+		new Setting(new UpdateDraftConditions(this.app,this.plugin))
 	}
 
 	checkFolderCanBeAdded(new_folder:string):void{
