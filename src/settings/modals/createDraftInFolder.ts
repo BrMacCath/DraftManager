@@ -1,7 +1,7 @@
 import {App, Modal,Setting } from "obsidian"
 import ResearchPluginSettings from "../researchPluginSettings";
 import ResearchPlugin from "src/main";
-import { FileFromFolderSuggest } from "../suggesters/fileFromFolderSuggester";
+import createDraft from "../functions/createDraft";
 export class createDraftInFolder extends Modal{
     settings: ResearchPluginSettings;
     plugin: ResearchPlugin;
@@ -15,17 +15,17 @@ export class createDraftInFolder extends Modal{
     onOpen(): void {
         const containerEl=this.modalEl;
         containerEl.createEl("h1").setText("Select File from " + this.folder);
-        let folderTextName = "";
+        let fileTextName = "";
         new Setting(containerEl).setName("Select your folder")
         .setDesc("Choose which folder you wish to add from your list.")
         .addText((cb) =>{
             cb.onChange((value)=>{
-                folderTextName = value
+                fileTextName = value;
             })
         })
         .addButton((btn)=>{
             btn.setButtonText("Create Draft").onClick(() =>{
-                console.log(folderTextName)
+                createDraft(this.folder,fileTextName);
             }  )
             btn.setClass("rp-button");
         })

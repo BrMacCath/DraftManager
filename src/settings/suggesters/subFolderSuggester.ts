@@ -17,16 +17,6 @@ export class SubFolderSuggest extends TextInputSuggest<TFolder> {
     }
 
     getSuggestions(inputStr: string): TFolder[] {
-        let test = this.app.vault.getFileByPath(this.folder);
-        const testTFolder = this.app.vault.getAllLoadedFiles().filter((folder: TAbstractFile) => {
-                return folder instanceof TFolder;
-            })
-        const printTest = testTFolder[0].children.filter( (file: TAbstractFile) => {return file instanceof TFile &&  file.extension === "md"})
-
-        for(let i = 0; i < printTest.length; i++){
-            console.log(printTest[i].name)
-        }
-
         const abstractFiles = this.app.vault.getAllLoadedFiles().filter( (folder: TAbstractFile) =>{
             return folder.path.toLowerCase().contains(this.folder.toLowerCase() )
         }  );
