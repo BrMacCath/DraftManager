@@ -3,6 +3,7 @@ import ResearchPluginSettings from "../researchPluginSettings";
 import ResearchPlugin from "src/main";
 import { SubFolderSuggest } from "../suggesters/subFolderSuggester";
 import { createDraftInFolder } from "./createDraftInFolder";
+import { chooseFileFromFolder } from "./chooseFileFromFolder";
 export class chooseSubFolder extends Modal{
     settings: ResearchPluginSettings;
     plugin: ResearchPlugin;
@@ -28,14 +29,13 @@ export class chooseSubFolder extends Modal{
                         new_folder = new_folder.trim()
                         new_folder = new_folder.replace(/\/$/, "");
                         folderTextName = new_folder;
-                        this.plugin.saveSettings();
                     });
                 // @ts-ignore
                 cb.containerEl.addClass("templater_search");
         }).addButton((btn)=>{
             btn.setButtonText("Folder Button").onClick(() =>{
                 // This will need to be figured out later.
-                new createDraftInFolder(this.app,this.settings,this.plugin,folderTextName).open()
+                new chooseFileFromFolder(this.app,this.settings,this.plugin,folderTextName).open()
                 this.close()
             }  )
             btn.setClass("rp-button");

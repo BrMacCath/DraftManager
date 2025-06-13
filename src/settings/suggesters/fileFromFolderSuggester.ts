@@ -1,13 +1,11 @@
-import { App, TAbstractFile, TFile} from "obsidian";
+import { App, Notice, TAbstractFile, TFile} from "obsidian";
 import { TextInputSuggest } from "./suggest";
-import FolderArrangement from "types/choices/folderArrangement";
-
 // What does this class need to do?
 // Takes the list of files from a folder
 
 
 
-export class FileFromFolderSuggest extends TextInputSuggest<TAbstractFile> {
+export class FileFromFolderSuggest extends TextInputSuggest<TFile> {
     sliceLength:number;
     folder: string;
     constructor(app: App, inputEl: HTMLInputElement | HTMLTextAreaElement,folder:string) {
@@ -15,15 +13,17 @@ export class FileFromFolderSuggest extends TextInputSuggest<TAbstractFile> {
         this.folder = folder;
     }
 
-    getSuggestions(inputStr: string): TAbstractFile[] {
+    getSuggestions(inputStr: string): TFile[] {
         let test = this.app.vault.getFileByPath(this.folder);
         const abstractFiles = this.app.vault.getAllLoadedFiles().filter((file: TAbstractFile) => {
-                return file instanceof TFile;
+                return file instanceof TFile &&
+                file.parent?.path == this.folder
             })
         //this.app.vault.getFolderByPath
         const folders: TFile[] = [];
         const lowerCaseInputStr = inputStr.toLowerCase();
-
+        console.log(this.folder);
+        console.log(abstractFiles);
         abstractFiles.forEach((file: TAbstractFile) => {
             if (
                 file instanceof TFile &&
@@ -31,7 +31,11 @@ export class FileFromFolderSuggest extends TextInputSuggest<TAbstractFile> {
             ) {
                 folders.push(file);
             }
+            console.log(folders)
         });
+        if (folders.length == 0){
+            new Notice("There are no files to create a draft from in this folder.")
+        }
 
         return folders.slice(0, 1000);
     }
@@ -40,7 +44,7 @@ export class FileFromFolderSuggest extends TextInputSuggest<TAbstractFile> {
         if (file.path == ""){
             el.setText("/")
         }else{
-        el.setText(file.path.slice(0,-3));
+        el.setText(file.name.slice(0,-3));
     }
 }
 

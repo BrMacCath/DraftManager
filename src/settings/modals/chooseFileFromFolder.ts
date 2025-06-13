@@ -17,7 +17,7 @@ export class chooseFileFromFolder extends Modal{
         const containerEl=this.modalEl;
         containerEl.createEl("h1").setText("Select File from " + this.folder);
         let folderTextName = "";
-        new Setting(containerEl).setName("Select your folder")
+        new Setting(containerEl).setName("Select the file")
         .setDesc("Choose which folder you wish to add from your list.")
         .addSearch((cb)=>{
             new FileFromFolderSuggest(this.app, cb.inputEl,this.folder);
@@ -28,7 +28,6 @@ export class chooseFileFromFolder extends Modal{
                         file = file.trim()
                         file = file.replace(/\/$/, "");
                         folderTextName = file;
-                        this.plugin.saveSettings();
                     });
                 // @ts-ignore
                 cb.containerEl.addClass("templater_search");
