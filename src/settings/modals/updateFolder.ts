@@ -99,7 +99,7 @@ export class UpdateFolder extends Modal {
         let draftConditionsTab =new Setting(contentEl).setName("Update draft conditions.").addButton((btn) => {
             btn.setButtonText("Update").onClick( () =>{
                 // Make a modal that talks about the draft settings
-                new UpdateDraftSettings(this.app,this.folder.draftConditions,this.settings).open()
+                new UpdateDraftSettings(this.app,this.folder.draftConditions,this.settings,this.folder.folderName).open()
             } )
             btn.setClass("rp-button")
         })

@@ -25,7 +25,7 @@ export class createDraftInFolder extends Modal{
         })
         .addButton((btn)=>{
             btn.setButtonText("Create Draft").onClick(() =>{
-                createDraft(this.folder,fileTextName);
+                createDraft(this.folder);
             }  )
             btn.setClass("rp-button");
         })
