@@ -1,11 +1,30 @@
 import { TFile } from "obsidian"
+import { splitContent } from "./splitContent";
 
-export default async function createDraft(fileName:string,template:string):Promise<void>{
-    console.log(fileName)
+export default async function createDraft(fileName:string):Promise<void>{
     const fileTFile:TFile = this.app.vault.getFileByPath(fileName)
-    console.log(fileTFile)
     let fileTest = await this.app.vault.read(fileTFile);
-    // this.app.vault.cachedRead()
-    // this.app.cachedRead()
+    let [frontMatter,content] = splitContent(fileTest);
 
+    // Update frontmatter through adding a new draft number
+
+    // Isolate draft
+
+
+    // Separate sections into paragarphs
+
+
+    // Separate paragraphs into lines
+    // splitContent function here
+
+    // Create finished version of the draft
+    // For each paragraph sentences .join(". ")
+
+    // For each paragraph do .join("\n\n" )
+
+    // Create a new draft with the sentences. 
+    // Will need to check if add comments is there
+    // New line joiner ="\n"
+    // If has comments new line joiner += this.commentLineSignifier +" \n"
+    // New line joiner += this.new line +" \n"
 }
