@@ -16,15 +16,13 @@ export default async function createDraft(fileName:string,draftNumIndicator:stri
     let paragraphs:string[] = []
     // Separate sections into paragarphs
     // If it is the first situation
+    const titleInd = content.indexOf(previousDraftTitle);
+    const sections = content.slice(titleInd + previousDraftTitle.length);
     if (oldDraftNum == 1){
-        const titleInd = content.indexOf(previousDraftTitle);
-        const sections = content.slice(titleInd + previousDraftTitle.length);
-        const paragaraphs = sections.split(paragraphSeperator);
+        // Here we add the new title for the 
     }
     else{
-        const titleInd = content.indexOf(previousDraftTitle);
-        const sections = content.slice(titleInd + previousDraftTitle.length);
-        const paragaraphs = sections.split(paragraphSeperator);
+        
     }
 
     // Separate paragraphs into lines
