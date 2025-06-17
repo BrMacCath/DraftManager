@@ -1,18 +1,31 @@
 import { TFile } from "obsidian"
 import { splitContent } from "./splitContent";
+import { updateFrontmatter } from "./updateFrontmatter";
+import { stringifyNumber } from "./stringifyNumber";
 
-export default async function createDraft(fileName:string):Promise<void>{
+export default async function createDraft(fileName:string,draftNumIndicator:string, paragraphSeperator:string):Promise<void>{
     const fileTFile:TFile = this.app.vault.getFileByPath(fileName)
     let fileTest = await this.app.vault.read(fileTFile);
-    let [frontMatter,content] = splitContent(fileTest);
+    let [tempFrontMatter,content] = splitContent(fileTest);
 
     // Update frontmatter through adding a new draft number
-
+    let [frontMatter,oldDraftNum] = updateFrontmatter(tempFrontMatter, draftNumIndicator)
     // Isolate draft
-
-
+    const previousDraftTitle = stringifyNumber(oldDraftNum);
+    const newDraftTitle = stringifyNumber(oldDraftNum+1); 
+    let paragraphs:string[] = []
     // Separate sections into paragarphs
-
+    // If it is the first situation
+    if (oldDraftNum == 1){
+        const titleInd = content.indexOf(previousDraftTitle);
+        const sections = content.slice(titleInd + previousDraftTitle.length);
+        const paragaraphs = sections.split(paragraphSeperator);
+    }
+    else{
+        const titleInd = content.indexOf(previousDraftTitle);
+        const sections = content.slice(titleInd + previousDraftTitle.length);
+        const paragaraphs = sections.split(paragraphSeperator);
+    }
 
     // Separate paragraphs into lines
     // splitContent function here
@@ -27,4 +40,6 @@ export default async function createDraft(fileName:string):Promise<void>{
     // New line joiner ="\n"
     // If has comments new line joiner += this.commentLineSignifier +" \n"
     // New line joiner += this.new line +" \n"
+    const file = frontMatter+content;
+
 }

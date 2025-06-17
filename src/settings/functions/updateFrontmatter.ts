@@ -1,0 +1,15 @@
+import { Notice } from "obsidian";
+
+
+export function updateFrontmatter(frontmatter:string, draftNumIndicator:string):[string,number]{
+    const draftInd = frontmatter.indexOf(draftNumIndicator);
+    if (draftInd==-1){
+        new Notice("This file does not contain the frontmatter to indicate the draft number.")
+    }
+    let tempFile = frontmatter.slice(draftInd + draftNumIndicator.length+1);
+    const endLineInd = tempFile.indexOf("\n")
+    const draftNum = Number( tempFile.slice(0,endLineInd).trim() ) 
+    const newDraftNum = draftNum+1
+    frontmatter = frontmatter.replace(draftNumIndicator +": " + draftNum, draftNumIndicator +": " + newDraftNum  )
+    return [frontmatter,draftNum];
+}
