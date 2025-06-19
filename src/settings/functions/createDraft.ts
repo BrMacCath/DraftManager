@@ -3,7 +3,7 @@ import { splitContent } from "./splitContent";
 import { updateFrontmatter } from "./updateFrontmatter";
 import { stringifyNumber } from "./stringifyNumber";
 import { createFromFirstDraft } from "./createFromFirstDraft";
-
+import { createFromDraft } from "./createFromDraft";
 export default async function createDraft(fileName:string,draftNumIndicator:string, paragraphSeperator:string,app:App):Promise<void>{
     const fileTFile:TFile = this.app.vault.getFileByPath(fileName)
     let fileTest = await this.app.vault.read(fileTFile);
@@ -30,10 +30,12 @@ export default async function createDraft(fileName:string,draftNumIndicator:stri
         // Here we add the new title for the 
         const updatedContent = createFromFirstDraft(content,paragraphSeperator,topicFronmatterSeparator,haveTopicFrontMatter,rewriteLineSignfier,commentLineSignifier);
         const updatedFile = frontMatter + updatedContent;
-        this.app.vault.modify(fileTFile,updatedFile)
+        await this.app.vault.modify(fileTFile,updatedFile);
     }
     else{
-        
+        const updatedContent = createFromDraft(content,paragraphSeperator,oldDraftNum,topicFronmatterSeparator,haveTopicFrontMatter,rewriteLineSignfier,commentLineSignifier);
+        const updatedFile = frontMatter + updatedContent;
+        await this.app.vault.modify(fileTFile,updatedFile);
     }
 
     // Separate paragraphs into lines
@@ -49,6 +51,5 @@ export default async function createDraft(fileName:string,draftNumIndicator:stri
     // New line joiner ="\n"
     // If has comments new line joiner += this.commentLineSignifier +" \n"
     // New line joiner += this.new line +" \n"
-    const file = frontMatter+content;
 
 }

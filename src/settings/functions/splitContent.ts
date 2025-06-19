@@ -11,6 +11,6 @@ export function splitContent(text:string):[string,string] {
   }
   const index = text.indexOf(meta_data_end) + meta_data_end.length;
   const frontMatter = text.slice(0, index);
-  const content = text.slice(index+1)
+  const content = text.slice(index)
   return [frontMatter,content];
 }
