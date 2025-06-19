@@ -6,15 +6,15 @@ import { SubFolderSuggest } from "../suggesters/subFolderSuggester";
 
 export class UpdateSubFolder extends Modal {
     plugin: ResearchPlugin;
-    settings:DraftTab;
+    settingsTab:DraftTab;
     subFolder:subFolderArrangement;
     folderName:string;
-    constructor(app: App,plugin: ResearchPlugin,subFolder:subFolderArrangement,folderName:string,settings:DraftTab) {
+    constructor(app: App,plugin: ResearchPlugin,subFolder:subFolderArrangement,folderName:string,settingsTab:DraftTab) {
             super(app);
             this.plugin = plugin;
             this.subFolder = subFolder;
             this.folderName=folderName;
-            this.settings=settings;
+            this.settingsTab=settingsTab;
     }
 
     onOpen(): void {
@@ -31,7 +31,7 @@ export class UpdateSubFolder extends Modal {
                         new_folder = new_folder.trim()
                         new_folder = new_folder.replace(/\/$/, "");
                         this.plugin.saveSettings();
-                        this.settings.display();
+                        this.settingsTab.display();
                     });
                 // @ts-ignore
                 cb.containerEl.addClass("templater_search");

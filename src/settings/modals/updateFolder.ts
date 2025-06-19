@@ -9,12 +9,12 @@ import { UpdateSubFolder } from "./updateSubfolder";
 export class UpdateFolder extends Modal {
 	plugin: ResearchPlugin;
 	folder: FolderArrangement;
-	settings: DraftTab;
-	constructor(app: App,plugin: ResearchPlugin,folder:FolderArrangement,settings:DraftTab) {
+	settingsTab: DraftTab;
+	constructor(app: App,plugin: ResearchPlugin,folder:FolderArrangement,settingsTab:DraftTab) {
 		super(app);
 		this.plugin = plugin;
 		this.folder = folder;
-		this.settings=settings;
+		this.settingsTab =settingsTab;
 	}
 
 	onOpen() {
@@ -41,7 +41,7 @@ export class UpdateFolder extends Modal {
                         new_folder = new_folder.replace(/\/$/, "");
 
                         this.checkFolderCanBeAdded(new_folder,cb,this.folder.folderName);
-						this.settings.display();
+						this.settingsTab.display();
                     });
                 // @ts-ignore
                 cb.containerEl.addClass("templater_search");
@@ -66,7 +66,7 @@ export class UpdateFolder extends Modal {
                 cb.setButtonText("Update");
                 cb.setClass("rp-button");
                 cb.onClick( () =>{
-                    new UpdateSubFolder(this.app,this.plugin,this.folder.subFolderArrangement,this.folder.folderName,this.settings).open()
+                    new UpdateSubFolder(this.app,this.plugin,this.folder.subFolderArrangement,this.folder.folderName,this.settingsTab).open()
                 } )
             } )
         if(!this.folder.haveSubFolders){
@@ -99,7 +99,9 @@ export class UpdateFolder extends Modal {
         let draftConditionsTab =new Setting(contentEl).setName("Update draft conditions.").addButton((btn) => {
             btn.setButtonText("Update").onClick( () =>{
                 // Make a modal that talks about the draft settings
-                new UpdateDraftSettings(this.app,this.folder.draftConditions,this.settings,this.folder.folderName).open()
+                console.log(this.folder.draftConditions)
+                
+                new UpdateDraftSettings(this.app,this.folder.draftConditions,this.settingsTab,this.folder.folderName).open()
             } )
             btn.setClass("rp-button")
         })
@@ -119,7 +121,7 @@ export class UpdateFolder extends Modal {
 
         this.folder.folderName = new_folder;
 		this.plugin.saveSettings();
-		this.settings.display();
+		this.settingsTab.display();
 	}
 
 
@@ -131,7 +133,7 @@ export class UpdateFolder extends Modal {
 			cb.setButtonText("Delete").onClick( () =>{
 				this.plugin.settings.folders = this.plugin.settings.folders.filter(fold => fold.id != this.folder.id)
 				this.plugin.saveSettings()
-				this.settings.display();
+				this.settingsTab.display();
 				this.close()
 			} ) 
             cb.setClass("rp-delete");

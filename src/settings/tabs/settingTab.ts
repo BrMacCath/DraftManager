@@ -4,13 +4,13 @@ import { FolderSuggest } from "../suggesters/folderSuggester";
 import { v4 } from "uuid";
 import { UpdateFolder } from "../modals/updateFolder";
 import { UpdateDraftCons } from "../functions/updateDraftCons";
+import draftConditions from "types/choices/draftConditions";
 export class DraftTab extends PluginSettingTab {
 	plugin: ResearchPlugin;
 	constructor(app: App, plugin: ResearchPlugin) {
 		super(app, plugin);
 		this.plugin = plugin;
 	}
-	
 
 	display(): void {
 		const {containerEl} = this;
@@ -61,17 +61,15 @@ export class DraftTab extends PluginSettingTab {
 				return;
 			}
 		}
+		// This is assigning not just the values but the memory too.
+		const folderCopy:draftConditions = this.plugin.settings.defaultFolder;
 		this.plugin.settings.folders.push({folderName:new_folder,id:v4(),haveSubFolders:true,haveDrafts:true,bibliography: "",draftConditions:this.plugin.settings.defaultFolder,subFolderArrangement:{excludeFolders:[],folderArrangement:[]}});
 		this.plugin.saveSettings();
 		this.display();
 	}
 
 	sortFolderOrder():void{
-		console.log(this.plugin.settings.folders)
 		this.plugin.settings.folders.sort( (a,b) => a.folderName.localeCompare(b.folderName));
-		console.log(this.plugin.settings.folders)
 		this.plugin.saveSettings()
 	}
-
-
 }

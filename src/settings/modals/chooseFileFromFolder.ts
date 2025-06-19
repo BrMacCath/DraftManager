@@ -33,7 +33,7 @@ export class chooseFileFromFolder extends Modal{
                 cb.containerEl.addClass("templater_search");
         }).addButton((btn)=>{
             btn.setButtonText("Folder Button").onClick(() =>{
-                createDraft(fileName)
+                createDraft(fileName,"","")
             }  )
             btn.setClass("rp-button");
         })
