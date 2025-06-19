@@ -35,7 +35,6 @@ export function createFromDraft(draft:string,paragraphSeparator:string,oldDraftN
             splitParagraph.push([temp[0].trim(),paraContent]);
         }  )
     }
-    console.log("Got through the separation of content")
     // Complete Draft
     let completeDraft:string[] = []
     let newDraft:string[] = []

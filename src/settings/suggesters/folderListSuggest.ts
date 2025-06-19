@@ -15,7 +15,6 @@ export class folderListSuggest extends TextInputSuggest<FolderArrangement> {
         //this.app.vault.getFolderByPath
         const folders: FolderArrangement[] = [];
         const lowerCaseInputStr = inputStr.toLowerCase();
-        console.log("Folder")
         abstractFiles.forEach((folder: FolderArrangement) => {
             if (
                 folder.folderName.toLowerCase().contains(lowerCaseInputStr)

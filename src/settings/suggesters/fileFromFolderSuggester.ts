@@ -14,16 +14,12 @@ export class FileFromFolderSuggest extends TextInputSuggest<TFile> {
     }
 
     getSuggestions(inputStr: string): TFile[] {
-        let test = this.app.vault.getFileByPath(this.folder);
         const abstractFiles = this.app.vault.getAllLoadedFiles().filter((file: TAbstractFile) => {
                 return file instanceof TFile &&
                 file.parent?.path == this.folder
             })
         //this.app.vault.getFolderByPath
         const folders: TFile[] = [];
-        const lowerCaseInputStr = inputStr.toLowerCase();
-        console.log(this.folder);
-        console.log(abstractFiles);
         abstractFiles.forEach((file: TAbstractFile) => {
             if (
                 file instanceof TFile &&
@@ -31,7 +27,6 @@ export class FileFromFolderSuggest extends TextInputSuggest<TFile> {
             ) {
                 folders.push(file);
             }
-            console.log(folders)
         });
         if (folders.length == 0){
             new Notice("There are no files to create a draft from in this folder.")

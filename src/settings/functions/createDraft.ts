@@ -18,9 +18,6 @@ export default async function createDraft(fileName:string,draftNumIndicator:stri
     // If it is the first situation
     const titleInd = content.indexOf(previousDraftTitle);
     const sections = content.slice(titleInd + previousDraftTitle.length);
-    console.log(fileName)
-    console.log("Within the draft function")
-    console.log(oldDraftNum)
     const topicFronmatterSeparator = "*---*"
     const haveTopicFrontMatter = true;
     const rewriteLineSignfier =">";
@@ -37,19 +34,5 @@ export default async function createDraft(fileName:string,draftNumIndicator:stri
         const updatedFile = frontMatter + updatedContent;
         await this.app.vault.modify(fileTFile,updatedFile);
     }
-
-    // Separate paragraphs into lines
-    // splitContent function here
-
-    // Create finished version of the draft
-    // For each paragraph sentences .join(". ")
-
-    // For each paragraph do .join("\n\n" )
-
-    // Create a new draft with the sentences. 
-    // Will need to check if add comments is there
-    // New line joiner ="\n"
-    // If has comments new line joiner += this.commentLineSignifier +" \n"
-    // New line joiner += this.new line +" \n"
 
 }
