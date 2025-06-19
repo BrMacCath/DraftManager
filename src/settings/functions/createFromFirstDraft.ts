@@ -5,11 +5,10 @@ import { Notice } from "obsidian";
 // Second it should add onto the 
 
 export function createFromFirstDraft(draft:string,paragraphSeparator:string, topicFrontMatterSeparator:string,haveTopicFrontMatter:Boolean,rewriteLineNotifier:string,commentLineSignifier:string=""){
-    const newLineSeperator = commentLineSignifier + " \n" + rewriteLineNotifier +" \n\n";
+    const newLineSeperator = "\n"+commentLineSignifier + " \n" + rewriteLineNotifier +" \n\n";
     let paragraphs = draft.split(paragraphSeparator);
     let splitParagraph: [string,string[]][] = [];
     if( !haveTopicFrontMatter){
-
         paragraphs.forEach((paragraph) =>{
             const paraContent = paragraph.split(".");
             splitParagraph.push(["",paraContent])
@@ -22,37 +21,42 @@ export function createFromFirstDraft(draft:string,paragraphSeparator:string, top
                 new Notice("Something has gone wrong. Length is " + temp.length);
             }
             const paraContent = temp[1].split(".");
-            //const tempPara = paraContent.join(newLineSeperator) + newLineSeperator
-            //paragaraphsEnd.push(temp[0]+ "\n" +topicFrontMatterSeparator+ tempPara)
+
             splitParagraph.push([temp[0],paraContent])
         }  )
     }
-
+    console.log("Got through the separation of content")
     // Complete Draft
     let completeDraft:string[] = []
     let newDraft:string[] = []
     splitParagraph.forEach( (content)=>{
-        const sentences = content[1];
+        const sentences = content[1].filter((t) =>{
+            return t.trim()!=""
+        } );
         completeDraft.push(sentences.join(".") +".") 
     }  )
 
     // Make new draft based on the topic front matter.
     if(!haveTopicFrontMatter){
         splitParagraph.forEach((content)=>{
-            const sentences = content[1]
+            const sentences = content[1].filter((t) =>{t.trim()!=""})
             newDraft.push(sentences.join(newLineSeperator)+newLineSeperator )
         })
     }
     else{
         splitParagraph.forEach((content)=>{
             const topicFrontMatter = content[0];
-            const sentences = content[1]
+            console.log(content[1])
+            const sentences = content[1].filter((t) =>{
+                return t.trim()!="";
+             });
             newDraft.push(topicFrontMatter+ topicFrontMatterSeparator +sentences.join(newLineSeperator)+newLineSeperator )
         })
     }
     // New Draft
-    draft += "\n\n## Complete First Draft\n\n" + completeDraft.join("\n\n");
-    draft += "# Second Draft\n\n" + newDraft.join(paragraphSeparator);
-    console.log(draft)
-
+    let newContent = "";
+    newContent += "\n\n## Complete First Draft\n\n" + completeDraft.join("\n\n")+"\n\n";
+    newContent += "# Second Draft\n\n" + newDraft.join(paragraphSeparator);
+    draft += newContent;
+    return draft;
 }
