@@ -3,8 +3,12 @@ import draftStyle from "./draftStyle";
 export default interface draftConditions{
     draftStyle:draftStyle;
     haveComments: boolean;
-    commentNotifier:string;
-    rewriteLineNotifier:string;
-    draftStorage: string,
-	draftFileIndicator: string
+    commentSignifier:string;
+    paragraphSeparator:string;
+    rewriteLineSignifier:string;
+    haveTopicFrontMatter:boolean;
+    topicFrontMatterSeparator:string;
+    draftNumSignifier: string;
+    draftStorage: string;
+	draftFileIndicator: string;
 }

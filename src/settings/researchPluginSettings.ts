@@ -16,6 +16,6 @@ export const DEFAULT_SETTINGS: ResearchPluginSettings = {
 	user_scripts_folder:"",
 	folders: [],
 	defaultDraft: "Peterson",
-	defaultFolder: {draftStyle:{name:"Peterson"},haveComments:true, commentNotifier:"-",rewriteLineNotifier:">",
-			draftStorage: "Drafts",	draftFileIndicator:"DRAFTS "}
+	defaultFolder: {draftStyle:{name:"Peterson"},haveComments:true, commentSignifier:"*",rewriteLineSignifier:">",
+			draftStorage: "Drafts",	draftFileIndicator:"DRAFTS ",haveTopicFrontMatter: true,topicFrontMatterSeparator:"*---*",paragraphSeparator:"+---+",draftNumSignifier:"draftNum"}
 }

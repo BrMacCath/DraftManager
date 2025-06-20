@@ -3,15 +3,18 @@ import ResearchPluginSettings from "../researchPluginSettings";
 import ResearchPlugin from "src/main";
 import { FileFromFolderSuggest } from "../suggesters/fileFromFolderSuggester";
 import createDraft from "../functions/createDraft";
+import draftConditions from "types/choices/draftConditions";
 export class chooseFileFromFolder extends Modal{
     settings: ResearchPluginSettings;
     plugin: ResearchPlugin;
     folder: string;
-    constructor(app: App,settings:ResearchPluginSettings,plugin:ResearchPlugin,folder:string) {
+    draftConditions:draftConditions;
+    constructor(app: App,settings:ResearchPluginSettings,plugin:ResearchPlugin,folder:string,draftConditions:draftConditions) {
         super(app);
         this.settings=settings;
         this.plugin = plugin;
         this.folder = folder;
+        this.draftConditions=draftConditions;
     }
     onOpen(): void {
         const containerEl=this.modalEl;
@@ -33,7 +36,16 @@ export class chooseFileFromFolder extends Modal{
                 cb.containerEl.addClass("templater_search");
         }).addButton((btn)=>{
             btn.setButtonText("Folder Button").onClick(() =>{
-                createDraft(fileName,"draftNum","+---+",this.app)
+                createDraft(fileName,this.draftConditions,this.app);
+                const leaf =this.app.workspace.getLeaf(false);
+                const tFileLeaf = this.app.vault.getFileByPath(fileName)
+                if( tFileLeaf == null ){
+
+                }
+                else{
+                    leaf.openFile(tFileLeaf);
+                    this.close();
+                }
             }  )
             btn.setClass("rp-button");
         })

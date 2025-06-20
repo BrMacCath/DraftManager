@@ -4,13 +4,19 @@ import { updateFrontmatter } from "./updateFrontmatter";
 import { stringifyNumber } from "./stringifyNumber";
 import { createFromFirstDraft } from "./createFromFirstDraft";
 import { createFromDraft } from "./createFromDraft";
-export default async function createDraft(fileName:string,draftNumIndicator:string, paragraphSeperator:string,app:App):Promise<void>{
+import draftConditions from "types/choices/draftConditions";
+export default async function createDraft(fileName:string,draftConditions:draftConditions,app:App):Promise<void>{
     const fileTFile:TFile = this.app.vault.getFileByPath(fileName)
     let fileTest = await this.app.vault.read(fileTFile);
     let [tempFrontMatter,content] = splitContent(fileTest);
-
+    const draftNumSignifier = draftConditions.draftNumSignifier;
+    const paragraphSeparator = draftConditions.paragraphSeparator;
+    const topicFrontMatterSeparator = draftConditions.topicFrontMatterSeparator;
+    const haveTopicFrontMatter = draftConditions.haveTopicFrontMatter;
+    const rewriteLineSignfier = draftConditions.rewriteLineSignifier;
+    const commentLineSignifier =  draftConditions.commentSignifier;
     // Update frontmatter through adding a new draft number
-    let [frontMatter,oldDraftNum] = updateFrontmatter(tempFrontMatter, draftNumIndicator)
+    let [frontMatter,oldDraftNum] = updateFrontmatter(tempFrontMatter, draftNumSignifier)
     // Isolate draft
     const previousDraftTitle = stringifyNumber(oldDraftNum);
     const newDraftTitle = stringifyNumber(oldDraftNum+1); 
@@ -18,21 +24,19 @@ export default async function createDraft(fileName:string,draftNumIndicator:stri
     // If it is the first situation
     const titleInd = content.indexOf(previousDraftTitle);
     const sections = content.slice(titleInd + previousDraftTitle.length);
-    const topicFronmatterSeparator = "*---*"
-    const haveTopicFrontMatter = true;
-    const rewriteLineSignfier =">";
-    const commentLineSignifier = "*";
+    
+    
 
     if (oldDraftNum == 1){
         // Here we add the new title for the 
-        const updatedContent = createFromFirstDraft(content,paragraphSeperator,topicFronmatterSeparator,haveTopicFrontMatter,rewriteLineSignfier,commentLineSignifier);
+        const updatedContent = createFromFirstDraft(content,paragraphSeparator,topicFrontMatterSeparator,haveTopicFrontMatter,rewriteLineSignfier,commentLineSignifier);
         const updatedFile = frontMatter + updatedContent;
-        await this.app.vault.modify(fileTFile,updatedFile);
+        await app.vault.modify(fileTFile,updatedFile);
     }
     else{
-        const updatedContent = createFromDraft(content,paragraphSeperator,oldDraftNum,topicFronmatterSeparator,haveTopicFrontMatter,rewriteLineSignfier,commentLineSignifier);
+        const updatedContent = createFromDraft(content,paragraphSeparator,oldDraftNum,topicFrontMatterSeparator,haveTopicFrontMatter,rewriteLineSignfier,commentLineSignifier);
         const updatedFile = frontMatter + updatedContent;
-        await this.app.vault.modify(fileTFile,updatedFile);
+        await app.vault.modify(fileTFile,updatedFile);
     }
 
 }

@@ -3,6 +3,7 @@ import { folderListSuggest } from "../suggesters/folderListSuggest";
 import ResearchPluginSettings from "../researchPluginSettings";
 import ResearchPlugin from "src/main";
 import { chooseSubFolder } from "./chooseSubfolder";
+import draftConditions from "types/choices/draftConditions";
 export class chooseFolder extends Modal{
     settings: ResearchPluginSettings;
     plugin: ResearchPlugin
@@ -31,7 +32,13 @@ export class chooseFolder extends Modal{
                 cb.containerEl.addClass("templater_search");
         }).addButton((btn)=>{
             btn.setButtonText("Folder Button").onClick(() =>{
-                new chooseSubFolder(this.app,this.settings,this.plugin,folderTextName).open()
+                let folderDraftConditions:draftConditions = this.settings.folders[0].draftConditions;
+                for (let i =0; i < this.settings.folders.length;i++){
+                    if(this.settings.folders[i].folderName == folderTextName){
+                        folderDraftConditions = this.settings.folders[i].draftConditions;
+                    }
+                }
+                new chooseSubFolder(this.app,this.settings,this.plugin,folderTextName,folderDraftConditions).open()
                 this.close()
             }  )
             btn.setClass("rp-button");

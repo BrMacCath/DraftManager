@@ -2,17 +2,19 @@ import {App, Modal,Setting } from "obsidian"
 import ResearchPluginSettings from "../researchPluginSettings";
 import ResearchPlugin from "src/main";
 import { SubFolderSuggest } from "../suggesters/subFolderSuggester";
-import { createDraftInFolder } from "./createDraftInFolder";
 import { chooseFileFromFolder } from "./chooseFileFromFolder";
+import draftConditions from "types/choices/draftConditions";
 export class chooseSubFolder extends Modal{
     settings: ResearchPluginSettings;
     plugin: ResearchPlugin;
     folder: string;
-    constructor(app: App,settings:ResearchPluginSettings,plugin:ResearchPlugin,folder:string) {
+    draftConditions:draftConditions
+    constructor(app: App,settings:ResearchPluginSettings,plugin:ResearchPlugin,folder:string,draftConditions:draftConditions) {
         super(app);
         this.settings=settings;
         this.plugin = plugin;
         this.folder = folder;
+        this.draftConditions= draftConditions;
     }
     onOpen(): void {
         const containerEl=this.modalEl;
@@ -35,7 +37,7 @@ export class chooseSubFolder extends Modal{
         }).addButton((btn)=>{
             btn.setButtonText("Folder Button").onClick(() =>{
                 // This will need to be figured out later.
-                new chooseFileFromFolder(this.app,this.settings,this.plugin,folderTextName).open()
+                new chooseFileFromFolder(this.app,this.settings,this.plugin,folderTextName,this.draftConditions).open()
                 this.close()
             }  )
             btn.setClass("rp-button");

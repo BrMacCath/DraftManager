@@ -20,8 +20,8 @@ new Setting(containerEl).setName("Draft Style")
     
     new Setting(containerEl).setName("New line signifier")
     .setDesc("How to indicate a new line in your draft").addText((cb) =>{
-            cb.setValue(draftConditions.rewriteLineNotifier).onChange(async(value)=>{
-                draftConditions.rewriteLineNotifier = value;
+            cb.setValue(draftConditions.rewriteLineSignifier).onChange(async(value)=>{
+                draftConditions.rewriteLineSignifier = value;
                 await settingsTab.plugin.saveSettings();
             })
         } )
@@ -39,8 +39,8 @@ new Setting(containerEl).setName("Draft Style")
     let commentSetting =new Setting(containerEl);
     commentSetting.setName("Comment Signifier")
     .setDesc("How to indicate a comment in your draft").addText((cb) =>{
-            cb.setValue(draftConditions.commentNotifier).onChange(async(value)=>{
-                draftConditions.commentNotifier = value;
+            cb.setValue(draftConditions.commentSignifier).onChange(async(value)=>{
+                draftConditions.commentSignifier = value;
                 await settingsTab.plugin.saveSettings();
             })
             
