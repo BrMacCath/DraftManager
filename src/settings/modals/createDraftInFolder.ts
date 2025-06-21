@@ -1,16 +1,19 @@
 import {App, Modal,Setting } from "obsidian"
-import ResearchPluginSettings from "../researchPluginSettings";
+import type ResearchPluginSettings from "../researchPluginSettings";
 import ResearchPlugin from "src/main";
 import createDraft from "../functions/createDraft";
+import type draftConditions from "types/choices/draftConditions";
 export class createDraftInFolder extends Modal{
     settings: ResearchPluginSettings;
     plugin: ResearchPlugin;
     folder: string;
-    constructor(app: App,settings:ResearchPluginSettings,plugin:ResearchPlugin,folder:string) {
+    draftConditions:draftConditions;
+    constructor(app: App,settings:ResearchPluginSettings,plugin:ResearchPlugin,folder:string,draftConditions:draftConditions) {
         super(app);
         this.settings=settings;
         this.plugin = plugin;
         this.folder = folder;
+        this.draftConditions=draftConditions;
     }
     onOpen(): void {
         const containerEl=this.modalEl;
@@ -25,7 +28,7 @@ export class createDraftInFolder extends Modal{
         })
         .addButton((btn)=>{
             btn.setButtonText("Create Draft").onClick(() =>{
-                createDraft(this.folder,"","");
+                createDraft(this.folder,this.draftConditions,this.app);
             }  )
             btn.setClass("rp-button");
         })

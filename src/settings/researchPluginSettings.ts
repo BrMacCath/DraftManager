@@ -1,5 +1,5 @@
-import FolderArrangement from "../../types/choices/folderArrangement";
-import draftConditions from "types/choices/draftConditions";
+import type FolderArrangement from "../../types/choices/folderArrangement";
+import type draftConditions from "types/choices/draftConditions";
 
 export default interface ResearchPluginSettings {
 	draftFolders:string[];

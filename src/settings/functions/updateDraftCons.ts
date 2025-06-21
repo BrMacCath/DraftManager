@@ -1,5 +1,5 @@
 import { Setting } from "obsidian"
-import draftConditions from "types/choices/draftConditions";
+import type draftConditions from "types/choices/draftConditions";
 import { DraftTab } from "../tabs/settingTab";
 import { draftOptions } from "types/choices/draftOptions";
 export function UpdateDraftCons(draftConditions:draftConditions,settingsTab:DraftTab,containerEl:HTMLElement,folder:string){

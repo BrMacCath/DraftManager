@@ -1,9 +1,9 @@
 import {App, Modal,Setting } from "obsidian"
-import ResearchPluginSettings from "../researchPluginSettings";
+import type ResearchPluginSettings from "../researchPluginSettings";
 import ResearchPlugin from "src/main";
 import { SubFolderSuggest } from "../suggesters/subFolderSuggester";
 import { chooseFileFromFolder } from "./chooseFileFromFolder";
-import draftConditions from "types/choices/draftConditions";
+import type draftConditions from "types/choices/draftConditions";
 export class chooseSubFolder extends Modal{
     settings: ResearchPluginSettings;
     plugin: ResearchPlugin;

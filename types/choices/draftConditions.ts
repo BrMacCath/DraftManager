@@ -1,4 +1,4 @@
-import draftStyle from "./draftStyle";
+import type draftStyle from "./draftStyle";
 
 export default interface draftConditions{
     draftStyle:draftStyle;

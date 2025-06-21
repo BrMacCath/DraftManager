@@ -1,8 +1,9 @@
 import { App, Modal, Setting } from "obsidian";
 import ResearchPlugin from "src/main";
 import { DraftTab } from "../tabs/settingTab";
-import subFolderArrangement from "types/choices/subFolderArrangement";
+import type subFolderArrangement from "types/choices/subFolderArrangement";
 import { SubFolderSuggest } from "../suggesters/subFolderSuggester";
+//import {faBars} from "@fortawesome/free-solid-svg-icons";
 
 export class UpdateSubFolder extends Modal {
     plugin: ResearchPlugin;

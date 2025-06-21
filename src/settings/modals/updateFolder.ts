@@ -1,5 +1,5 @@
 import ResearchPlugin from "src/main";
-import FolderArrangement from "types/choices/folderArrangement";
+import type FolderArrangement from "types/choices/folderArrangement";
 import { DraftTab } from "../tabs/settingTab";
 import { Modal,App,Setting,Notice,SearchComponent } from "obsidian";
 import { FolderSuggest } from "../suggesters/folderSuggester";

@@ -1,6 +1,6 @@
 // Organise this.
-import draftConditions from "./draftConditions";
-import subFolderArrangement from "./subFolderArrangement";
+import type draftConditions from "./draftConditions";
+import type subFolderArrangement from "./subFolderArrangement";
 export default interface FolderArrangement {
 	folderName: string;
 	id: string;

@@ -1,6 +1,6 @@
 import { App} from "obsidian";
 import { TextInputSuggest } from "./suggest";
-import FolderArrangement from "types/choices/folderArrangement";
+import type FolderArrangement from "types/choices/folderArrangement";
 
 export class folderListSuggest extends TextInputSuggest<FolderArrangement> {
     sliceLength:number;
