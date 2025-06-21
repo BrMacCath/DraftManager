@@ -4,9 +4,12 @@ import { DraftTab } from "../tabs/settingTab";
 import type subFolderArrangement from "types/choices/subFolderArrangement";
 import { SubFolderSuggest } from "../suggesters/subFolderSuggester";
 //import {faBars} from "@fortawesome/free-solid-svg-icons";
+import SvelteImportStuff from "../svelteTest/svelteImportStuff.svelte";
+import { mount,unmount } from "svelte";
 
 export class UpdateSubFolder extends Modal {
     plugin: ResearchPlugin;
+    svelteTest:ReturnType<typeof SvelteImportStuff> | undefined;
     settingsTab:DraftTab;
     subFolder:subFolderArrangement;
     folderName:string;
@@ -37,10 +40,15 @@ export class UpdateSubFolder extends Modal {
                 // @ts-ignore
                 cb.containerEl.addClass("templater_search");
         });
+        this.svelteTest = mount(SvelteImportStuff,{target:this.contentEl})
     }
 
     onClose() {
-		const {contentEl} = this;
+		if(this.svelteTest){
+            unmount(this.svelteTest);
+        }
+        const {contentEl} = this;
+        
 		contentEl.empty();
 	}
 }
