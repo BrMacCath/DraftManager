@@ -42,6 +42,9 @@ export class UpdateSubFolder extends Modal {
         });
         this.svelteTest = mount(SvelteImportStuff, { target:this.contentEl,props:{tabs:10} }  )
         this.svelteTest = mount(SvelteImportStuff, { target:this.contentEl,props:{tabs:20} }  )
+        
+
+
     }
 
     onClose() {

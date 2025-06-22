@@ -1,6 +1,6 @@
 {
 	"name": "Personal Research Plugin",
-	"version": "0.0.7",
+	"version": "0.0.8",
 	"description": "Personal Research Plugin. It will have compatibility with latex and self testing plugin.",
 	"main": "src/main.js",
 	"scripts": {
