@@ -40,8 +40,9 @@ export class UpdateSubFolder extends Modal {
                 // @ts-ignore
                 cb.containerEl.addClass("templater_search");
         });
-        this.svelteTest = mount(SvelteImportStuff, { target:this.contentEl,props:{tabs:10} }  )
-        this.svelteTest = mount(SvelteImportStuff, { target:this.contentEl,props:{tabs:20} }  )
+        const fold = this.app.vault.getAbstractFileByPath(this.folderName);
+        this.svelteTest = mount(SvelteImportStuff, { target:this.contentEl,props:{tabs:10, folder:fold} }  )
+        //this.svelteTest = mount(SvelteImportStuff, { target:this.contentEl,props:{tabs:20} }  )
         
 
 

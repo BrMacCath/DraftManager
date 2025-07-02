@@ -1,5 +1,5 @@
-import { Plugin} from 'obsidian';
-import ResearchPluginSettings from 'src/settings/researchPluginSettings';
+import { Notice, Plugin} from 'obsidian';
+import type ResearchPluginSettings from 'src/settings/researchPluginSettings';
 import { DEFAULT_SETTINGS } from 'src/settings/researchPluginSettings';
 import { DraftTab } from './settings/tabs/settingTab';
 import { chooseFolder } from './settings/modals/chooseFolder';
@@ -16,10 +16,11 @@ export default class ResearchPlugin extends Plugin {
 		this.addSettingTab(new DraftTab(this.app, this));
 
 		// When registering intervals, this function will automatically clear the interval when the plugin is disabled.
-		this.registerInterval(window.setInterval(() => console.log('setInterval'), 5 * 60 * 1000));
 		this.addCommand({id:"New Draft",name:"New Draft",callback: async ()=>{
 			new chooseFolder(this.app,this.settings,this).open()
 		}})
+		// This recognises that the vault was modified.
+		//this.registerEvent(this.app.vault.on("modify",() =>{new Notice("This worked")}))
 	}
 
 	onunload() {
