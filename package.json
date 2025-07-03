@@ -33,6 +33,7 @@
 		"@microsoft/tsdoc": "^0.15.1",
 		"fortawesome": "^0.0.1-security",
 		"popper.js": "^1.16.1",
+		"svelox": "^0.0.3",
 		"svelte-awesome": "^3.3.5",
 		"uuid": "^11.1.0"
 	}
