@@ -1,10 +1,12 @@
 import ResearchPlugin from "src/main";
 import type FolderArrangement from "types/choices/folderArrangement";
 import { DraftTab } from "../tabs/settingTab";
-import { Modal,App,Setting,Notice,SearchComponent } from "obsidian";
+import { Modal,App,Setting,Notice,SearchComponent, Vault } from "obsidian";
 import { FolderSuggest } from "../suggesters/folderSuggester";
 import { UpdateDraftSettings } from "./updateDraftSettings";
 import { UpdateSubFolder } from "./updateSubfolder";
+import { UpdateExperiment } from "./updateExperimentType";
+import { fillOutFolderArrangement } from "../functions/SubFolderArrangement/fillOutFolderArrangement";
 
 export class UpdateFolder extends Modal {
 	plugin: ResearchPlugin;
@@ -67,6 +69,18 @@ export class UpdateFolder extends Modal {
                 cb.setClass("rp-button");
                 cb.onClick( () =>{
                     new UpdateSubFolder(this.app,this.plugin,this.folder.subFolderArrangement,this.folder.folderName,this.settingsTab).open()
+                } )
+            } )
+        let expSet = new Setting(contentEl);
+        expSet.setName("Update Subfolders Experiment")
+            .setDesc("Change Subfolder Conditions")
+            .addButton((cb) => {
+                cb.setButtonText("Update");
+                cb.setClass("rp-button");
+                cb.onClick( () =>{
+                    const vault:Vault = new Vault;
+                    console.log(vault.getFolderByPath("Excalidraw"));
+                    new UpdateExperiment(this.app,this.plugin,this.folder.subFolderArrangement,this.folder.folderName,this.settingsTab,fillOutFolderArrangement(vault.getFolderByPath("Miscellaneous"))).open();
                 } )
             } )
         if(!this.folder.haveSubFolders){

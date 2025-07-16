@@ -1,6 +1,10 @@
+import type ExperimentType from "types/choices/experimentType";
 import type FolderArrangement from "../../types/choices/folderArrangement";
 import type draftConditions from "types/choices/draftConditions";
+import { Vault } from "obsidian";
+import { fillOutFolderArrangement } from "./functions/SubFolderArrangement/fillOutFolderArrangement";
 
+const vault:Vault = new Vault;
 export default interface ResearchPluginSettings {
 	draftFolders:string[];
 	templates_folder:string;
@@ -8,6 +12,7 @@ export default interface ResearchPluginSettings {
 	folders: FolderArrangement[];
 	defaultDraft: string;
 	defaultFolder:draftConditions;
+	//experiment: ExperimentType;
 }
 
 export const DEFAULT_SETTINGS: ResearchPluginSettings = {
@@ -17,5 +22,6 @@ export const DEFAULT_SETTINGS: ResearchPluginSettings = {
 	folders: [],
 	defaultDraft: "Peterson",
 	defaultFolder: {draftStyle:{name:"Peterson"},haveComments:true, commentSignifier:"*",rewriteLineSignifier:">",
-			draftStorage: "Drafts",	draftFileIndicator:"DRAFTS ",haveTopicFrontMatter: false,topicFrontMatterSeparator:"*---*",paragraphSeparator:"+---+",draftNumSignifier:"draftNum"}
+			draftStorage: "Drafts",	draftFileIndicator:"DRAFTS ",haveTopicFrontMatter: false,topicFrontMatterSeparator:"*---*",paragraphSeparator:"+---+",draftNumSignifier:"draftNum"},
+	//experiment: fillOutFolderArrangement(vault.getFolderByPath("Miscellaneous"))
 }

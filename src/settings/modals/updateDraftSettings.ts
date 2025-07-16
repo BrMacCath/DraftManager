@@ -1,7 +1,7 @@
 import { Modal,App } from "obsidian";
 import type draftConditions from "types/choices/draftConditions";
 import { DraftTab } from "../tabs/settingTab";
-import { UpdateDraftCons } from "../functions/updateDraftCons";
+import { UpdateDraftCons } from "../functions/Drafts/updateDraftCons";
 export class UpdateDraftSettings extends Modal{
     draftConditions:draftConditions;
     settingsTab: DraftTab;

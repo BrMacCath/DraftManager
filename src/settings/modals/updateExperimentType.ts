@@ -9,19 +9,21 @@ import { mount,unmount } from "svelte";
 import SvelteExperimentData from "../svelteTest/svelteExperimentData.svelte";
 import type ExperimentType from "types/choices/experimentType";
 
-export class UpdateSubFolder extends Modal {
+export class UpdateExperiment extends Modal {
     plugin: ResearchPlugin;
     svelteTest:ReturnType<typeof SvelteImportStuff> | undefined;
     experimentSvelteTest:ReturnType<typeof SvelteExperimentData>|undefined;
     settingsTab:DraftTab;
     subFolder:subFolderArrangement;
     folderName:string;
-    constructor(app: App,plugin: ResearchPlugin,subFolder:subFolderArrangement,folderName:string,settingsTab:DraftTab) {
+    check: ExperimentType;
+    constructor(app: App,plugin: ResearchPlugin,subFolder:subFolderArrangement,folderName:string,settingsTab:DraftTab,check:ExperimentType) {
             super(app);
             this.plugin = plugin;
             this.subFolder = subFolder;
             this.folderName=folderName;
             this.settingsTab=settingsTab;
+            this.check = check;
     }
 
     onOpen(): void {
@@ -44,8 +46,10 @@ export class UpdateSubFolder extends Modal {
                 cb.containerEl.addClass("templater_search");
         });
         const fold = this.app.vault.getAbstractFileByPath(this.folderName);
-        this.svelteTest = mount(SvelteImportStuff, { target:this.contentEl,props:{tabs:10, folder:fold} }  )
-    
+        //this.svelteTest = mount(SvelteImportStuff, { target:this.contentEl,props:{tabs:10, folder:fold} }  )
+        //this.svelteTest = mount(SvelteImportStuff, { target:this.contentEl,props:{tabs:20} }  )
+        this.experimentSvelteTest = mount(SvelteExperimentData,{target:this.contentEl,props:{tabs:10, folder:this.check}})
+
 
     }
 

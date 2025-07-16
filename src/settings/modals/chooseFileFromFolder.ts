@@ -2,7 +2,7 @@ import {App, Modal,Setting } from "obsidian"
 import type ResearchPluginSettings from "../researchPluginSettings";
 import ResearchPlugin from "src/main";
 import { FileFromFolderSuggest } from "../suggesters/fileFromFolderSuggester";
-import createDraft from "../functions/createDraft";
+import createDraft from "../functions/Drafts/createDraft";
 import type draftConditions from "types/choices/draftConditions";
 export class chooseFileFromFolder extends Modal{
     settings: ResearchPluginSettings;

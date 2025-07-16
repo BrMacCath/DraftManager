@@ -1,7 +1,7 @@
 import {App, Modal,Setting } from "obsidian"
 import type ResearchPluginSettings from "../researchPluginSettings";
 import ResearchPlugin from "src/main";
-import createDraft from "../functions/createDraft";
+import createDraft from "../functions/Drafts/createDraft";
 import type draftConditions from "types/choices/draftConditions";
 export class createDraftInFolder extends Modal{
     settings: ResearchPluginSettings;

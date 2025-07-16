@@ -3,7 +3,7 @@ import type ResearchPlugin from "src/main";
 import { FolderSuggest } from "../suggesters/folderSuggester";
 import { v4 } from "uuid";
 import { UpdateFolder } from "../modals/updateFolder";
-import { UpdateDraftCons } from "../functions/updateDraftCons";
+import { UpdateDraftCons } from "../functions/Drafts/updateDraftCons";
 import type draftConditions from "types/choices/draftConditions";
 export class DraftTab extends PluginSettingTab {
 	plugin: ResearchPlugin;
