@@ -13,6 +13,7 @@ export default interface ResearchPluginSettings {
 	defaultDraft: string;
 	defaultFolder:draftConditions;
 	//experiment: ExperimentType;
+	citationKey: string;
 }
 
 export const DEFAULT_SETTINGS: ResearchPluginSettings = {
@@ -23,5 +24,6 @@ export const DEFAULT_SETTINGS: ResearchPluginSettings = {
 	defaultDraft: "Peterson",
 	defaultFolder: {draftStyle:{name:"Peterson"},haveComments:true, commentSignifier:"*",rewriteLineSignifier:">",
 			draftStorage: "Drafts",	draftFileIndicator:"DRAFTS ",haveTopicFrontMatter: false,topicFrontMatterSeparator:"*---*",paragraphSeparator:"+---+",draftNumSignifier:"draftNum"},
-	//experiment: fillOutFolderArrangement(vault.getFolderByPath("Miscellaneous"))
+	//experiment: fillOutFolderArrangement(vault.getFolderByPath("Miscellaneous")),
+	citationKey: "\cite{"
 }

@@ -79,8 +79,10 @@ export class UpdateFolder extends Modal {
                 cb.setClass("rp-button");
                 cb.onClick( () =>{
                     const vault:Vault = new Vault;
-                    console.log(vault.getFolderByPath("Excalidraw"));
-                    new UpdateExperiment(this.app,this.plugin,this.folder.subFolderArrangement,this.folder.folderName,this.settingsTab,fillOutFolderArrangement(vault.getFolderByPath("Miscellaneous"))).open();
+                    console.log(this.app.vault.getFolderByPath("Excalidraw"));
+                    console.log(vault.getAbstractFileByPath("Excalidraw"));
+                    //console.log(vault)
+                    new UpdateExperiment(this.app,this.plugin,this.folder.subFolderArrangement,this.folder.folderName,this.settingsTab,fillOutFolderArrangement(this.app.vault.getFolderByPath("Miscellaneous"))).open();
                 } )
             } )
         if(!this.folder.haveSubFolders){

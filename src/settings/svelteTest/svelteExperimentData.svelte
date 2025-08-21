@@ -17,7 +17,6 @@
 <div class="Test1" >
     <Icon data={faFolder} />{folder.folder.name}
     <!-- {mount(SvelteImportStuff)} -->
-     <div class={folder.folder.name}>Test</div>
 
 </div>
 {#each folder.folderArrangement as fold}
