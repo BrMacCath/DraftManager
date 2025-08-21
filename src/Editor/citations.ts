@@ -9,14 +9,16 @@ import {
 import ResearchPlugin from 'src/main';
 
 export default class SuggestionIcon extends EditorSuggest<string> {
+  defaultArray:Array<string>
   constructor(
     app: App,
     public plugin: ResearchPlugin,
   ) {
     super(app);
+    this.defaultArray = ["test", "abc", "Get that here blah"];
   }
 
-  onTrigger(cursor: EditorPosition, editor: Editor): EditorSuggestTriggerInfo|null {
+  onTrigger(cursor: EditorPosition, editor: Editor): EditorSuggestTriggerInfo {
     // Isolate shortcode starting position closest to the cursor.
     const shortcodeStart = editor
       .getLine(cursor.line)
@@ -44,7 +46,7 @@ export default class SuggestionIcon extends EditorSuggest<string> {
 
     const startingIndex = editor
       .getLine(cursor.line)
-      .indexOf(regexOngoingShortcode[0]);
+      .indexOf(regexOngoingShortcode[0])+ this.plugin.settings.citationKey.length;
 
     return {
       start: {
@@ -53,7 +55,7 @@ export default class SuggestionIcon extends EditorSuggest<string> {
       },
       end: {
         line: cursor.line,
-        ch: startingIndex + regexOngoingShortcode[0].length,
+        ch: startingIndex + regexOngoingShortcode[0].length-this.plugin.settings.citationKey.length,
       },
       query: regexOngoingShortcode[0],
     };
@@ -63,45 +65,21 @@ export default class SuggestionIcon extends EditorSuggest<string> {
     const queryLowerCase = context.query
       .substring(this.plugin.settings.citationKey.length)
       .toLowerCase();
-
-    // Store all icons corresponding to the current query.
-    // const iconsNameArray = this.plugin
-    //   .getIconPackManager()
-    //   .allLoadedIconNames.filter((iconObject) => {
-    //     const name =
-    //       iconObject.prefix.toLowerCase() + iconObject.name.toLowerCase();
-    //     return name.toLowerCase().includes(queryLowerCase);
-    //   })
-    //   .map((iconObject) => iconObject.prefix + iconObject.name);
-
-    // // Store all emojis correspoding to the current query - parsing whitespaces and
-    // // colons for shortcodes compatibility.
-    // const emojisNameArray = Object.keys(emoji.shortNames).filter((e) =>
-    //   emoji.getShortcode(e)?.includes(queryLowerCase),
-    // );
-
-    return ["test", "abc", "Get that here blah"];
+    const suggestions = this.defaultArray.filter((e) =>
+       e?.includes(queryLowerCase),
+    )
+    return suggestions;
   }
 
   renderSuggestion(value: string, el: HTMLElement): void {
-    // const iconObject = icon.getIconByName(this.plugin, value);
-    // el.style.display = 'flex';
-    // el.style.alignItems = 'center';
-    // el.style.gap = '0.25rem';
-    // if (iconObject) {
-    //   // Suggest an icon.
-    //   el.innerHTML = `${iconObject.svgElement} <span>${value}</span>`;
-    // } else {
-    //   // Suggest an emoji - display its shortcode version.
-    //   const shortcode = emoji.getShortcode(value);
-    //   if (shortcode) {
-    //     el.innerHTML = `<span>${value}</span> <span>${shortcode}</span>`;
-    //   }
-    // }
     el.innerHTML =`<span>${value}</span>`
   }
 
   selectSuggestion(value: string): void {
-    
+    this.context.editor.replaceRange(
+      value,
+      this.context.start,
+      this.context.end,
+    );
   }
 }
