@@ -1,4 +1,3 @@
-import type ExperimentType from "types/choices/experimentType";
 import type FolderArrangement from "../../types/choices/folderArrangement";
 import type draftConditions from "types/choices/draftConditions";
 

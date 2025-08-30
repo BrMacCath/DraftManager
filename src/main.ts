@@ -19,6 +19,7 @@ export default class ResearchPlugin extends Plugin {
 		this.addCommand({id:"New Draft",name:"New Draft",callback: async ()=>{
 			new chooseFolder(this.app,this.settings,this).open()
 		}})
+		console.log(this.app)
 		// This recognises that the vault was modified.
 		//this.registerEvent(this.app.vault.on("modify",() =>{new Notice("This worked")}))
 

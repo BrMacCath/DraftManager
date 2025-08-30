@@ -1,7 +1,7 @@
 {
-	"name": "Personal Research Plugin",
-	"version": "0.0.8",
-	"description": "Personal Research Plugin. It will have compatibility with latex and self testing plugin.",
+	"name": "Draft Manager",
+	"version": "0.0.9",
+	"description": "Apply draft techniques to files and control the output file type and location.",
 	"main": "src/main.js",
 	"scripts": {
 		"dev": "node esbuild.config.mjs",
