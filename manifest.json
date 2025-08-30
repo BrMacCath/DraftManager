@@ -1,9 +1,9 @@
 {
 	"id": "Personal Plugin",
-	"name": "Research Plugin",
+	"name": "Draft Manager",
 	"version": "0.0.8",
 	"minAppVersion": "0.15.0",
-	"description": "Utilising obsidian to help with Research.",
+	"description": "Allow you to create drafts of your writing and where they are located.",
 	"author": "Brian Collery",
 	"authorUrl": "https://github.com/BrMacCath/ObsidianResearch.git",
 	"isDesktopOnly": false

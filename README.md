@@ -1,6 +1,14 @@
-# Research Plugin
+# Draft Manager
 
-The goal of this plugin is to link Obsidian with Research features that I want. This list will expand as necessary. The main thing I want is to be able to link and create notes together. I will be linking this app with Zotero if needs be.
+This plugin is to help order writing drafts in Obsidian and how to manage the final product. This plugin will allow for different draft styles
+
+
+# Draft Styles
+## Peterson-Beginning
+
+## Peterson Walt Frontmatter
+
+
 
 # Road map
 
