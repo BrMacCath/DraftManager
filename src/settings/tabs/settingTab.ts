@@ -51,7 +51,9 @@ export class DraftTab extends PluginSettingTab {
             btn.setClass("rp-button");
 		})
 		UpdateDraftCons(this.plugin.settings.defaultFolder, this,containerEl,"Default");
-		
+
+	
+
 	}
 
 	checkFolderCanBeAdded(new_folder:string):void{

@@ -31,6 +31,7 @@
 	},
 	"dependencies": {
 		"@microsoft/tsdoc": "^0.15.1",
+		"codemirror": "^6.0.2",
 		"fortawesome": "^0.0.1-security",
 		"popper.js": "^1.16.1",
 		"svelox": "^0.0.3",

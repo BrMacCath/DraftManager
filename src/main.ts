@@ -3,7 +3,6 @@ import type ResearchPluginSettings from 'src/settings/researchPluginSettings';
 import { DEFAULT_SETTINGS } from 'src/settings/researchPluginSettings';
 import { DraftTab } from './settings/tabs/settingTab';
 import { chooseFolder } from './settings/modals/chooseFolder';
-import SuggestionIcon from './Editor/citations';
 // Remember to rename these classes and interfaces!
 
 
@@ -23,7 +22,7 @@ export default class ResearchPlugin extends Plugin {
 		// This recognises that the vault was modified.
 		//this.registerEvent(this.app.vault.on("modify",() =>{new Notice("This worked")}))
 
-		this.registerEditorSuggest(new SuggestionIcon(this.app, this));
+		//this.registerEditorSuggest(new SuggestionIcon(this.app, this));
 	}
 
 	onunload() {
