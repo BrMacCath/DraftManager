@@ -57,7 +57,7 @@ export class UpdateFolder extends Modal {
             .addToggle( (cb) => cb.setValue(this.folder.haveSubFolders)
             .onChange(async (value)=>{
                 this.folder.haveSubFolders = value;
-                subFoldArrange.settingEl.classList.toggle("rp-hidden");
+                subFoldArrange.settingEl.classList.toggle("dm-hidden");
                 await this.plugin.saveSettings();}
             )
 	    )
@@ -66,7 +66,7 @@ export class UpdateFolder extends Modal {
             .setDesc("Change Subfolder Conditions")
             .addButton((cb) => {
                 cb.setButtonText("Update");
-                cb.setClass("rp-button");
+                cb.setClass("dm-button");
                 cb.onClick( () =>{
                     new UpdateSubFolder(this.app,this.plugin,this.folder.subFolderArrangement,this.folder.folderName,this.settingsTab).open()
                 } )
@@ -76,13 +76,13 @@ export class UpdateFolder extends Modal {
             .setDesc("Change Subfolder Conditions")
             .addButton((cb) => {
                 cb.setButtonText("Update");
-                cb.setClass("rp-button");
+                cb.setClass("dm-button");
                 cb.onClick( () =>{
                     new UpdateExperiment(this.app,this.plugin,this.folder.subFolderArrangement,this.folder.folderName,this.settingsTab,fillOutFolderArrangement(this.app.vault.getFolderByPath("Miscellaneous"))).open();
                 } )
             } )
         if(!this.folder.haveSubFolders){
-            subFoldArrange.settingEl.classList.add("rp-hidden");
+            subFoldArrange.settingEl.classList.add("dm-hidden");
         }
     }
 
@@ -104,7 +104,7 @@ export class UpdateFolder extends Modal {
             .addToggle( (cb) => cb.setValue(this.folder.haveDrafts)
             .onChange(async (value)=>{
                 this.folder.haveDrafts = value;
-                draftConditionsTab.settingEl.classList.toggle("rp-hidden")
+                draftConditionsTab.settingEl.classList.toggle("dm-hidden")
                 await this.plugin.saveSettings();}
             )
         )
@@ -115,10 +115,10 @@ export class UpdateFolder extends Modal {
                 
                 new UpdateDraftSettings(this.app,this.folder.draftConditions,this.settingsTab,this.folder.folderName).open()
             } )
-            btn.setClass("rp-button")
+            btn.setClass("dm-button")
         })
         if(!this.folder.haveDrafts){
-            draftConditionsTab.settingEl.classList.add("rp-hidden");
+            draftConditionsTab.settingEl.classList.add("dm-hidden");
         }
     }
 
@@ -148,7 +148,7 @@ export class UpdateFolder extends Modal {
 				this.settingsTab.display();
 				this.close()
 			} ) 
-            cb.setClass("rp-delete");
+            cb.setClass("dm-delete");
 	} )
     }
 	onClose() {

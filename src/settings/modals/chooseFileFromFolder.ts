@@ -1,5 +1,5 @@
 import {App, Modal,Setting } from "obsidian"
-import type ResearchPluginSettings from "../researchPluginSettings";
+import type ResearchPluginSettings from "../DraftManagerPluginSettings";
 import ResearchPlugin from "src/main";
 import { FileFromFolderSuggest } from "../suggesters/fileFromFolderSuggester";
 import createDraft from "../functions/Drafts/createDraft";
@@ -47,7 +47,7 @@ export class chooseFileFromFolder extends Modal{
                     this.close();
                 }
             }  )
-            btn.setClass("rp-button");
+            btn.setClass("dm-button");
         })
     }
 

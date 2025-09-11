@@ -5,6 +5,7 @@ import { stringifyNumber } from "./stringifyNumber";
 import { createFromFirstDraft } from "./createFromFirstDraft";
 import { createFromDraft } from "./createFromDraft";
 import type draftConditions from "types/choices/draftConditions";
+
 export default async function createDraft(fileName:string,draftConditions:draftConditions,app:App):Promise<void>{
     const fileTFile:TFile = this.app.vault.getFileByPath(fileName)
     let fileTest = await this.app.vault.read(fileTFile);

@@ -2,7 +2,7 @@ import type FolderArrangement from "../../types/choices/folderArrangement";
 import type draftConditions from "types/choices/draftConditions";
 
 
-export default interface ResearchPluginSettings {
+export default interface DraftManagerSettings {
 	draftFolders:string[];
 	templates_folder:string;
 	user_scripts_folder:string;
@@ -11,7 +11,7 @@ export default interface ResearchPluginSettings {
 	defaultFolder:draftConditions;
 }
 
-export const DEFAULT_SETTINGS: ResearchPluginSettings = {
+export const DEFAULT_SETTINGS: DraftManagerSettings = {
 	draftFolders: [],
 	templates_folder:"",
 	user_scripts_folder:"",

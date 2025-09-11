@@ -1,5 +1,5 @@
 import {App, Modal,Setting } from "obsidian"
-import type ResearchPluginSettings from "../researchPluginSettings";
+import type ResearchPluginSettings from "../DraftManagerPluginSettings";
 import ResearchPlugin from "src/main";
 import { SubFolderSuggest } from "../suggesters/subFolderSuggester";
 import { chooseFileFromFolder } from "./chooseFileFromFolder";
@@ -40,7 +40,7 @@ export class chooseSubFolder extends Modal{
                 new chooseFileFromFolder(this.app,this.settings,this.plugin,folderTextName,this.draftConditions).open()
                 this.close()
             }  )
-            btn.setClass("rp-button");
+            btn.setClass("dm-button");
         })
     }
 

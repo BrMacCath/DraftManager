@@ -1,5 +1,5 @@
 import {App, Modal,Setting } from "obsidian"
-import type ResearchPluginSettings from "../researchPluginSettings";
+import type ResearchPluginSettings from "../DraftManagerPluginSettings";
 import ResearchPlugin from "src/main";
 import createDraft from "../functions/Drafts/createDraft";
 import type draftConditions from "types/choices/draftConditions";
@@ -30,7 +30,7 @@ export class createDraftInFolder extends Modal{
             btn.setButtonText("Create Draft").onClick(() =>{
                 createDraft(this.folder,this.draftConditions,this.app);
             }  )
-            btn.setClass("rp-button");
+            btn.setClass("dm-button");
         })
     }
 

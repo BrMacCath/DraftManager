@@ -1,13 +1,14 @@
-import { Notice, Plugin, Vault} from 'obsidian';
-import type ResearchPluginSettings from 'src/settings/researchPluginSettings';
-import { DEFAULT_SETTINGS } from 'src/settings/researchPluginSettings';
+import { Notice, Plugin, TFile} from 'obsidian';
+import type DraftManagerPluginSettings from 'src/settings/DraftManagerPluginSettings';
+import { DEFAULT_SETTINGS } from 'src/settings/DraftManagerPluginSettings';
 import { DraftTab } from './settings/tabs/settingTab';
 import { chooseFolder } from './settings/modals/chooseFolder';
+import overwriteFileInOtherVault from './settings/functions/URI/overwriteFileInOtherVault';
 // Remember to rename these classes and interfaces!
 
 
 export default class ResearchPlugin extends Plugin {
-	settings: ResearchPluginSettings;
+	settings: DraftManagerPluginSettings;
 	async onload() {
 		await this.loadSettings();
 
@@ -20,18 +21,20 @@ export default class ResearchPlugin extends Plugin {
 		}})
 
 		this.addCommand({id:"test URI",name:"testURI",callback: async ()=>{
-			// pluginAPI
-			// const test = this.app.plugins.plugins["obsidian-advanced-uri"];
-			// console.log(test)
-			// ObsidianProtocolHandler()
-			//this.registerObsidianProtocolHandler("new", )
-			// //experimentURI();
+			// changeVault("testVault")
+            // window.OBS_ACT({"scheme":"Obsidian","action":"new","file":"temp/test8","content":"test","openmode":"silent"});
+            const fileTFile:TFile = this.app.vault.getFileByPath("temp/test8.md");
+            console.log(fileTFile)
+            overwriteFileInOtherVault("testVault",fileTFile.path,await this.app.vault.read(fileTFile))
+
 		}})
 
 		this.registerObsidianProtocolHandler("blahTest",(e)=>{
 			const parameters = e as unknown as Parameters;
 			console.log(parameters)
-			window.OBS_ACT({"action":"new","vault":"testVault","name":"test3"});
+			window.OBS_ACT({"scheme":"Obsidian","action":"new","vault":"testVault","file":"temp/test3","content":"test","openmode":"silent"});
+            window.OBS_ACT({"scheme":"Obsidian","action":"new","vault":"testVault","file":"temp/test5","content":"test","openmode":"silent"});
+            window.open('obsidian://new?vault=testVault&file=temp%2Ftest7','_external')
 			new Notice(parameters.separator)
 			new Notice("Got Here")
 		})

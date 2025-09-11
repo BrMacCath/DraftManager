@@ -1,18 +1,18 @@
-.rp-button{
+.dm-button{
     --interactive-normal: #7852ee;
     --interactive-hover: #a882ff;
 }
 
-.rp-delete{
+.dm-delete{
     --interactive-normal: #fb464c;
     --interactive-hover: #fb464c;
 }
-.rp-hidden{
+.dm-hidden{
     display: none;
     transition-duration: 1500ms;
 }
 
-.rp-bib-wrapper {
+.dm-bib-wrapper {
     width: 100%;
     margin-bottom: 0.75rem;
 }
