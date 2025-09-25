@@ -4,6 +4,7 @@ import ResearchPlugin from "src/main";
 import { FileFromFolderSuggest } from "../suggesters/fileFromFolderSuggester";
 import createDraft from "../functions/Drafts/createDraft";
 import type draftConditions from "types/choices/draftConditions";
+import { buttonCssClassName, templateSearchCssName } from "src/cssStylings/cssClassNames";
 export class chooseFileFromFolder extends Modal{
     settings: ResearchPluginSettings;
     plugin: ResearchPlugin;
@@ -33,7 +34,7 @@ export class chooseFileFromFolder extends Modal{
                         fileName = file;
                     });
                 // @ts-ignore
-                cb.containerEl.addClass("templater_search");
+                cb.containerEl.addClass(templateSearchCssName);
         }).addButton((btn)=>{
             btn.setButtonText("Folder Button").onClick(() =>{
                 createDraft(fileName,this.draftConditions,this.app);
@@ -47,7 +48,7 @@ export class chooseFileFromFolder extends Modal{
                     this.close();
                 }
             }  )
-            btn.setClass("dm-button");
+            btn.setClass(buttonCssClassName);
         })
     }
 

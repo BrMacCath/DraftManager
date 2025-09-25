@@ -7,7 +7,6 @@ import { SubFolderSuggest } from "../suggesters/subFolderSuggester";
 import SvelteImportStuff from "../svelteTest/svelteImportStuff.svelte";
 import { mount,unmount } from "svelte";
 import SvelteExperimentData from "../svelteTest/svelteExperimentData.svelte";
-import type ExperimentType from "types/choices/experimentType";
 
 export class UpdateSubFolder extends Modal {
     plugin: ResearchPlugin;

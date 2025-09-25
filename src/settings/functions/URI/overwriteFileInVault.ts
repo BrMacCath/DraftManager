@@ -1,4 +1,4 @@
-export default function overwriteFileInOtherVault(vault:string,file:string,content:string="TestNew"){
+export default function overwriteFileInVault(vault:string,file:string,content:string="TestNew"){
     const scheme= "obsidian://";
     const action = "new?";
     const setVaultParameter ="vault="+ encodeURI(vault);
@@ -11,3 +11,5 @@ export default function overwriteFileInOtherVault(vault:string,file:string,conte
 
     window.open(scheme+action+parameters.join("&"),targetParameter)
 }
+
+//			window.OBS_ACT({"scheme":"Obsidian","action":"new","vault":"testVault","file":"temp/test3","content":"test","openmode":"silent"});

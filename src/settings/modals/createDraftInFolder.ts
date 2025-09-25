@@ -3,6 +3,7 @@ import type ResearchPluginSettings from "../DraftManagerPluginSettings";
 import ResearchPlugin from "src/main";
 import createDraft from "../functions/Drafts/createDraft";
 import type draftConditions from "types/choices/draftConditions";
+import { buttonCssClassName } from "src/cssStylings/cssClassNames";
 export class createDraftInFolder extends Modal{
     settings: ResearchPluginSettings;
     plugin: ResearchPlugin;
@@ -30,7 +31,7 @@ export class createDraftInFolder extends Modal{
             btn.setButtonText("Create Draft").onClick(() =>{
                 createDraft(this.folder,this.draftConditions,this.app);
             }  )
-            btn.setClass("dm-button");
+            btn.setClass(buttonCssClassName);
         })
     }
 

@@ -4,6 +4,7 @@ import type ResearchPluginSettings from "../DraftManagerPluginSettings";
 import ResearchPlugin from "src/main";
 import { chooseSubFolder } from "./chooseSubfolder";
 import type draftConditions from "types/choices/draftConditions";
+import { buttonCssClassName, templateSearchCssName } from "src/cssStylings/cssClassNames";
 export class chooseFolder extends Modal{
     settings: ResearchPluginSettings;
     plugin: ResearchPlugin
@@ -29,7 +30,7 @@ export class chooseFolder extends Modal{
                         folderTextName = new_folder;
                     });
                 // @ts-ignore
-                cb.containerEl.addClass("templater_search");
+                cb.containerEl.addClass(templateSearchCssName);
         }).addButton((btn)=>{
             btn.setButtonText("Folder Button").onClick(() =>{
                 let folderDraftConditions:draftConditions = this.settings.folders[0].draftConditions;
@@ -41,7 +42,7 @@ export class chooseFolder extends Modal{
                 new chooseSubFolder(this.app,this.settings,this.plugin,folderTextName,folderDraftConditions).open()
                 this.close()
             }  )
-            btn.setClass("dm-button");
+            btn.setClass(buttonCssClassName);
         })
     }
     onClose() {

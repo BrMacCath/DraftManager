@@ -4,6 +4,7 @@ import ResearchPlugin from "src/main";
 import { SubFolderSuggest } from "../suggesters/subFolderSuggester";
 import { chooseFileFromFolder } from "./chooseFileFromFolder";
 import type draftConditions from "types/choices/draftConditions";
+import { buttonCssClassName, templateSearchCssName } from "src/cssStylings/cssClassNames";
 export class chooseSubFolder extends Modal{
     settings: ResearchPluginSettings;
     plugin: ResearchPlugin;
@@ -33,14 +34,14 @@ export class chooseSubFolder extends Modal{
                         folderTextName = new_folder;
                     });
                 // @ts-ignore
-                cb.containerEl.addClass("templater_search");
+                cb.containerEl.addClass(templateSearchCssName);
         }).addButton((btn)=>{
             btn.setButtonText("Folder Button").onClick(() =>{
                 // This will need to be figured out later.
                 new chooseFileFromFolder(this.app,this.settings,this.plugin,folderTextName,this.draftConditions).open()
                 this.close()
             }  )
-            btn.setClass("dm-button");
+            btn.setClass(buttonCssClassName);
         })
     }
 

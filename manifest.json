@@ -1,7 +1,7 @@
 {
-	"id": "Personal Plugin",
+	"id": "Draft Manager",
 	"name": "Draft Manager",
-	"version": "0.0.9",
+	"version": "0.1.0",
 	"minAppVersion": "0.15.0",
 	"description": "Allow you to create drafts of your writing and where they are located.",
 	"author": "Brian Collery",
