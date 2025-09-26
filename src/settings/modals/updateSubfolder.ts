@@ -1,5 +1,4 @@
 import { App, Modal, Setting } from "obsidian";
-import ResearchPlugin from "src/main";
 import { DraftTab } from "../tabs/settingTab";
 import type subFolderArrangement from "types/choices/subFolderArrangement";
 import { SubFolderSuggest } from "../suggesters/subFolderSuggester";
@@ -7,15 +6,16 @@ import { SubFolderSuggest } from "../suggesters/subFolderSuggester";
 import SvelteImportStuff from "../svelteTest/svelteImportStuff.svelte";
 import { mount,unmount } from "svelte";
 import SvelteExperimentData from "../svelteTest/svelteExperimentData.svelte";
+import type DraftManagerPlugin from "src/main";
 
 export class UpdateSubFolder extends Modal {
-    plugin: ResearchPlugin;
+    plugin: DraftManagerPlugin;
     svelteTest:ReturnType<typeof SvelteImportStuff> | undefined;
     experimentSvelteTest:ReturnType<typeof SvelteExperimentData>|undefined;
     settingsTab:DraftTab;
     subFolder:subFolderArrangement;
     folderName:string;
-    constructor(app: App,plugin: ResearchPlugin,subFolder:subFolderArrangement,folderName:string,settingsTab:DraftTab) {
+    constructor(app: App,plugin: DraftManagerPlugin,subFolder:subFolderArrangement,folderName:string,settingsTab:DraftTab) {
             super(app);
             this.plugin = plugin;
             this.subFolder = subFolder;

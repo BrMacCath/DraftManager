@@ -1,6 +1,6 @@
 import type FolderArrangement from "../../types/choices/folderArrangement";
 import type draftConditions from "types/choices/draftConditions";
-
+import { App } from "obsidian";
 
 export default interface DraftManagerSettings {
 	draftFolders:string[];
@@ -9,6 +9,7 @@ export default interface DraftManagerSettings {
 	folders: FolderArrangement[];
 	defaultDraft: string;
 	defaultFolder:draftConditions;
+	vaultList: string[];
 }
 
 export const DEFAULT_SETTINGS: DraftManagerSettings = {
@@ -18,5 +19,6 @@ export const DEFAULT_SETTINGS: DraftManagerSettings = {
 	folders: [],
 	defaultDraft: "Peterson",
 	defaultFolder: {draftStyle:{name:"Peterson"},haveComments:true, commentSignifier:"*",rewriteLineSignifier:">",
-			draftStorage: "Drafts",	draftFileIndicator:"DRAFTS ",haveTopicFrontMatter: false,topicFrontMatterSeparator:"*---*",paragraphSeparator:"+---+",draftNumSignifier:"draftNum"}
+			draftStorage: "Drafts",	draftFileIndicator:"DRAFTS ",haveTopicFrontMatter: false,topicFrontMatterSeparator:"*---*",paragraphSeparator:"+---+",draftNumSignifier:"draftNum"},
+	vaultList: []
 }

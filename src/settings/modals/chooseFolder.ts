@@ -1,14 +1,14 @@
 import {App, Modal,Setting } from "obsidian"
 import { folderListSuggest } from "../suggesters/folderListSuggest";
-import type ResearchPluginSettings from "../DraftManagerPluginSettings";
-import ResearchPlugin from "src/main";
 import { chooseSubFolder } from "./chooseSubfolder";
 import type draftConditions from "types/choices/draftConditions";
 import { buttonCssClassName, templateSearchCssName } from "src/cssStylings/cssClassNames";
+import type DraftManagerSettings from "../DraftManagerPluginSettings";
+import type DraftManagerPlugin from "src/main";
 export class chooseFolder extends Modal{
-    settings: ResearchPluginSettings;
-    plugin: ResearchPlugin
-    constructor(app: App,settings:ResearchPluginSettings,plugin:ResearchPlugin) {
+    settings: DraftManagerSettings;
+    plugin: DraftManagerPlugin;
+    constructor(app: App,settings:DraftManagerSettings,plugin:DraftManagerPlugin) {
         super(app);
         this.settings=settings;
         this.plugin = plugin;

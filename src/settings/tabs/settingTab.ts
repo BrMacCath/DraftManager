@@ -1,23 +1,27 @@
 import { PluginSettingTab,App,Setting, Notice } from "obsidian";
-import type ResearchPlugin from "src/main";
 import { FolderSuggest } from "../suggesters/folderSuggester";
 import { v4 } from "uuid";
 import { UpdateFolder } from "../modals/updateFolder";
 import { UpdateDraftCons } from "../functions/Drafts/updateDraftCons";
 import type draftConditions from "types/choices/draftConditions";
+import { createVaultTab } from "../functions/Tabs/createVaultTab";
+import { buttonCssClassName, templateSearchCssName } from "src/cssStylings/cssClassNames";
+import { sortFolderOrder } from "../functions/Folder/sortFolderOrder";
+import type DraftManagerPlugin from "src/main";
 export class DraftTab extends PluginSettingTab {
-	plugin: ResearchPlugin;
-	constructor(app: App, plugin: ResearchPlugin) {
+	plugin: DraftManagerPlugin;
+
+	constructor(app: App, plugin: DraftManagerPlugin) {
 		super(app, plugin);
 		this.plugin = plugin;
 	}
 
 	display(): void {
 		const {containerEl} = this;
-		this.sortFolderOrder();
+		sortFolderOrder(this.plugin);
 		containerEl.empty();
-		new Setting(containerEl).setName("Plugin Settings")
-		.setDesc("Choose which folders.").setHeading();
+		containerEl.createEl("h1").setText("Plugin Settings")
+		new Setting(containerEl).setName("Choose which folders.").setHeading();
 		//this.add_template_folder_setting();
 		this.plugin.settings.folders.forEach( (folder) => {
 			new Setting(containerEl).setName(folder.folderName).addButton( (btn)=> {
@@ -25,7 +29,7 @@ export class DraftTab extends PluginSettingTab {
 				btn.setButtonText("Update Folder").onClick(() => {
 					new UpdateFolder(this.app,this.plugin,folder,this).open()
 				});
-                btn.setClass("rp-button");
+                btn.setClass(buttonCssClassName);
 			})
 		} )
 		let folderTextName = "";
@@ -43,14 +47,16 @@ export class DraftTab extends PluginSettingTab {
                         this.plugin.saveSettings();
                     });
                 // @ts-ignore
-                cb.containerEl.addClass("templater_search");
+                cb.containerEl.addClass(templateSearchCssName);
 		}).addButton((btn)=>{
 			btn.setButtonText("Folder Button").onClick(() =>{
 				this.checkFolderCanBeAdded(folderTextName)
 			}  )
-            btn.setClass("rp-button");
+            btn.setClass(buttonCssClassName);
 		})
 		UpdateDraftCons(this.plugin.settings.defaultFolder, this,containerEl,"Default");
+		//new VaultTab(containerEl,this.plugin);
+		createVaultTab(containerEl,this.plugin)
 	}
 
 	checkFolderCanBeAdded(new_folder:string):void{

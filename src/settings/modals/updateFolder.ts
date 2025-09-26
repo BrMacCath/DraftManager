@@ -1,4 +1,3 @@
-import ResearchPlugin from "src/main";
 import type FolderArrangement from "types/choices/folderArrangement";
 import { DraftTab } from "../tabs/settingTab";
 import { Modal,App,Setting,Notice,SearchComponent, Vault } from "obsidian";
@@ -6,12 +5,13 @@ import { FolderSuggest } from "../suggesters/folderSuggester";
 import { UpdateDraftSettings } from "./updateDraftSettings";
 import { UpdateSubFolder } from "./updateSubfolder";
 import { buttonCssClassName, hideCssName, deleteCssName } from "src/cssStylings/cssClassNames";
+import type DraftManagerPlugin from "src/main";
 
 export class UpdateFolder extends Modal {
-	plugin: ResearchPlugin;
+	plugin: DraftManagerPlugin;
 	folder: FolderArrangement;
 	settingsTab: DraftTab;
-	constructor(app: App,plugin: ResearchPlugin,folder:FolderArrangement,settingsTab:DraftTab) {
+	constructor(app: App,plugin: DraftManagerPlugin,folder:FolderArrangement,settingsTab:DraftTab) {
 		super(app);
 		this.plugin = plugin;
 		this.folder = folder;
