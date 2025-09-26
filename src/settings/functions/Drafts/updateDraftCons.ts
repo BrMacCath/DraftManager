@@ -2,6 +2,7 @@ import { Setting } from "obsidian"
 import type draftConditions from "types/choices/draftConditions";
 import { DraftTab } from "../../tabs/settingTab";
 import { draftOptions } from "types/choices/draftOptions";
+import { hideCssName } from "src/cssStylings/cssClassNames";
 export function UpdateDraftCons(draftConditions:draftConditions,settingsTab:DraftTab,containerEl:HTMLElement,folder:string){
 new Setting(containerEl).setName(folder + " Draft Conditions").setHeading();
 new Setting(containerEl).setName("Draft Style")
@@ -31,7 +32,7 @@ new Setting(containerEl).setName("Comment lines.")
     .setDesc("Do you wish to have comments in your drafts.").addToggle((cb) =>{
         cb.setValue(draftConditions.haveComments).onChange(async(value)=>{
             draftConditions.haveComments = value;
-            commentSetting.settingEl.classList.toggle("rp-hidden");
+            commentSetting.settingEl.classList.toggle(hideCssName);
             await settingsTab.plugin.saveSettings();
         })
     } )
@@ -45,7 +46,7 @@ commentSetting.setName("Comment Signifier")
         })
     } )
 if(!draftConditions.haveComments){
-    commentSetting.setClass("rp-hidden");
+    commentSetting.setClass(hideCssName);
 }
 new Setting(containerEl).setName("Paragraph Separator")
     .setDesc("How do you want paragraphs to be separated in your drafts").addText((cb) =>{
@@ -74,7 +75,7 @@ new Setting(containerEl).setName("Topic Front Matter.")
     .setDesc("Do you wish to have frontmatter for each topic.").addToggle((cb) =>{
         cb.setValue(draftConditions.haveTopicFrontMatter).onChange(async(value)=>{
             draftConditions.haveTopicFrontMatter = value;
-            frontmatterTopicSetting.settingEl.classList.toggle("rp-hidden");
+            frontmatterTopicSetting.settingEl.classList.toggle(hideCssName);
             await settingsTab.plugin.saveSettings();
         })
     } )
@@ -89,6 +90,6 @@ frontmatterTopicSetting.setName("FrontMatter Topic Separator Signifier")
         
     } )
 if(!draftConditions.haveTopicFrontMatter){
-    frontmatterTopicSetting.setClass("rp-hidden");
+    frontmatterTopicSetting.setClass(hideCssName);
 }
 }

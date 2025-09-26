@@ -1,9 +1,9 @@
 import { Setting } from "obsidian";
 import { buttonCssClassName, deleteCssName } from "src/cssStylings/cssClassNames";
-import type ResearchPlugin from "src/main";
+import type DraftManagerPlugin from "src/main";
 import { checkVaultCanBeAdded } from "./checkVaultCanBeAdded";
 
-export function createVaultTab(html:HTMLElement,  plugin: ResearchPlugin){
+export function createVaultTab(html:HTMLElement,  plugin: DraftManagerPlugin){
     html.createEl("h2").setText("Vault Transfer Management");
     new Setting(html).setName("Vaults that we can transfer files to").setHeading();
     plugin.settings.vaultList.forEach( (vault) =>{
@@ -33,7 +33,7 @@ export function createVaultTab(html:HTMLElement,  plugin: ResearchPlugin){
         cb.containerEl.addClass(templateSearchCssName);
     }).addButton((btn)=>{
         btn.setButtonText("Add Vault").onClick(() =>{
-            checkVaultCanBeAdded(vaultName)
+            checkVaultCanBeAdded(vaultName,plugin.settings);
         }  )
         btn.setClass(buttonCssClassName);
     })

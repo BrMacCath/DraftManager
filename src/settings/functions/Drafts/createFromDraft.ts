@@ -1,6 +1,7 @@
-import { Notice } from "obsidian";
 import { createDraftTitle } from "./createDraftTitle";
 import { stringifyNumber } from "./stringifyNumber";
+import { splitParagraphsNoFrontMatter } from "../ParagraphFunctions/splitParagraphsNoFrontMatter";
+import { splitParagraphsFrontMatter } from "../ParagraphFunctions/splitParagraphsFrontMatter";
 
 export function createFromDraft(draft:string,paragraphSeparator:string,oldDraftNum:number, topicFrontMatterSeparator:string,haveTopicFrontMatter:Boolean,rewriteLineSignifier:string,commentLineSignifier:string=""){
     const newLineSeperator = "\n"+commentLineSignifier + " \n" + rewriteLineSignifier +" \n\n";
@@ -8,32 +9,16 @@ export function createFromDraft(draft:string,paragraphSeparator:string,oldDraftN
     const currentDraftTitle = createDraftTitle(oldDraftNum);
     const contentIndex = draft.indexOf(currentDraftTitle) + currentDraftTitle.length;
     const contentDraft = draft.slice(contentIndex);
-
     let paragraphs = contentDraft.split(paragraphSeparator);
     let splitParagraph: [string,string[]][] = [];
-    if( !haveTopicFrontMatter){
-        paragraphs.forEach((paragraph) =>{
-            const paraContent = paragraph.split("\n").filter((t) => {
-                return t[0] == rewriteLineSignifier;
-            }).map(t =>{
-                return t.slice(1).trim();
-            });
-            splitParagraph.push(["",paraContent])
-        } )
+
+
+    if(!haveTopicFrontMatter){
+        splitParagraph =splitParagraphsNoFrontMatter(paragraphs,rewriteLineSignifier);
     }
-    else{
-        paragraphs.forEach( (paragraph) =>{
-            const temp = paragraph.split(topicFrontMatterSeparator)
-            if(temp.length != 2){
-                new Notice("Something has gone wrong. Length is " + temp.length);
-            }
-            const paraContent = temp[1].split("\n").filter((t) => {
-                return t[0] == rewriteLineSignifier;
-            }).map(t =>{
-                return t.slice(1).trim();
-            });;
-            splitParagraph.push([temp[0].trim(),paraContent]);
-        }  )
+    else
+    {
+        splitParagraph = splitParagraphsFrontMatter(paragraphs,rewriteLineSignifier,topicFrontMatterSeparator)
     }
     // Complete Draft
     let completeDraft:string[] = []

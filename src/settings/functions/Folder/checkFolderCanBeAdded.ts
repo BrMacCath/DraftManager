@@ -1,10 +1,10 @@
 import { Notice } from "obsidian";
-import type ResearchPlugin from "src/main";
+import type DraftManagerPlugin from "src/main";
 import type draftConditions from "types/choices/draftConditions";
 import { v4 } from "uuid";
 
 
-export function checkFolderCanBeAdded(new_folder:string,plugin:ResearchPlugin):void{
+export function checkFolderCanBeAdded(new_folder:string,plugin:DraftManagerPlugin):void{
     for(let i = 0; i <this.plugin.settings.folders.length; i++){
         if (new_folder == this.plugin.settings.folders[i].folderName){
             new Notice("This folder is already on the list");

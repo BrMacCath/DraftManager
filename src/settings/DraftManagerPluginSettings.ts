@@ -1,6 +1,5 @@
 import type FolderArrangement from "../../types/choices/folderArrangement";
 import type draftConditions from "types/choices/draftConditions";
-import { App } from "obsidian";
 
 export default interface DraftManagerSettings {
 	draftFolders:string[];

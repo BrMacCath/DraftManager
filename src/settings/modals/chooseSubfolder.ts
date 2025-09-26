@@ -1,6 +1,4 @@
 import {App, Modal,Setting } from "obsidian"
-import type ResearchPluginSettings from "../DraftManagerPluginSettings";
-
 import { SubFolderSuggest } from "../suggesters/subFolderSuggester";
 import { chooseFileFromFolder } from "./chooseFileFromFolder";
 import type draftConditions from "types/choices/draftConditions";

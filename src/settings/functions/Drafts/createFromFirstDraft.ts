@@ -3,7 +3,7 @@ import { Notice } from "obsidian";
 // Add onto the draft in two ways.
 // First it should have a completed draft added onto the end of the draft.
 // Second it should add onto the 
-
+// Return [frontmatter,content]
 export function createFromFirstDraft(draft:string,paragraphSeparator:string, topicFrontMatterSeparator:string,haveTopicFrontMatter:Boolean,rewriteLineNotifier:string,commentLineSignifier:string=""){
     const newLineSeperator = "\n"+commentLineSignifier + " \n" + rewriteLineNotifier +" \n\n";
     let paragraphs = draft.split(paragraphSeparator);
@@ -46,7 +46,6 @@ export function createFromFirstDraft(draft:string,paragraphSeparator:string, top
     else{
         splitParagraph.forEach((content)=>{
             const topicFrontMatter = content[0];
-            console.log(content[1])
             const sentences = content[1].filter((t) =>{
                 return t.trim()!="";
              });
