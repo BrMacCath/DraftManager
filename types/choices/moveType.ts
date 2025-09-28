@@ -1,0 +1,1 @@
+export const moveType:string[] = ["As Is","Peterson"];

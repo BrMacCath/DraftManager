@@ -13,7 +13,7 @@ export class UpdateDraftSettings extends Modal{
             this.folderName= folderName;
         }
     onOpen() {
-		UpdateDraftCons(this.draftConditions,this.settingsTab,this.modalEl,this.folderName + " ")
+		  UpdateDraftCons(this.draftConditions,this.settingsTab,this.modalEl,this.folderName + " ")
     }
 
     onClose() {

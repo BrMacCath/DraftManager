@@ -14,29 +14,27 @@ export function createVaultTab(html:HTMLElement,  plugin: DraftManagerPlugin){
         });
         btn.setClass(deleteCssName);
     })
-
     } )
     let vaultName = ""
-    new Setting(html).setName("Add a folder template")
-    .setDesc("Choose which folder you wish to add")
-    .addSearch((cb)=>{
+    new Setting(html).setName("Add a vault")
+    .setDesc("Type which vault you wish to add:")
+    .addText((cb)=>{
         cb.setPlaceholder(vaultName)
             .setValue("")
-            .onChange((vaultChange) => {
+            .onChange( (vaultChange) => {
                 // Trim folder and Strip ending slash if there
                 vaultChange = vaultChange.trim()
                 vaultChange = vaultChange.replace(/\/$/, "");
                 vaultName = vaultChange;
-                this.plugin.saveSettings();
             });
-        // @ts-ignore
-        cb.containerEl.addClass(templateSearchCssName);
+       
+        
     }).addButton((btn)=>{
-        btn.setButtonText("Add Vault").onClick(() =>{
-            checkVaultCanBeAdded(vaultName,plugin.settings);
+        btn.setButtonText("Add Vault").onClick(async () =>{
+            await checkVaultCanBeAdded(vaultName,plugin.settings,plugin);
         }  )
         btn.setClass(buttonCssClassName);
     })
-this.checkFolderCanBeAdded
+
     
 }
