@@ -1,41 +1,45 @@
 <script lang="ts">
     interface Props{
         tabs: number;
-        folder: TFolder;
+        folderArrangement: FolderArrangement;
     }
 
     let {
         tabs,
-        folder
+        folderArrangement
     }:Props =$props();
-    let folderChildren:TFolder[] =folder.children.filter((abfile) =>{return abfile instanceof TFolder});
-    let fileChildren:TFile[] =folder.children.filter((abfile) =>{return abfile instanceof TFile});
+    // let folderChildren:TFolder[] =folder.children.filter((abfile) =>{return abfile instanceof TFolder});
+    // let fileChildren:TFile[] =folder.children.filter((abfile) =>{return abfile instanceof TFile});
     // Could manage this outside the svelte situation
 
     import {faFolder,faFile} from "@fortawesome/free-solid-svg-icons";
-	import {TFile, TFolder } from "obsidian";
     import Icon from "svelte-awesome/components/Icon.svelte";
+	import type FolderArrangement from "types/FolderTypes/folderArrangement";
+    import SvelteImportStuff from "./svelteImportStuff.svelte";
 </script>
 
 <div class="Test1" >
-    <Icon data={faFolder} />{folder.name}
+    <Icon data={faFolder} />{"  "+folderArrangement.folder.name}
     <!-- {mount(SvelteImportStuff)} -->
-     <div class={folder.name}>Test</div>
-
-</div>
-{#each folderChildren as fold}
+    <div class={folderArrangement.folder.name}>
+{#each folderArrangement.subFolders as fold}
 <div class="Test2" >
-    <Icon data={faFolder} />{fold.name}
-    <div class={fold.name}>Test</div>
+    <SvelteImportStuff tabs={tabs+5} folderArrangement={fold} ></SvelteImportStuff>
+    <!-- <div class={fold.folder.name}></div> -->
 </div>  
 {/each}
+ </div>
 
-
-{#each fileChildren as file}
-    <div class="Test2"style="margin-left:{tabs}px">
-        <Icon data={faFile} /> {file.name}
+{#each folderArrangement.subFiles as file}
+    <div class="Test2"style="margin-left:5px">
+        <Icon data={faFile} /> {file.file.name}
     </div>
 {/each}
+
+    
+</div>
+
+
 
 <style>
     .Test1 {
