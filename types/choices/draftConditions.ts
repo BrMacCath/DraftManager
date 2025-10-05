@@ -1,7 +1,6 @@
-import type draftStyle from "./draftStyle";
 
 export default interface draftConditions{
-    draftStyle:draftStyle;
+    draftStyle:string;
     haveComments: boolean;
     commentSignifier:string;
     paragraphSeparator:string;
