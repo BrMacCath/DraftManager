@@ -1,6 +1,6 @@
 import { App} from "obsidian";
 import { TextInputSuggest } from "./suggest";
-import type FolderArrangement from "types/choices/folderArrangement";
+import type FolderArrangement from "types/FolderTypes/folderArrangement";
 
 export class folderListSuggest extends TextInputSuggest<FolderArrangement> {
     sliceLength:number;
@@ -17,7 +17,7 @@ export class folderListSuggest extends TextInputSuggest<FolderArrangement> {
         const lowerCaseInputStr = inputStr.toLowerCase();
         abstractFiles.forEach((folder: FolderArrangement) => {
             if (
-                folder.folderName.toLowerCase().contains(lowerCaseInputStr)
+                folder.folder.toLowerCase().contains(lowerCaseInputStr)
             ) {
                 folders.push(folder);
             }
@@ -26,17 +26,17 @@ export class folderListSuggest extends TextInputSuggest<FolderArrangement> {
         return folders.slice(0, 1000);
     }
 
-    renderSuggestion(file: FolderArrangement, el: HTMLElement): void {
-        const text = file.folderName.slice(this.sliceLength);
+    renderSuggestion(folder: FolderArrangement, el: HTMLElement): void {
+        const text = folder.folder.slice(this.sliceLength);
         if (text == ""){
             el.setText("/")
         }else{
         el.setText(text);
     }}
 
-    selectSuggestion(file: FolderArrangement): void {
+    selectSuggestion(folder: FolderArrangement): void {
         // Get the TFile for this
-        this.inputEl.value = file.folderName;
+        this.inputEl.value = folder.folder;
         this.inputEl.trigger("input");
         this.close();
     }

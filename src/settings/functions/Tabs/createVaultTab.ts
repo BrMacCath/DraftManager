@@ -1,16 +1,22 @@
 import { Setting } from "obsidian";
-import { buttonCssClassName, deleteCssName } from "src/cssStylings/cssClassNames";
+import { buttonCssClassName, deleteCssName } from "types/cssStylings/cssClassNames";
 import type DraftManagerPlugin from "src/main";
 import { checkVaultCanBeAdded } from "./checkVaultCanBeAdded";
+import type { DraftTab } from "src/settings/tabs/settingTab";
 
-export function createVaultTab(html:HTMLElement,  plugin: DraftManagerPlugin){
+export function createVaultTab(html:HTMLElement,  plugin: DraftManagerPlugin,settingTab:DraftTab){
     html.createEl("h2").setText("Vault Transfer Management");
     new Setting(html).setName("Vaults that we can transfer files to").setHeading();
     plugin.settings.vaultList.forEach( (vault) =>{
         new Setting(html).setName(vault).addButton( (btn)=> {
         // Create a folder modal that allows you to edit it.
-        btn.setButtonText("Delete Vault").onClick(() => {
+        btn.setButtonText("Delete Vault").onClick(async () => {
             // Delete vault action
+            plugin.settings.vaultList =plugin.settings.vaultList.filter((name)=>{
+                return name != vault;
+            } )
+            await plugin.saveSettings();
+            await settingTab.display();
         });
         btn.setClass(deleteCssName);
     })
@@ -32,6 +38,7 @@ export function createVaultTab(html:HTMLElement,  plugin: DraftManagerPlugin){
     }).addButton((btn)=>{
         btn.setButtonText("Add Vault").onClick(async () =>{
             await checkVaultCanBeAdded(vaultName,plugin.settings,plugin);
+            await settingTab.display();
         }  )
         btn.setClass(buttonCssClassName);
     })

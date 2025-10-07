@@ -1,7 +1,7 @@
 import {App, Modal,Setting } from "obsidian"
 import createDraft from "../functions/Drafts/createDraft";
 import type draftConditions from "types/choices/draftConditions";
-import { buttonCssClassName } from "src/cssStylings/cssClassNames";
+import { buttonCssClassName } from "types/cssStylings/cssClassNames";
 import type DraftManagerSettings from "../DraftManagerPluginSettings";
 import type DraftManagerPlugin from "src/main";
 export class createDraftInFolder extends Modal{

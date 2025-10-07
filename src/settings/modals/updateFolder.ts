@@ -1,11 +1,12 @@
-import type FolderArrangement from "types/choices/folderArrangement";
+import type FolderArrangement from "types/FolderTypes/folderArrangement";
 import { DraftTab } from "../tabs/settingTab";
-import { Modal,App,Setting,Notice,SearchComponent, Vault } from "obsidian";
+import { Modal,App,Setting,Notice,SearchComponent, Vault, TFolder } from "obsidian";
 import { FolderSuggest } from "../suggesters/folderSuggester";
 import { UpdateDraftSettings } from "./updateDraftSettings";
 import { UpdateSubFolder } from "./updateSubfolder";
-import { buttonCssClassName, hideCssName, deleteCssName } from "src/cssStylings/cssClassNames";
+import { buttonCssClassName, hideCssName, deleteCssName } from "types/cssStylings/cssClassNames";
 import type DraftManagerPlugin from "src/main";
+import { fillOutFolderStructure } from "../functions/Folder/fillOutFolderStructure";
 
 export class UpdateFolder extends Modal {
 	plugin: DraftManagerPlugin;
@@ -21,8 +22,7 @@ export class UpdateFolder extends Modal {
 	onOpen() {
         this.folderNameConditions()
         this.createSubfolderConditions()
-        this.createBibliography()
-        this.createDraftConditions()
+        // this.createDraftConditions()
         this.createDeleteFolderButton()
 	}
 
@@ -34,14 +34,14 @@ export class UpdateFolder extends Modal {
             .setDesc("This is where the code will be applied to.")
             .addSearch((cb) => {
                 new FolderSuggest(this.app, cb.inputEl);
-                cb.setPlaceholder(this.folder.folderName)
-                    .setValue(this.folder.folderName)
+                cb.setPlaceholder(this.folder.folder)
+                    .setValue(this.folder.folder)
                     .onChange((new_folder) => {
                         // Trim folder and Strip ending slash if there
                         new_folder = new_folder.trim()
                         new_folder = new_folder.replace(/\/$/, "");
 
-                        this.checkFolderCanBeAdded(new_folder,cb,this.folder.folderName);
+                        this.checkFolderCanBeAdded(new_folder,cb,this.folder.folder);
 						this.settingsTab.display();
                     });
                 // @ts-ignore
@@ -53,9 +53,8 @@ export class UpdateFolder extends Modal {
         const {contentEl} = this;
 		new Setting(contentEl).setName("Subfolders")
             .setDesc("Does this folder have subfolders?")
-            .addToggle( (cb) => cb.setValue(this.folder.haveSubFolders)
-            .onChange(async (value)=>{
-                this.folder.haveSubFolders = value;
+            .addToggle( (cb) => cb.onChange(async (value)=>{
+                // this.folder.haveSubFolders = value;
                 subFoldArrange.settingEl.classList.toggle(hideCssName);
                 await this.plugin.saveSettings();}
             )
@@ -67,60 +66,48 @@ export class UpdateFolder extends Modal {
                 cb.setButtonText("Update");
                 cb.setClass(buttonCssClassName);
                 cb.onClick( () =>{
-                    new UpdateSubFolder(this.app,this.plugin,this.folder.subFolderArrangement,this.folder.folderName,this.settingsTab).open()
+                    new UpdateSubFolder(this.app,this.plugin,this.folder,this.settingsTab).open()
                 } )
             } )
-        if(!this.folder.haveSubFolders){
-            subFoldArrange.settingEl.classList.add(hideCssName);
-        }
+        
     }
 
-    createBibliography():void{
-        const {contentEl} = this;
-        new Setting(contentEl).setName("Bibliography").addTextArea((cb)=>{
-            cb.setValue(this.folder.bibliography)
-            .onChange(async (value)=>{
-                this.folder.bibliography = value;
-                await this.plugin.saveSettings();
-            })
-	})
-    }
-
-    createDraftConditions():void{
-        const {contentEl} = this;
-        new Setting(contentEl).setName("Drafts")
-            .setDesc("Will you be using drafts in your situation?")
-            .addToggle( (cb) => cb.setValue(this.folder.haveDrafts)
-            .onChange(async (value)=>{
-                this.folder.haveDrafts = value;
-                draftConditionsTab.settingEl.classList.toggle(hideCssName);
-                await this.plugin.saveSettings();}
-            )
-        )
-        let draftConditionsTab =new Setting(contentEl).setName("Update draft conditions.").addButton((btn) => {
-            btn.setButtonText("Update").onClick( () =>{
-                // Make a modal that talks about the draft settings
-                console.log(this.folder.draftConditions)
+    // createDraftConditions():void{
+    //     const {contentEl} = this;
+    //     new Setting(contentEl).setName("Drafts")
+    //         .setDesc("Will you be using drafts in your situation?")
+    //         .addToggle( (cb) => cb.setValue(this.folder.haveDrafts)
+    //         .onChange(async (value)=>{
+    //             this.folder.haveDrafts = value;
+    //             draftConditionsTab.settingEl.classList.toggle(hideCssName);
+    //             await this.plugin.saveSettings();}
+    //         )
+    //     )
+    //     let draftConditionsTab =new Setting(contentEl).setName("Update draft conditions.").addButton((btn) => {
+    //         btn.setButtonText("Update").onClick( () =>{
+    //             // Make a modal that talks about the draft settings
+    //             console.log(this.folder.draftConditions)
                 
-                new UpdateDraftSettings(this.app,this.folder.draftConditions,this.settingsTab,this.folder.folderName).open()
-            } )
-            btn.setClass(buttonCssClassName)
-        })
-        if(!this.folder.haveDrafts){
-            draftConditionsTab.settingEl.classList.add(hideCssName);
-        }
-    }
+    //             new UpdateDraftSettings(this.app,this.folder.draftConditions,this.settingsTab,this.folder.folder.name).open()
+    //         } )
+    //         btn.setClass(buttonCssClassName)
+    //     })
+    // }
 
     checkFolderCanBeAdded(new_folder:string,cb:SearchComponent,oldName:string):void{
 		for(let i = 0; i <this.plugin.settings.folders.length; i++){
-			if (new_folder == this.plugin.settings.folders[i].folderName && this.plugin.settings.folders[i].id !=this.folder.id){
+			if (new_folder == this.plugin.settings.folders[i].folder){
 				new Notice("This folder is already on the list");
                 cb.setValue(oldName);
 				return;
 			}
 		}
-
-        this.folder.folderName = new_folder;
+        const foldName = this.app.vault.getFolderByPath(new_folder);
+        if( !(foldName instanceof TFolder) ){
+            return;
+        }
+ 
+        this.folder= fillOutFolderStructure(foldName,this.plugin.settings.defaultFolder);
 		this.plugin.saveSettings();
 		this.settingsTab.display();
 	}
@@ -132,7 +119,7 @@ export class UpdateFolder extends Modal {
 		.setDesc("Do you wish to delete this folder?")
 		.addButton((cb) =>{
 			cb.setButtonText("Delete").onClick( () =>{
-				this.plugin.settings.folders = this.plugin.settings.folders.filter(fold => fold.id != this.folder.id)
+				//this.plugin.settings.folders = this.plugin.settings.folders.filter(fold => fold.id != this.folder.id)
 				this.plugin.saveSettings()
 				this.settingsTab.display();
 				this.close()
@@ -140,6 +127,7 @@ export class UpdateFolder extends Modal {
             cb.setClass(deleteCssName);
 	} )
     }
+
 	onClose() {
 		const {contentEl} = this;
 		contentEl.empty();

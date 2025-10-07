@@ -1,7 +1,7 @@
 import type DraftManagerPlugin from "src/main";
 import type DraftManagerSettings from "../DraftManagerPluginSettings";
 import { Modal, Notice, Setting, TFolder, type App } from "obsidian";
-import { buttonCssClassName, centerHeadingCssName, templateSearchCssName } from "src/cssStylings/cssClassNames";
+import { buttonCssClassName, centerHeadingCssName, templateSearchCssName } from "types/cssStylings/cssClassNames";
 import { FolderSuggest } from "../suggesters/folderSuggester";
 import { moveFolderToVault } from "../functions/URI/moveFolderToVault";
 

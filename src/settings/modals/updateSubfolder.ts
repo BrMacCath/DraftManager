@@ -1,25 +1,25 @@
-import { App, Modal, Setting } from "obsidian";
+import { App, Modal, Setting, TFolder } from "obsidian";
 import { DraftTab } from "../tabs/settingTab";
-import type subFolderArrangement from "types/choices/subFolderArrangement";
 import { SubFolderSuggest } from "../suggesters/subFolderSuggester";
 //import {faBars} from "@fortawesome/free-solid-svg-icons";
 import SvelteImportStuff from "../svelteTest/svelteImportStuff.svelte";
 import { mount,unmount } from "svelte";
-import SvelteExperimentData from "../svelteTest/svelteExperimentData.svelte";
 import type DraftManagerPlugin from "src/main";
+import type FolderArrangement from "types/FolderTypes/folderArrangement";
+import SvelteDisplayList from "../svelteTest/svelteDisplayList.svelte";
+import AdjustFiles from "../svelteTest/adjustFiles.svelte";
 
 export class UpdateSubFolder extends Modal {
     plugin: DraftManagerPlugin;
     svelteTest:ReturnType<typeof SvelteImportStuff> | undefined;
-    experimentSvelteTest:ReturnType<typeof SvelteExperimentData>|undefined;
+    svelteTest2:ReturnType<typeof SvelteDisplayList>|undefined;
+    svelteTest3:ReturnType<typeof AdjustFiles>|undefined;
     settingsTab:DraftTab;
-    subFolder:subFolderArrangement;
-    folderName:string;
-    constructor(app: App,plugin: DraftManagerPlugin,subFolder:subFolderArrangement,folderName:string,settingsTab:DraftTab) {
+    folderArrangement:FolderArrangement;
+    constructor(app: App,plugin: DraftManagerPlugin,folderArrangement:FolderArrangement,settingsTab:DraftTab) {
             super(app);
             this.plugin = plugin;
-            this.subFolder = subFolder;
-            this.folderName=folderName;
+            this.folderArrangement=folderArrangement;
             this.settingsTab=settingsTab;
     }
 
@@ -30,7 +30,7 @@ export class UpdateSubFolder extends Modal {
             .setName("Folder")
             .setDesc("This is where the code will be applied to.")
             .addSearch((cb) => {
-                new SubFolderSuggest(this.app, cb.inputEl, this.folderName);
+                new SubFolderSuggest(this.app, cb.inputEl, this.folderArrangement.folder);
                 cb.setPlaceholder("")
                     .onChange((new_folder) => {
                         // Trim folder and Strip ending slash if there
@@ -42,8 +42,10 @@ export class UpdateSubFolder extends Modal {
                 // @ts-ignore
                 cb.containerEl.addClass("templater_search");
         });
-        const fold = this.app.vault.getAbstractFileByPath(this.folderName);
-        this.svelteTest = mount(SvelteImportStuff, { target:this.contentEl,props:{tabs:10, folder:fold} }  )
+        
+        this.svelteTest = mount(SvelteImportStuff, { target:this.contentEl,props:{tabs:10, folderArrangement:this.folderArrangement} }  )
+        this.svelteTest2 = mount(SvelteDisplayList, { target:this.contentEl,props:{} }  )
+        this.svelteTest3 = mount(AdjustFiles, { target:this.contentEl,props:{subFiles:this.folderArrangement.subFiles} }  )
     
 
     }

@@ -1,19 +1,25 @@
-import { Notice } from "obsidian";
+import { Notice, TFolder } from "obsidian";
 import type DraftManagerPlugin from "src/main";
 import type draftConditions from "types/choices/draftConditions";
 import { v4 } from "uuid";
 
 
 export function checkFolderCanBeAdded(new_folder:string,plugin:DraftManagerPlugin):void{
-    for(let i = 0; i <this.plugin.settings.folders.length; i++){
-        if (new_folder == this.plugin.settings.folders[i].folderName){
+    for(let i = 0; i <plugin.settings.folders.length; i++){
+        if (new_folder == plugin.settings.folders[i].folder){
             new Notice("This folder is already on the list");
             return;
         }
     }
+    const tfold:TFolder|null  = plugin.app.vault.getFolderByPath(new_folder);
+    if( !(tfold instanceof TFolder) ){
+        new Notice("This folder does not exist");
+        return;
+    }
+
     // This is assigning not just the values but the memory too.
     const folderCopy:draftConditions = this.plugin.settings.defaultFolder;
-    this.plugin.settings.folders.push({folderName:new_folder,id:v4(),haveSubFolders:true,haveDrafts:true,bibliography: "",draftConditions:this.plugin.settings.defaultFolder,subFolderArrangement:{excludeFolders:[],folderArrangement:[]}});
-    this.plugin.saveSettings();
-    this.display();
+    plugin.settings.folders.push({folder:tfold.name,id:v4(),draftConditions:this.plugin.settings.defaultFolder,compileOutPut:"",subFiles:[],subFolders:[],order:0});
+    plugin.saveSettings();
+    //plugin.settings.display();
 }

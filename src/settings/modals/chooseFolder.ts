@@ -2,7 +2,7 @@ import {App, Modal,Setting } from "obsidian"
 import { folderListSuggest } from "../suggesters/folderListSuggest";
 import { chooseSubFolder } from "./chooseSubfolder";
 import type draftConditions from "types/choices/draftConditions";
-import { buttonCssClassName, templateSearchCssName } from "src/cssStylings/cssClassNames";
+import { buttonCssClassName, templateSearchCssName } from "types/cssStylings/cssClassNames";
 import type DraftManagerSettings from "../DraftManagerPluginSettings";
 import type DraftManagerPlugin from "src/main";
 export class chooseFolder extends Modal{
@@ -16,13 +16,13 @@ export class chooseFolder extends Modal{
     onOpen(): void {
         const containerEl=this.modalEl;
         containerEl.createEl("h1").setText("Select Folder" );
-        let folderTextName = this.settings.folders[0].folderName;
+        let folderTextName = this.settings.folders[0].folder;
         new Setting(containerEl).setName("Select your folder")
         .setDesc("Choose which folder you wish to add from your list.")
         .addSearch((cb)=>{
             new folderListSuggest(this.app, cb.inputEl,this.settings.folders);
                 cb.setPlaceholder("Example: folder1/folder2")
-                    .setValue(this.settings.folders[0].folderName)
+                    .setValue(this.settings.folders[0].folder)
                     .onChange((new_folder) => {
                         // Trim folder and Strip ending slash if there
                         new_folder = new_folder.trim()
@@ -35,7 +35,7 @@ export class chooseFolder extends Modal{
             btn.setButtonText("Folder Button").onClick(() =>{
                 let folderDraftConditions:draftConditions = this.settings.folders[0].draftConditions;
                 for (let i =0; i < this.settings.folders.length;i++){
-                    if(this.settings.folders[i].folderName == folderTextName){
+                    if(this.settings.folders[i].folder == folderTextName){
                         folderDraftConditions = this.settings.folders[i].draftConditions;
                     }
                 }

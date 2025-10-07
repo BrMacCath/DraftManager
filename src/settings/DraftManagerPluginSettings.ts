@@ -1,23 +1,15 @@
-import type FolderArrangement from "../../types/choices/folderArrangement";
+import type FolderArrangement from "../../types/FolderTypes/folderArrangement";
 import type draftConditions from "types/choices/draftConditions";
+import { defaultFolderDraftConditions } from "./Default Values/defaultFolderDraftConditions";
 
 export default interface DraftManagerSettings {
-	draftFolders:string[];
-	templates_folder:string;
-	user_scripts_folder:string;
 	folders: FolderArrangement[];
-	defaultDraft: string;
 	defaultFolder:draftConditions;
 	vaultList: string[];
 }
 
 export const DEFAULT_SETTINGS: DraftManagerSettings = {
-	draftFolders: [],
-	templates_folder:"",
-	user_scripts_folder:"",
 	folders: [],
-	defaultDraft: "Peterson",
-	defaultFolder: {draftStyle:{name:"Peterson"},haveComments:true, commentSignifier:"*",rewriteLineSignifier:">",
-			draftStorage: "Drafts",	draftFileIndicator:"DRAFTS ",haveTopicFrontMatter: false,topicFrontMatterSeparator:"*---*",paragraphSeparator:"+---+",draftNumSignifier:"draftNum"},
+	defaultFolder: defaultFolderDraftConditions,
 	vaultList: []
 }

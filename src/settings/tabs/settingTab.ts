@@ -1,13 +1,13 @@
-import { PluginSettingTab,App,Setting, Notice } from "obsidian";
+import { PluginSettingTab,App,Setting, Notice, TFolder } from "obsidian";
 import { FolderSuggest } from "../suggesters/folderSuggester";
-import { v4 } from "uuid";
 import { UpdateFolder } from "../modals/updateFolder";
 import { UpdateDraftCons } from "../functions/Drafts/updateDraftCons";
-import type draftConditions from "types/choices/draftConditions";
 import { createVaultTab } from "../functions/Tabs/createVaultTab";
-import { buttonCssClassName, templateSearchCssName } from "src/cssStylings/cssClassNames";
+import { buttonCssClassName, templateSearchCssName } from "types/cssStylings/cssClassNames";
 import { sortFolderOrder } from "../functions/Folder/sortFolderOrder";
 import type DraftManagerPlugin from "src/main";
+import { fillOutFolderStructure } from "../functions/Folder/fillOutFolderStructure";
+import type FolderArrangement from "types/FolderTypes/folderArrangement";
 export class DraftTab extends PluginSettingTab {
 	plugin: DraftManagerPlugin;
 
@@ -24,7 +24,9 @@ export class DraftTab extends PluginSettingTab {
 		new Setting(containerEl).setName("Choose which folders.").setHeading();
 		//this.add_template_folder_setting();
 		this.plugin.settings.folders.forEach( (folder) => {
-			new Setting(containerEl).setName(folder.folderName).addButton( (btn)=> {
+		
+	
+			new Setting(containerEl).setName(folder.folder).addButton( (btn)=> {
 				// Create a folder modal that allows you to edit it.
 				btn.setButtonText("Update Folder").onClick(() => {
 					new UpdateFolder(this.app,this.plugin,folder,this).open()
@@ -49,32 +51,46 @@ export class DraftTab extends PluginSettingTab {
                 // @ts-ignore
                 cb.containerEl.addClass(templateSearchCssName);
 		}).addButton((btn)=>{
-			btn.setButtonText("Folder Button").onClick(() =>{
-				this.checkFolderCanBeAdded(folderTextName)
+			btn.setButtonText("Add Folder").onClick(async () =>{
+				await this.checkFolderCanBeAdded(folderTextName,this.plugin)
 			}  )
             btn.setClass(buttonCssClassName);
 		})
 		UpdateDraftCons(this.plugin.settings.defaultFolder, this,containerEl,"Default");
 		//new VaultTab(containerEl,this.plugin);
-		createVaultTab(containerEl,this.plugin)
+		createVaultTab(containerEl,this.plugin,this)
 	}
 
-	checkFolderCanBeAdded(new_folder:string):void{
-		for(let i = 0; i <this.plugin.settings.folders.length; i++){
-			if (new_folder == this.plugin.settings.folders[i].folderName){
+	async checkFolderCanBeAdded(new_folder:string,plugin:DraftManagerPlugin):Promise<void>{
+		for(let i = 0; i <plugin.settings.folders.length; i++){
+			if (new_folder == plugin.settings.folders[i].folder){
 				new Notice("This folder is already on the list");
 				return;
 			}
 		}
 		// This is assigning not just the values but the memory too.
-		const folderCopy:draftConditions = this.plugin.settings.defaultFolder;
-		this.plugin.settings.folders.push({folderName:new_folder,id:v4(),haveSubFolders:true,haveDrafts:true,bibliography: "",draftConditions:this.plugin.settings.defaultFolder,subFolderArrangement:{excludeFolders:[],folderArrangement:[]}});
-		this.plugin.saveSettings();
+		const tfold:TFolder|null = this.app.vault.getFolderByPath(new_folder);
+		if( !(tfold instanceof TFolder)){
+			return;
+		}
+		console.log(plugin.settings.folders)
+		const foldArrange:FolderArrangement = fillOutFolderStructure(tfold,plugin.settings.defaultFolder)
+		console.log(foldArrange)
+		console.log(JSON.stringify({
+			"a": "test"
+		})
+		)
+		console.log(foldArrange)
+		console.log(JSON.stringify(foldArrange))
+		console.log(foldArrange.id)
+		plugin.settings.folders.push(foldArrange);
+		await plugin.saveData(plugin.settings)
+		await plugin.saveSettings();
 		this.display();
 	}
 
 	sortFolderOrder():void{
-		this.plugin.settings.folders.sort( (a,b) => a.folderName.localeCompare(b.folderName));
+		this.plugin.settings.folders.sort( (a,b) => a.folder.localeCompare(b.folder));
 		this.plugin.saveSettings()
 	}
 }

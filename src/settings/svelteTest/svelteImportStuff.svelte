@@ -19,9 +19,9 @@
 </script>
 
 <div class="Test1" >
-    <Icon data={faFolder} />{"  "+folderArrangement.folder.name}
+    <Icon data={faFolder} />{"  "+folderArrangement.folder}
     <!-- {mount(SvelteImportStuff)} -->
-    <div class={folderArrangement.folder.name}>
+    <div class={folderArrangement.folder}>
 {#each folderArrangement.subFolders as fold}
 <div class="Test2" >
     <SvelteImportStuff tabs={tabs+5} folderArrangement={fold} ></SvelteImportStuff>
@@ -32,7 +32,7 @@
 
 {#each folderArrangement.subFiles as file}
     <div class="Test2"style="margin-left:5px">
-        <Icon data={faFile} /> {file.file.name}
+        <Icon data={faFile} /> {file.file}
     </div>
 {/each}
 

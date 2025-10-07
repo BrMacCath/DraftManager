@@ -2,7 +2,7 @@ import {App, Modal,Setting } from "obsidian"
 import { SubFolderSuggest } from "../suggesters/subFolderSuggester";
 import { chooseFileFromFolder } from "./chooseFileFromFolder";
 import type draftConditions from "types/choices/draftConditions";
-import { buttonCssClassName, templateSearchCssName } from "src/cssStylings/cssClassNames";
+import { buttonCssClassName, templateSearchCssName } from "types/cssStylings/cssClassNames";
 import type DraftManagerPlugin from "src/main";
 import type DraftManagerSettings from "../DraftManagerPluginSettings";
 export class chooseSubFolder extends Modal{
