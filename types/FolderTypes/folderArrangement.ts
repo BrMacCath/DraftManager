@@ -1,12 +1,11 @@
 // Organise this.
-import type { TFolder } from "obsidian";
 import type draftConditions from "../choices/draftConditions";
 import type FileArrangement from "./fileArrangement";
 // The id property is added as each folder
 // may be added multiple times and sometimes we
 // will need to distingush where it is.
 export default interface FolderArrangement {
-    folder: TFolder;
+    folder: string;
     draftConditions: draftConditions;
     order: number;
     subFolders: FolderArrangement[];
