@@ -1,8 +1,9 @@
 import { Notice } from "obsidian";
 import type DraftManagerPlugin from "src/main";
 import type DraftManagerSettings from "src/settings/DraftManagerPluginSettings";
+import { settingsStore } from "types/zustand/store";
 
-export async function checkVaultCanBeAdded(vaultName:string,draftManagerSettings:DraftManagerSettings,plugin: DraftManagerPlugin){
+export function checkVaultCanBeAdded(vaultName:string,draftManagerSettings:DraftManagerSettings,plugin: DraftManagerPlugin){
     // Check Vault is not already on the list
     let newVault= true;
     draftManagerSettings.vaultList.forEach((vault) =>{
@@ -23,9 +24,9 @@ export async function checkVaultCanBeAdded(vaultName:string,draftManagerSettings
         new Notice("This vault does not exist.");
         return;
     }
-   
+    settingsStore.setState({vaultList: [...draftManagerSettings.vaultList,vaultName]})
     draftManagerSettings.vaultList.push(vaultName)
-    await plugin.saveSettings()
+    
     
     // Check the vault exists
     

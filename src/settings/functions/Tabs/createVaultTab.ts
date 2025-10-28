@@ -36,9 +36,8 @@ export function createVaultTab(html:HTMLElement,  plugin: DraftManagerPlugin,set
        
         
     }).addButton((btn)=>{
-        btn.setButtonText("Add Vault").onClick(async () =>{
-            await checkVaultCanBeAdded(vaultName,plugin.settings,plugin);
-            await settingTab.display();
+        btn.setButtonText("Add Vault").onClick(() =>{
+            checkVaultCanBeAdded(vaultName,plugin.settings,plugin);
         }  )
         btn.setClass(buttonCssClassName);
     })

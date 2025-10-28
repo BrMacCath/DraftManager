@@ -19,7 +19,7 @@ export function checkFolderCanBeAdded(new_folder:string,plugin:DraftManagerPlugi
 
     // This is assigning not just the values but the memory too.
     const folderCopy:draftConditions = this.plugin.settings.defaultFolder;
-    plugin.settings.folders.push({folder:tfold.name,id:v4(),draftConditions:this.plugin.settings.defaultFolder,compileOutPut:"",subFiles:[],subFolders:[],order:0});
+    plugin.settings.folders.push({folder:tfold.name,id:v4(),draftConditions:this.plugin.settings.defaultFolder,compileOutPut:"",subFiles:[],subFolders:[]});
     plugin.saveSettings();
     //plugin.settings.display();
 }

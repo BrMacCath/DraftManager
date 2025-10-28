@@ -7,7 +7,6 @@ import type FileArrangement from "./fileArrangement";
 export default interface FolderArrangement {
     folder: string;
     draftConditions: draftConditions;
-    order: number;
     subFolders: FolderArrangement[];
     subFiles: FileArrangement[];
     compileOutPut: string;

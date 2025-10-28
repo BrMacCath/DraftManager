@@ -1,44 +1,91 @@
 <script lang="ts">
 	import type FileArrangement from "types/FolderTypes/fileArrangement";
-
+    import { dndzone } from 'svelte-dnd-action';
+	import { flip } from 'svelte/animate';
+    import type {DndEvent} from "svelte-dnd-action";
+	import ObsidianIcon from "./ObsidianIcon.svelte";
+//https://svelte.dev/tutorial/kit/the-form-element
     interface Props{
         subFiles: FileArrangement[]
     }
 
     let {
-        subFiles
+        subFiles=$bindable()
     }:Props =$props();
-    // let folderChildren:TFolder[] =folder.children.filter((abfile) =>{return abfile instanceof TFolder});
-    // let fileChildren:TFile[] =folder.children.filter((abfile) =>{return abfile instanceof TFile});
-    // Could manage this outside the svelte situation
-    
-	export function dragstart (ev:DragEvent, group:string, order:number) {
-		ev.dataTransfer?.setData("group", group);
-		ev.dataTransfer?.setData("item", String(order));
+
+	const flipDurationMs = 200;
+	let dragDisabled = $state(true);
+	
+	function handleConsider(e:CustomEvent<DndEvent>){
+		subFiles = e.detail.items;
+	};
+	function handleFinalize(e){
+		subFiles = e.detail.items;
+    }
+
+	const startDrag = () => {
+		dragDisabled = false;
+	};
+	const stopDrag = () => {
+		dragDisabled = true;
+	};
+	function removeExtension(str:string){
+		const index= str.indexOf(".");
+		if(index ===-1){
+			return str;
+		}
+		return str.slice(0,index);
 	}
-
-	export function dragover (ev:DragEvent) {
-		ev.preventDefault();
-        if(!(ev.dataTransfer == null) ){
-		    ev.dataTransfer.dropEffect = 'move';
-        }
-	}
-
-	export function drop (ev:DragEvent) {
-		ev.preventDefault();
-		var i = ev.dataTransfer?.getData("item");
-		var old_g = ev.dataTransfer?.getData("group");
-	// 	const item = groups[old_g].items.splice(i,1)[0];
-	// 	groups[new_g].items.push(item);
-	// 	groups = groups;
-	 }
-
+ 
 
 </script>
+<style>
+	.div-animate {
+		position: relative;
+		height: 1.5em;
+		width: 10em;
+		text-align: center;
+		margin: 0.2em;
+		padding: 0.3em;
+	}
+	.handle {
+		cursor: grab;
+		position: absolute;
+		display: flex;
+	}
+	.alignIconInDivInMiddle {
+    display: flex;
+    align-items: center;
+}
+.textAlign{
+	text-align: left;
+	left: 0;
+}
+</style>
 
-{#each subFiles as file,order}
-<div class = "subfile">
-    {file.file} + {order}
-</div>
+<section
+	use:dndzone={{ items:subFiles, dragDisabled, flipDurationMs }}
+	onconsider={handleConsider}
+	onfinalize={handleFinalize}
+>
+	{#each subFiles as subfile(subfile.id)}
+		<div animate:flip={{ duration: flipDurationMs }} class="div-animate">
+			<div 
+			class="handle" 
+			tabindex={dragDisabled ? 0 : -1}
+			onmousedown={startDrag} 
+			ontouchstart={startDrag} 
+			onmouseup={stopDrag} 
+			ontouchend={stopDrag}
+			 role="button"
+		
+			 > 
+				 <ObsidianIcon iconId="file" size={16} />
 
-{/each}
+			</div>
+			<div><span class="textAlign">{removeExtension(subfile.file)}</span></div>
+			
+			
+  	</div>
+	{/each}
+</section> 

@@ -1,4 +1,7 @@
 <script>
+	// import {dndzone, SHADOW_PLACEHOLDER_ITEM_ID, SOURCES} from "svelte-dnd-action";
+    // import type {DndEvent} from "svelte-dnd-action";
+	//https://svelte.dev/playground/7eb1fe7730394d9397700ef294d805aa?version=5.39.11
 	export let groups = [
     {
       "name": "Fruit basket 1",

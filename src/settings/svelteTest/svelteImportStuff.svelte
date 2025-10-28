@@ -12,14 +12,15 @@
     // let fileChildren:TFile[] =folder.children.filter((abfile) =>{return abfile instanceof TFile});
     // Could manage this outside the svelte situation
 
-    import {faFolder,faFile} from "@fortawesome/free-solid-svg-icons";
-    import Icon from "svelte-awesome/components/Icon.svelte";
+    
 	import type FolderArrangement from "types/FolderTypes/folderArrangement";
     import SvelteImportStuff from "./svelteImportStuff.svelte";
+    import AdjustFiles from "./adjustFiles.svelte";
+	import ObsidianIcon from "./ObsidianIcon.svelte";
 </script>
 
 <div class="Test1" >
-    <Icon data={faFolder} />{"  "+folderArrangement.folder}
+    <ObsidianIcon iconId="folder" size={16} />{"  "+folderArrangement.folder}
     <!-- {mount(SvelteImportStuff)} -->
     <div class={folderArrangement.folder}>
 {#each folderArrangement.subFolders as fold}
@@ -30,11 +31,11 @@
 {/each}
  </div>
 
-{#each folderArrangement.subFiles as file}
-    <div class="Test2"style="margin-left:5px">
-        <Icon data={faFile} /> {file.file}
-    </div>
-{/each}
+<div style="margin-left:5px">
+    <AdjustFiles bind:subFiles={folderArrangement.subFiles}></AdjustFiles>
+</div>
+
+
 
     
 </div>
@@ -43,7 +44,7 @@
 
 <style>
     .Test1 {
-        margin-left: 3px;
+        margin-left: 5px;
     }
     
 </style>

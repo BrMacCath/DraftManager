@@ -1,17 +1,18 @@
 import type FolderArrangement from "types/FolderTypes/folderArrangement";
 import { DraftTab } from "../tabs/settingTab";
-import { Modal,App,Setting,Notice,SearchComponent, Vault, TFolder } from "obsidian";
-import { FolderSuggest } from "../suggesters/folderSuggester";
-import { UpdateDraftSettings } from "./updateDraftSettings";
+import { Modal,App,Setting,Notice,SearchComponent,  TFolder } from "obsidian";
 import { UpdateSubFolder } from "./updateSubfolder";
-import { buttonCssClassName, hideCssName, deleteCssName } from "types/cssStylings/cssClassNames";
+import { buttonCssClassName,  deleteCssName } from "types/cssStylings/cssClassNames";
 import type DraftManagerPlugin from "src/main";
 import { fillOutFolderStructure } from "../functions/Folder/fillOutFolderStructure";
+import { mount,unmount } from "svelte";
+import AdjustText from "../svelteTest/adjustText.svelte";
 
 export class UpdateFolder extends Modal {
 	plugin: DraftManagerPlugin;
 	folder: FolderArrangement;
 	settingsTab: DraftTab;
+	svelteText: ReturnType<typeof AdjustText> |undefined;
 	constructor(app: App,plugin: DraftManagerPlugin,folder:FolderArrangement,settingsTab:DraftTab) {
 		super(app);
 		this.plugin = plugin;
@@ -20,45 +21,14 @@ export class UpdateFolder extends Modal {
 	}
 
 	onOpen() {
-        this.folderNameConditions()
         this.createSubfolderConditions()
-        // this.createDraftConditions()
         this.createDeleteFolderButton()
+		this.svelteText = mount(AdjustText,{target:this.containerEl,props:{text:this.plugin.settings.test}})
 	}
-
-    folderNameConditions():void{
-        const {contentEl} = this;
-        contentEl.createEl("h1").setText("Adjust Folder Settings");
-        new Setting(contentEl)
-			.setName("Folder")
-            .setDesc("This is where the code will be applied to.")
-            .addSearch((cb) => {
-                new FolderSuggest(this.app, cb.inputEl);
-                cb.setPlaceholder(this.folder.folder)
-                    .setValue(this.folder.folder)
-                    .onChange((new_folder) => {
-                        // Trim folder and Strip ending slash if there
-                        new_folder = new_folder.trim()
-                        new_folder = new_folder.replace(/\/$/, "");
-
-                        this.checkFolderCanBeAdded(new_folder,cb,this.folder.folder);
-						this.settingsTab.display();
-                    });
-                // @ts-ignore
-                cb.containerEl.addClass("templater_search");
-            });
-    }
 
     createSubfolderConditions():void{
         const {contentEl} = this;
-		new Setting(contentEl).setName("Subfolders")
-            .setDesc("Does this folder have subfolders?")
-            .addToggle( (cb) => cb.onChange(async (value)=>{
-                // this.folder.haveSubFolders = value;
-                subFoldArrange.settingEl.classList.toggle(hideCssName);
-                await this.plugin.saveSettings();}
-            )
-	    )
+		contentEl.createEl("h1").setText("Adjust " +this.folder.folder + " folder")
         let subFoldArrange = new Setting(contentEl);
         subFoldArrange.setName("Update Subfolders")
             .setDesc("Change Subfolder Conditions")
@@ -72,27 +42,6 @@ export class UpdateFolder extends Modal {
         
     }
 
-    // createDraftConditions():void{
-    //     const {contentEl} = this;
-    //     new Setting(contentEl).setName("Drafts")
-    //         .setDesc("Will you be using drafts in your situation?")
-    //         .addToggle( (cb) => cb.setValue(this.folder.haveDrafts)
-    //         .onChange(async (value)=>{
-    //             this.folder.haveDrafts = value;
-    //             draftConditionsTab.settingEl.classList.toggle(hideCssName);
-    //             await this.plugin.saveSettings();}
-    //         )
-    //     )
-    //     let draftConditionsTab =new Setting(contentEl).setName("Update draft conditions.").addButton((btn) => {
-    //         btn.setButtonText("Update").onClick( () =>{
-    //             // Make a modal that talks about the draft settings
-    //             console.log(this.folder.draftConditions)
-                
-    //             new UpdateDraftSettings(this.app,this.folder.draftConditions,this.settingsTab,this.folder.folder.name).open()
-    //         } )
-    //         btn.setClass(buttonCssClassName)
-    //     })
-    // }
 
     checkFolderCanBeAdded(new_folder:string,cb:SearchComponent,oldName:string):void{
 		for(let i = 0; i <this.plugin.settings.folders.length; i++){
@@ -128,8 +77,13 @@ export class UpdateFolder extends Modal {
 	} )
     }
 
+	
+
 	onClose() {
 		const {contentEl} = this;
+		if(this.svelteText){
+            unmount(this.svelteText);
+        }
 		contentEl.empty();
 	}
 }

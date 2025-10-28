@@ -2,11 +2,23 @@
 
 This plugin is to help order writing drafts in Obsidian and how to manage the final product. This plugin will allow for different draft styles
 
+# Current Capacity
+
+Right now we can move folders of files from one vault to the next.
+
+
 
 # Draft Styles
-## Peterson-Beginning
 
-## Peterson Walt Frontmatter
+## Blank
+
+This draft style updates the frontmatter and adds the next draft number title to the page.
+
+## Copy
+
+This updates the frontmatter, states the completed draft version and creates the title for the next draft.
+
+## Peterson-Walt-Frontmatter
 
 
 
