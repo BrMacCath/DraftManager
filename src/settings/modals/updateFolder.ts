@@ -5,14 +5,12 @@ import { UpdateSubFolder } from "./updateSubfolder";
 import { buttonCssClassName,  deleteCssName } from "types/cssStylings/cssClassNames";
 import type DraftManagerPlugin from "src/main";
 import { fillOutFolderStructure } from "../functions/Folder/fillOutFolderStructure";
-import { mount,unmount } from "svelte";
-import AdjustText from "../svelteTest/adjustText.svelte";
+import { settingsStore } from "types/zustand/store";
 
 export class UpdateFolder extends Modal {
 	plugin: DraftManagerPlugin;
 	folder: FolderArrangement;
 	settingsTab: DraftTab;
-	svelteText: ReturnType<typeof AdjustText> |undefined;
 	constructor(app: App,plugin: DraftManagerPlugin,folder:FolderArrangement,settingsTab:DraftTab) {
 		super(app);
 		this.plugin = plugin;
@@ -23,7 +21,6 @@ export class UpdateFolder extends Modal {
 	onOpen() {
         this.createSubfolderConditions()
         this.createDeleteFolderButton()
-		this.svelteText = mount(AdjustText,{target:this.containerEl,props:{text:this.plugin.settings.test}})
 	}
 
     createSubfolderConditions():void{
@@ -57,7 +54,7 @@ export class UpdateFolder extends Modal {
         }
  
         this.folder= fillOutFolderStructure(foldName,this.plugin.settings.defaultFolder);
-		this.plugin.saveSettings();
+		settingsStore.setState({folders:[...settingsStore.getState().folders,this.folder]})
 		this.settingsTab.display();
 	}
 
@@ -69,7 +66,8 @@ export class UpdateFolder extends Modal {
 		.addButton((cb) =>{
 			cb.setButtonText("Delete").onClick( () =>{
 				//this.plugin.settings.folders = this.plugin.settings.folders.filter(fold => fold.id != this.folder.id)
-				this.plugin.saveSettings()
+				const folderList = settingsStore.getState().folders.filter(fold => fold.id != this.folder.id)
+				settingsStore.setState({folders:folderList})
 				this.settingsTab.display();
 				this.close()
 			} ) 
@@ -81,9 +79,7 @@ export class UpdateFolder extends Modal {
 
 	onClose() {
 		const {contentEl} = this;
-		if(this.svelteText){
-            unmount(this.svelteText);
-        }
+		
 		contentEl.empty();
 	}
 }

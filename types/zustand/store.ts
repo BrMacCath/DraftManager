@@ -10,6 +10,8 @@ export const settingsStore = ( () =>{
 
 	const { getState, setState, subscribe } = useSettingsStore;
 
+	
+
 	return {
 		getState,
 		setState,

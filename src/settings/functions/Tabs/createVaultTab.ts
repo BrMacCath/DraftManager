@@ -3,20 +3,21 @@ import { buttonCssClassName, deleteCssName } from "types/cssStylings/cssClassNam
 import type DraftManagerPlugin from "src/main";
 import { checkVaultCanBeAdded } from "./checkVaultCanBeAdded";
 import type { DraftTab } from "src/settings/tabs/settingTab";
+import { settingsStore } from "types/zustand/store";
 
 export function createVaultTab(html:HTMLElement,  plugin: DraftManagerPlugin,settingTab:DraftTab){
     html.createEl("h2").setText("Vault Transfer Management");
     new Setting(html).setName("Vaults that we can transfer files to").setHeading();
-    plugin.settings.vaultList.forEach( (vault) =>{
+    settingsStore.getState().vaultList.forEach( (vault) =>{
         new Setting(html).setName(vault).addButton( (btn)=> {
         // Create a folder modal that allows you to edit it.
-        btn.setButtonText("Delete Vault").onClick(async () => {
+        btn.setButtonText("Delete Vault").onClick(() => {
             // Delete vault action
-            plugin.settings.vaultList =plugin.settings.vaultList.filter((name)=>{
+            const newList = settingsStore.getState().vaultList.filter((name)=>{
                 return name != vault;
             } )
-            await plugin.saveSettings();
-            await settingTab.display();
+            settingsStore.setState({vaultList:newList})
+            settingTab.display();
         });
         btn.setClass(deleteCssName);
     })
@@ -38,6 +39,7 @@ export function createVaultTab(html:HTMLElement,  plugin: DraftManagerPlugin,set
     }).addButton((btn)=>{
         btn.setButtonText("Add Vault").onClick(() =>{
             checkVaultCanBeAdded(vaultName,plugin.settings,plugin);
+            settingTab.display();
         }  )
         btn.setClass(buttonCssClassName);
     })

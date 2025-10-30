@@ -4,10 +4,10 @@ import { UpdateFolder } from "../modals/updateFolder";
 import { UpdateDraftCons } from "../functions/Drafts/updateDraftCons";
 import { createVaultTab } from "../functions/Tabs/createVaultTab";
 import { buttonCssClassName, templateSearchCssName } from "types/cssStylings/cssClassNames";
-import { sortFolderOrder } from "../functions/Folder/sortFolderOrder";
 import type DraftManagerPlugin from "src/main";
 import { fillOutFolderStructure } from "../functions/Folder/fillOutFolderStructure";
 import type FolderArrangement from "types/FolderTypes/folderArrangement";
+import { settingsStore } from "types/zustand/store";
 export class DraftTab extends PluginSettingTab {
 	plugin: DraftManagerPlugin;
 
@@ -17,13 +17,12 @@ export class DraftTab extends PluginSettingTab {
 	}
 
 	display(): void {
-		const {containerEl} = this;
-		sortFolderOrder(this.plugin);
+		const {containerEl} = this;;
 		containerEl.empty();
 		containerEl.createEl("h1").setText("Plugin Settings")
 		new Setting(containerEl).setName("Choose which folders.").setHeading();
 		//this.add_template_folder_setting();
-		this.plugin.settings.folders.forEach( (folder) => {
+		settingsStore.getState().folders.forEach( (folder) => {
 		
 	
 			new Setting(containerEl).setName(folder.folder).addButton( (btn)=> {
@@ -46,7 +45,6 @@ export class DraftTab extends PluginSettingTab {
                         new_folder = new_folder.trim()
                         new_folder = new_folder.replace(/\/$/, "");
 						folderTextName = new_folder;
-                        this.plugin.saveSettings();
                     });
                 // @ts-ignore
                 cb.containerEl.addClass(templateSearchCssName);
@@ -58,10 +56,11 @@ export class DraftTab extends PluginSettingTab {
 		})
 		UpdateDraftCons(this.plugin.settings.defaultFolder, this,containerEl,"Default");
 		//new VaultTab(containerEl,this.plugin);
-		createVaultTab(containerEl,this.plugin,this)
+		createVaultTab(containerEl,this.plugin,this);
 	}
 
 	async checkFolderCanBeAdded(new_folder:string,plugin:DraftManagerPlugin):Promise<void>{
+		console.log("Got into folder function: Starting")
 		for(let i = 0; i <plugin.settings.folders.length; i++){
 			if (new_folder == plugin.settings.folders[i].folder){
 				new Notice("This folder is already on the list");
@@ -73,24 +72,10 @@ export class DraftTab extends PluginSettingTab {
 		if( !(tfold instanceof TFolder)){
 			return;
 		}
-		console.log(plugin.settings.folders)
 		const foldArrange:FolderArrangement = fillOutFolderStructure(tfold,plugin.settings.defaultFolder)
-		console.log(foldArrange)
-		console.log(JSON.stringify({
-			"a": "test"
-		})
-		)
-		console.log(foldArrange)
-		console.log(JSON.stringify(foldArrange))
-		console.log(foldArrange.id)
-		plugin.settings.folders.push(foldArrange);
-		await plugin.saveData(plugin.settings)
-		await plugin.saveSettings();
-		this.display();
+		settingsStore.setState({folders: [...settingsStore.getState().folders,foldArrange]})
+		this.display()
 	}
 
-	sortFolderOrder():void{
-		this.plugin.settings.folders.sort( (a,b) => a.folder.localeCompare(b.folder));
-		this.plugin.saveSettings()
-	}
+	
 }

@@ -25,7 +25,7 @@ export function checkVaultCanBeAdded(vaultName:string,draftManagerSettings:Draft
         return;
     }
     settingsStore.setState({vaultList: [...draftManagerSettings.vaultList,vaultName]})
-    draftManagerSettings.vaultList.push(vaultName)
+    
     
     
     // Check the vault exists

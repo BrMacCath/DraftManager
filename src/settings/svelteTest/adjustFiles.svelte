@@ -1,32 +1,50 @@
 <script lang="ts">
 	import type FileArrangement from "types/FolderTypes/fileArrangement";
-    import { dndzone } from 'svelte-dnd-action';
+    import { dndzone, SHADOW_PLACEHOLDER_ITEM_ID } from 'svelte-dnd-action';
 	import { flip } from 'svelte/animate';
     import type {DndEvent} from "svelte-dnd-action";
 	import ObsidianIcon from "./ObsidianIcon.svelte";
 //https://svelte.dev/tutorial/kit/the-form-element
     interface Props{
-        subFiles: FileArrangement[]
+        subFiles: FileArrangement[],
+		handleConfigureChoice: (e:Event) => void;
     }
 
     let {
-        subFiles=$bindable()
+        subFiles,
+		handleConfigureChoice
     }:Props =$props();
 
 	const flipDurationMs = 200;
 	let dragDisabled = $state(true);
 	
 	function handleConsider(e:CustomEvent<DndEvent>){
-		subFiles = e.detail.items;
+		// subFiles = e.detail.items;
+		console.log(e)
 	};
 	function handleFinalize(e){
-		subFiles = e.detail.items;
+		
+		let {items: newItems} = e.detail;
+		console.log(e.detail)
+        let collapseId = "";
+
+        // Remove internal placeholder item from state to avoid ghost gaps
+        const sanitized = (newItems as FileArrangement[]).filter(
+            (it) => it.id !== SHADOW_PLACEHOLDER_ITEM_ID
+        );
+        // subFiles = sanitized;
+		
+        // Always re-disable dragging when the sort finalizes
+        dragDisabled = true;
+		
     }
 
 	const startDrag = () => {
+		console.log("In here")
 		dragDisabled = false;
 	};
 	const stopDrag = () => {
+		console.log("Not here")
 		dragDisabled = true;
 	};
 	function removeExtension(str:string){
@@ -53,10 +71,7 @@
 		position: absolute;
 		display: flex;
 	}
-	.alignIconInDivInMiddle {
-    display: flex;
-    align-items: center;
-}
+	
 .textAlign{
 	text-align: left;
 	left: 0;
@@ -66,7 +81,7 @@
 <section
 	use:dndzone={{ items:subFiles, dragDisabled, flipDurationMs }}
 	onconsider={handleConsider}
-	onfinalize={handleFinalize}
+	onfinalize={handleConfigureChoice}
 >
 	{#each subFiles as subfile(subfile.id)}
 		<div animate:flip={{ duration: flipDurationMs }} class="div-animate">
