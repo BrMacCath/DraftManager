@@ -1,6 +1,5 @@
 import { App, Modal} from "obsidian";
 import { DraftTab } from "../tabs/settingTab";
-import SvelteImportStuff from "../svelteTest/svelteImportStuff.svelte";
 import { mount,unmount } from "svelte";
 import type DraftManagerPlugin from "src/main";
 import type FolderArrangement from "types/FolderTypes/folderArrangement";

@@ -1,7 +1,7 @@
 {
 	"name": "Draft Manager",
-	"version": "1.0.0",
-	"description": "Apply draft techniques to files and control the output file type and location.",
+	"version": "1.0.1",
+	"description": "Apply draft techniques to files and control the location of the end result.",
 	"main": "main.js",
 	"scripts": {
 		"dev": "node esbuild.config.mjs",

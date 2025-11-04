@@ -14,7 +14,8 @@
 		startDrag: () =>void;
 		stopDrag: ()=>void;
         saveChanges: ()=>void;
-        changeSelection:(e:any, selection:FolderArrangement|FileArrangement) => void;
+        changeSelection:(selection:FolderArrangement|FileArrangement) => void;
+		changeFileList:(fileList:FileArrangement[])=>void;
     }
 
     let {
@@ -25,7 +26,8 @@
 		startDrag,
 		stopDrag,
         saveChanges,
-        changeSelection
+        changeSelection,
+		changeFileList
 
     }:Props =$props();
 
@@ -36,7 +38,7 @@
         subFiles = e.detail.items;         
 	}
 
-    function handleFinalise(e){
+    function handleFinalise(e:any){
 		let {items: newItems} = e.detail;
         collapseId = "";
         // Remove internal placeholder item from state to avoid ghost gaps
@@ -53,7 +55,7 @@
         subFolders = e.detail.items;
 	}
     //This is going to the wrong place. It is saving it to subfiles
-    function handleFinaliseFolder(e){
+    function handleFinaliseFolder(e:any){
 		let {items: newItems} = e.detail;
         collapseId = "";
         // Remove internal placeholder item from state to avoid ghost gaps
@@ -118,14 +120,18 @@
 				 <ObsidianIcon iconId="folder" size={16} />
 
 			</div>
-			<div><span class="textAlign" onclick={(e)=>{changeSelection(e,subFolder)}}>{subFolder.folder}</span></div>
+			<div><button class="textAlign"  onclick={()=>{{
+				changeSelection(subFolder)
+				changeFileList(Folder.subFiles)
+			}}}>{subFolder.folder}</button></div>
 			</div>
 			<div style="margin-left: {tabs}px">
 			<AdjustFolders bind:Folder={subFolders[index]} {dragDisabled} {tabs} {currentSelection}
                 {startDrag}
                 {stopDrag}
                 {saveChanges} 
-                {changeSelection}>
+                {changeSelection}
+				{changeFileList}>
             </AdjustFolders>  
             </div>
   	</div>
@@ -154,7 +160,7 @@
 			> 
 				<ObsidianIcon iconId="file" size={16} />
 			</div>
-			<div><span class="textAlign" onclick={(e)=>changeSelection(e,subfile)}>{removeExtension(subfile.file)}</span></div>
+			<div><button class="textAlign" onclick={()=>changeSelection(subfile)}>{removeExtension(subfile.file)}</button></div>
 			
 			
   	</div>

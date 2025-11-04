@@ -14,7 +14,7 @@
 		startDrag: () =>void;
 		stopDrag: ()=>void;
 		type:string;
-		changeSelection:(e:any, selection:FolderArrangement|FileArrangement) => void;
+		changeSelection:(selection:FolderArrangement|FileArrangement) => void;
     }
 
     let {
@@ -80,7 +80,7 @@
 			> 
 				<ObsidianIcon iconId="file" size={16} />
 			</div>
-			<div><span class="textAlign" onclick={(e)=>changeSelection(e,subfile)}>{removeExtension(subfile.file)}</span></div>
+			<div><button class="textAlign" onclick={()=>changeSelection(subfile)}>{removeExtension(subfile.file)}</button></div>
 			
 			
   	</div>

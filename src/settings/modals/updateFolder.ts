@@ -20,12 +20,13 @@ export class UpdateFolder extends Modal {
 
 	onOpen() {
         this.createSubfolderConditions()
+		this.createMoveVaultConditions()
         this.createDeleteFolderButton()
 	}
 
     createSubfolderConditions():void{
         const {contentEl} = this;
-		contentEl.createEl("h1").setText("Adjust " +this.folder.folder + " folder")
+		contentEl.createEl("h1").setText("" +this.folder.folder + " conditions")
         let subFoldArrange = new Setting(contentEl);
         subFoldArrange.setName("Update Subfolders")
             .setDesc("Change Subfolder Conditions")
@@ -38,6 +39,33 @@ export class UpdateFolder extends Modal {
             } )
         
     }
+
+
+	createMoveVaultConditions():void{
+		
+		const vaultList = this.plugin.settings.vaultList;
+		if (vaultList.length==0){
+			return;
+		}
+		const {contentEl} = this;
+		let vaultChosen = vaultList[0];
+		new Setting(contentEl).setName("Move to another Vault")
+		.setDesc("Select from the dropdown")
+		.addDropdown(
+			(dropdown)=>{
+				for (let i=0; i< vaultList.length;i++){
+					dropdown.addOption(vaultList[i],vaultList[i])
+				}
+				dropdown.setValue(vaultChosen)
+				dropdown.onChange((value)=>{
+					vaultChosen = value;
+				})
+			}
+		).addButton((btn)=>{
+			btn.setButtonText("Move files to vault")
+		})
+
+	}
 
 
     checkFolderCanBeAdded(new_folder:string,cb:SearchComponent,oldName:string):void{

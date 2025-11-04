@@ -24,11 +24,19 @@
     function handleConfigureChoice(e: any) {
         subFiles = e.detail.items;         
 	}
-    function changeSelection(e:any, selection:FolderArrangement|FileArrangement){
+    function changeSelection(selection:FolderArrangement|FileArrangement){
         currentSelection = selection
     }
+    function changeFileList(tempFileList:FileArrangement[]){
+        console.log("changeFile opened")
+        // const tempFileList:FileArrangement[] =fileList
+        console.log(fileList)
+        fileList = tempFileList
+        console.log(fileList)
+        
+    }
 
-    function handleFinalise(e){
+    function handleFinalise(e:any){
 		let {items: newItems} = e.detail;
         collapseId = "";
         // Remove internal placeholder item from state to avoid ghost gaps
@@ -54,7 +62,7 @@
         subFolders = e.detail.items;
 	}
     //This is going to the wrong place. It is saving it to subfiles
-    function handleFinaliseFolder(e){
+    function handleFinaliseFolder(e:any){
 		let {items: newItems} = e.detail;
         collapseId = "";
 		
@@ -133,7 +141,11 @@
 }
 </style>
 <div>
-<h1 >Update <span onclick={(e)=>changeSelection(e,folderArrangement)}>{folderArrangement.folder}</span></h1>
+<h1 >Update <button onclick={()=>{changeSelection(folderArrangement);
+changeFileList([]);
+}}
+    
+    >{folderArrangement.folder}</button></h1>
 </div> 
 <section
     use:dndzone={{ items:subFolders, dragDisabled, flipDurationMs,dropFromOthersDisabled:true,type }}
@@ -156,14 +168,19 @@
 				 <ObsidianIcon iconId="folder" size={16} />
 
 			</div>
-			<div><span class="textAlign" onclick={(e)=>changeSelection(e,subFolder)}>{subFolder.folder}</span></div>
+			<div><button class="textAlign" 
+                onclick={()=>{changeSelection(subFolder)
+                    changeFileList(subFiles)
+                }}
+                >{subFolder.folder}</button></div>
             </div>
             <div style="margin-left:{tabs}px">
-			<AdjustFolders bind:Folder={subFolders[index]} {dragDisabled} {tabs} {currentSelection}
+			<AdjustFolders bind:Folder={subFolders[index]} {dragDisabled} {tabs} {currentSelection} 
                 {startDrag}
                 {stopDrag}
                 {saveChanges}
                 {changeSelection} 
+                {changeFileList}
                 >
             </AdjustFolders>  
             </div>
@@ -187,12 +204,12 @@
 <div>
 {#if currentSelection.folder}
 {@const folderData:FolderArrangement = currentSelection}
-<FolderProperties {folderData} {saveChanges}></FolderProperties>
-{currentSelection.folder}
+<FolderProperties {folderData} {fileList} {saveChanges}></FolderProperties>
+
 {/if}
 
 {#if currentSelection.file}
-{currentSelection.file}
+
 {@const fileData:FileArrangement = currentSelection}
 <FileProperties {fileData} {saveChanges}></FileProperties>
 
