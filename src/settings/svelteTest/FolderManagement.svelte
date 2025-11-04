@@ -6,52 +6,195 @@
 
     let {
         tabs,
-        folderArrangement =$bindable()
+        folderArrangement,
     }:Props =$props();
-    // let folderChildren:TFolder[] =folder.children.filter((abfile) =>{return abfile instanceof TFolder});
-    // let fileChildren:TFile[] =folder.children.filter((abfile) =>{return abfile instanceof TFile});
-    // Could manage this outside the svelte situation
-    async function handleConfigureChoice(e: any) {
-		
-        console.log(e.detail)
-		
+    let dragDisabled = $state(true);
+    let subFiles = $state(folderArrangement.subFiles);
+    let subFolders = $state(folderArrangement.subFolders);
+    let currentSelection:FolderArrangement|FileArrangement = $state(folderArrangement)
+    let fileList:FileArrangement[] = $state([])
+
+    const startDrag = () => {
+		dragDisabled = false;
+	};
+	const stopDrag = () => {
+		dragDisabled = true;
+	};
+
+    function handleConfigureChoice(e: any) {
+        subFiles = e.detail.items;         
 	}
-    function sendM(){
-        console.log("Got here");
+    function changeSelection(e:any, selection:FolderArrangement|FileArrangement){
+        currentSelection = selection
     }
+
+    function handleFinalise(e){
+		let {items: newItems} = e.detail;
+        collapseId = "";
+        // Remove internal placeholder item from state to avoid ghost gaps
+        const sanitized = (newItems as FileArrangement[]).filter(
+            (it) => it.id !== SHADOW_PLACEHOLDER_ITEM_ID
+        );
+        // Always re-disable dragging when the sort finalizes
+        dragDisabled = true;
+        let newFold:FolderArrangement[] = [];
+        settingsStore.getState().folders.forEach((fold)=>{
+            if(fold.id != folderArrangement.id){
+                newFold.push(fold)
+                return ;
+            }
+            // sanitized is sometimes going wrong.
+            fold.subFiles = sanitized;
+            newFold.push(fold);
+        })        
+		settingsStore.setState({folders: newFold});
+    }
+
+    function handleConfigureChoiceFolder(e: any) {
+        subFolders = e.detail.items;
+	}
+    //This is going to the wrong place. It is saving it to subfiles
+    function handleFinaliseFolder(e){
+		let {items: newItems} = e.detail;
+        collapseId = "";
+		
+        // Remove internal placeholder item from state to avoid ghost gaps
+        const sanitized = (newItems as FolderArrangement[]).filter(
+            (it) => it.id !== SHADOW_PLACEHOLDER_ITEM_ID
+        );
+        // Always re-disable dragging when the sort finalizes
+        dragDisabled = true;
+
+        let newFold:FolderArrangement[] = [];
+        settingsStore.getState().folders.forEach((fold)=>{
+            if(fold.id != folderArrangement.id){
+                newFold.push(fold)
+                return ;
+            }
+            // sanitized is sometimes going wrong.
+            fold.subFolders = sanitized;
+            newFold.push(fold);
+        })    
+        
+		settingsStore.setState({folders: newFold});
+    }
+
+    function saveChanges(){
+        let newFold:FolderArrangement[] = [];
+        settingsStore.getState().folders.forEach((fold)=>{
+            if(fold.id != folderArrangement.id){
+                newFold.push(fold)
+                return ;
+            }
+            // sanitized is sometimes going wrong.
+            fold.subFolders = subFolders;
+            fold.subFiles = subFiles;
+            newFold.push(fold);
+        })    
+        console.log("Here")
+		settingsStore.setState({folders: newFold});
+    }
+
+    const flipDurationMs = 200;
    
     
 	import type FolderArrangement from "types/FolderTypes/folderArrangement";
-    import SvelteImportStuff from "./svelteImportStuff.svelte";
     import AdjustFiles from "./adjustFiles.svelte";
 	import ObsidianIcon from "./ObsidianIcon.svelte";
-	import Test from "./Test.svelte";
+
+	import { settingsStore } from "types/zustand/store";
+	import type FileArrangement from "types/FolderTypes/fileArrangement";
+	import { dndzone, SHADOW_PLACEHOLDER_ITEM_ID } from "svelte-dnd-action";
+	import { flip } from "svelte/animate";
+	import AdjustFolders from "./adjustFolders.svelte";
+	import FileProperties from "./FileProperties.svelte";
+    import FolderProperties from "./FolderProperties.svelte";
+    let type = "folder" +folderArrangement.id
 </script>
-<!-- 
-<div class="Test1" >
-    <ObsidianIcon iconId="folder" size={16} />{"  "+folderArrangement.folder}
-    {mount(SvelteImportStuff)}
-    <div class={folderArrangement.folder}>
-{#each folderArrangement.subFolders as fold}
-<div class="Test2" >
-    <SvelteImportStuff tabs={tabs+5} folderArrangement={fold} ></SvelteImportStuff>onconfigureChoice={handleConfigureChoice}
-    <div class={fold.folder.name}></div> 
-</div>  
-{/each}
- </div> 
--->
-<div style="margin-left:5px">
-    <AdjustFiles subFiles={folderArrangement.subFiles} {handleConfigureChoice} ></AdjustFiles>
-</div>
 
+<style>
+	.div-animate {
+		position: relative;
+		height: 1.5em;
+		width: 10em;
+		text-align: center;
+		margin: 0.2em;
+		padding: 0.3em;
+	}
+	.handle {
+		cursor: grab;
+		position: absolute;
+		display: flex;
+	}
+	
+.textAlign{
+	text-align: left;
+	left: 0;
+}
+</style>
+<div>
+<h1 >Update <span onclick={(e)=>changeSelection(e,folderArrangement)}>{folderArrangement.folder}</span></h1>
+</div> 
+<section
+    use:dndzone={{ items:subFolders, dragDisabled, flipDurationMs,dropFromOthersDisabled:true,type }}
+	onconsider={handleConfigureChoiceFolder}
+	onfinalize={handleFinaliseFolder}
+>
+{#each subFolders as subFolder,index(subFolder.id)}
+		<div animate:flip={{ duration: flipDurationMs }} >
+            <div class="div-animate">
+			<div 
+			class="handle" 
+			tabindex={dragDisabled ? 0 : -1}
+			onmousedown={startDrag} 
+			ontouchstart={startDrag} 
+			onmouseup={stopDrag} 
+			ontouchend={stopDrag}
+			 role="button"
+		
+			 > 
+				 <ObsidianIcon iconId="folder" size={16} />
 
-<Test sendM={sendM}></Test>
-
-<!--
-
+			</div>
+			<div><span class="textAlign" onclick={(e)=>changeSelection(e,subFolder)}>{subFolder.folder}</span></div>
+            </div>
+            <div style="margin-left:{tabs}px">
+			<AdjustFolders bind:Folder={subFolders[index]} {dragDisabled} {tabs} {currentSelection}
+                {startDrag}
+                {stopDrag}
+                {saveChanges}
+                {changeSelection} 
+                >
+            </AdjustFolders>  
+            </div>
+			
+  	</div>
     
+
+	{/each}    
+
+</section> 
+
+
+<div style="margin-left:0px">
+    <AdjustFiles {subFiles} {dragDisabled} {currentSelection} {handleConfigureChoice} 
+    {handleFinalise} {startDrag}
+     {stopDrag} {changeSelection}
+     type={"Files" +folderArrangement.id} ></AdjustFiles>
 </div>
--->
 
 
+<div>
+{#if currentSelection.folder}
+{@const folderData:FolderArrangement = currentSelection}
+<FolderProperties {folderData} {saveChanges}></FolderProperties>
+{currentSelection.folder}
+{/if}
 
+{#if currentSelection.file}
+{currentSelection.file}
+{@const fileData:FileArrangement = currentSelection}
+<FileProperties {fileData} {saveChanges}></FileProperties>
+
+{/if}
+</div>

@@ -4,12 +4,12 @@ import SvelteImportStuff from "../svelteTest/svelteImportStuff.svelte";
 import { mount,unmount } from "svelte";
 import type DraftManagerPlugin from "src/main";
 import type FolderArrangement from "types/FolderTypes/folderArrangement";
-import FolderManagement2 from "../svelteTest/FolderManagement2.svelte";
+import FolderManagement from "../svelteTest/FolderManagement.svelte";
 
 
 export class UpdateSubFolder extends Modal {
     plugin: DraftManagerPlugin;
-    svelteTest:ReturnType<typeof FolderManagement2> | undefined;
+    svelteTest:ReturnType<typeof FolderManagement> | undefined;
     settingsTab:DraftTab;
     folderArrangement:FolderArrangement;
     constructor(app: App,plugin: DraftManagerPlugin,folderArrangement:FolderArrangement,settingsTab:DraftTab) {
@@ -20,9 +20,9 @@ export class UpdateSubFolder extends Modal {
     }
 
     onOpen(): void {
+        const tabIndent = 10;
         const {contentEl} = this;
-        contentEl.createEl("h1").setText("Update " + this.folderArrangement.folder);
-        this.svelteTest = mount(FolderManagement2, { target:this.contentEl }  )
+        this.svelteTest = mount(FolderManagement, { target:this.contentEl,props:{tabs:tabIndent, folderArrangement:this.folderArrangement} }  )
 
     }
 

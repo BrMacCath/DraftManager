@@ -1,52 +1,36 @@
 <script lang="ts">
 	import type FileArrangement from "types/FolderTypes/fileArrangement";
-    import { dndzone, SHADOW_PLACEHOLDER_ITEM_ID } from 'svelte-dnd-action';
+    import { dndzone } from 'svelte-dnd-action';
 	import { flip } from 'svelte/animate';
-    import type {DndEvent} from "svelte-dnd-action";
 	import ObsidianIcon from "./ObsidianIcon.svelte";
+	import type FolderArrangement from "types/FolderTypes/folderArrangement";
 //https://svelte.dev/tutorial/kit/the-form-element
     interface Props{
         subFiles: FileArrangement[],
+		dragDisabled:boolean,
+		currentSelection: FolderArrangement|FileArrangement;
 		handleConfigureChoice: (e:Event) => void;
+		handleFinalise:(e:Event) => void;
+		startDrag: () =>void;
+		stopDrag: ()=>void;
+		type:string;
+		changeSelection:(e:any, selection:FolderArrangement|FileArrangement) => void;
     }
 
     let {
         subFiles,
-		handleConfigureChoice
+		dragDisabled,
+		currentSelection,
+		handleConfigureChoice,
+		handleFinalise,
+		startDrag,
+		stopDrag,
+		type,
+		changeSelection
     }:Props =$props();
 
 	const flipDurationMs = 200;
-	let dragDisabled = $state(true);
 	
-	function handleConsider(e:CustomEvent<DndEvent>){
-		// subFiles = e.detail.items;
-		console.log(e)
-	};
-	function handleFinalize(e){
-		
-		let {items: newItems} = e.detail;
-		console.log(e.detail)
-        let collapseId = "";
-
-        // Remove internal placeholder item from state to avoid ghost gaps
-        const sanitized = (newItems as FileArrangement[]).filter(
-            (it) => it.id !== SHADOW_PLACEHOLDER_ITEM_ID
-        );
-        // subFiles = sanitized;
-		
-        // Always re-disable dragging when the sort finalizes
-        dragDisabled = true;
-		
-    }
-
-	const startDrag = () => {
-		console.log("In here")
-		dragDisabled = false;
-	};
-	const stopDrag = () => {
-		console.log("Not here")
-		dragDisabled = true;
-	};
 	function removeExtension(str:string){
 		const index= str.indexOf(".");
 		if(index ===-1){
@@ -79,9 +63,9 @@
 </style>
 
 <section
-	use:dndzone={{ items:subFiles, dragDisabled, flipDurationMs }}
-	onconsider={handleConsider}
-	onfinalize={handleConfigureChoice}
+	use:dndzone={{ items:subFiles, dragDisabled, flipDurationMs,type }}
+	onconsider={handleConfigureChoice}
+	onfinalize={handleFinalise}
 >
 	{#each subFiles as subfile(subfile.id)}
 		<div animate:flip={{ duration: flipDurationMs }} class="div-animate">
@@ -92,13 +76,11 @@
 			ontouchstart={startDrag} 
 			onmouseup={stopDrag} 
 			ontouchend={stopDrag}
-			 role="button"
-		
-			 > 
-				 <ObsidianIcon iconId="file" size={16} />
-
+			role="button"
+			> 
+				<ObsidianIcon iconId="file" size={16} />
 			</div>
-			<div><span class="textAlign">{removeExtension(subfile.file)}</span></div>
+			<div><span class="textAlign" onclick={(e)=>changeSelection(e,subfile)}>{removeExtension(subfile.file)}</span></div>
 			
 			
   	</div>

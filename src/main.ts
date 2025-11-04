@@ -9,11 +9,9 @@ import { settingsStore } from 'types/zustand/store';
 export default class DraftManagerPlugin extends Plugin {
 	settings: DraftManagerPluginSettings;
 	private unsubscribeSettingsStore: () => void;
+	
 	async onload() {
-		alert("Got to the start")
-		console.log("Here in the app")
 		await this.loadSettings();
-		console.log("Loading draft manager")
 		settingsStore.setState(this.settings);
 		this.unsubscribeSettingsStore = settingsStore.subscribe((settings) => {
 			this.settings = settings;
@@ -28,7 +26,6 @@ export default class DraftManagerPlugin extends Plugin {
 		}})
 		this.addCommand({id:"testCommandDm",name:"Test Command",callback: async()=>{
 			console.log("Test");
-			alert("This works");
 			
 		}})
 
