@@ -26,7 +26,7 @@ export class UpdateFolder extends Modal {
 
     createSubfolderConditions():void{
         const {contentEl} = this;
-		contentEl.createEl("h1").setText("" +this.folder.folder + " conditions")
+		new Setting(contentEl).setName("" +this.folder.folder + " conditions").setHeading();
         let subFoldArrange = new Setting(contentEl);
         subFoldArrange.setName("Update Subfolders")
             .setDesc("Change Subfolder Conditions")

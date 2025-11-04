@@ -19,7 +19,7 @@ export class chooseSubFolder extends Modal{
     }
     onOpen(): void {
         const containerEl=this.modalEl;
-        containerEl.createEl("h1").setText("Select Folder from " + this.folder);
+        new Setting(containerEl).setName("Select Folder from " + this.folder).setHeading();
         let folderTextName = "";
         new Setting(containerEl).setName("Select your folder")
         .setDesc("Choose which folder you wish to add from your list.")

@@ -16,7 +16,7 @@ export class moveFolderToVaultModal extends Modal{
         }
     onOpen() {
         const containerEl = this.modalEl;
-        const header = containerEl.createEl("h1").setText("Move Folder to New Vault");
+        new Setting(containerEl).setName("Move Folder to New Vault").setHeading();
         
         let folderTextName ="";
         new Setting(containerEl).setName("Select your folder")

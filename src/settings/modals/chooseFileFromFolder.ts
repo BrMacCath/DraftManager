@@ -19,7 +19,7 @@ export class chooseFileFromFolder extends Modal{
     }
     onOpen(): void {
         const containerEl=this.modalEl;
-        containerEl.createEl("h1").setText("Select File from " + this.folder);
+        new Setting(containerEl).setName("Select File from " + this.folder).setHeading();
         let fileName = "";
         new Setting(containerEl).setName("Select the file")
         .setDesc("Choose which folder you wish to add from your list.")
