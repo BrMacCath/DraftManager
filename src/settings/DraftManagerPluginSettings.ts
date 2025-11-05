@@ -4,12 +4,12 @@ import { defaultFolderDraftConditions } from "./Default Values/defaultFolderDraf
 
 export default interface DraftManagerSettings {
 	folders: FolderArrangement[];
-	defaultFolder:draftConditions;
+	defaultFolderConditions:draftConditions;
 	vaultList: string[];
 }
 
 export const DEFAULT_SETTINGS: DraftManagerSettings = {
 	folders: [],
-	defaultFolder: defaultFolderDraftConditions,
+	defaultFolderConditions: defaultFolderDraftConditions,
 	vaultList: []
 }

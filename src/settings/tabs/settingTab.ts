@@ -54,7 +54,7 @@ export class DraftTab extends PluginSettingTab {
 			}  )
             btn.setClass(buttonCssClassName);
 		})
-		UpdateDraftCons(this.plugin.settings.defaultFolder, this,containerEl,"Default");
+		UpdateDraftCons(this.plugin.settings.defaultFolderConditions, this,containerEl,"Default");
 		//new VaultTab(containerEl,this.plugin);
 		createVaultTab(containerEl,this.plugin,this);
 	}
@@ -72,7 +72,7 @@ export class DraftTab extends PluginSettingTab {
 		if( !(tfold instanceof TFolder)){
 			return;
 		}
-		const foldArrange:FolderArrangement = fillOutFolderStructure(tfold,plugin.settings.defaultFolder)
+		const foldArrange:FolderArrangement = fillOutFolderStructure(tfold,plugin.settings.defaultFolderConditions)
 		settingsStore.setState({folders: [...settingsStore.getState().folders,foldArrange]})
 		this.display()
 	}

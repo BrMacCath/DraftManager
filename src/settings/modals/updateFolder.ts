@@ -21,6 +21,7 @@ export class UpdateFolder extends Modal {
 	onOpen() {
         this.createSubfolderConditions()
 		this.createMoveVaultConditions()
+		this.createApplyFolderConditions()
         this.createDeleteFolderButton()
 	}
 
@@ -81,11 +82,26 @@ export class UpdateFolder extends Modal {
             return;
         }
  
-        this.folder= fillOutFolderStructure(foldName,this.plugin.settings.defaultFolder);
+        this.folder= fillOutFolderStructure(foldName,this.plugin.settings.defaultFolderConditions);
 		settingsStore.setState({folders:[...settingsStore.getState().folders,this.folder]})
 		this.settingsTab.display();
 	}
 
+	createApplyFolderConditions():void{
+		const {contentEl} = this;
+		new Setting(contentEl).setName("Apply folder conditions.")
+		.setDesc("Apply draft conditions.")
+		.addButton((cb) =>{
+			cb.setButtonText("Apply").onClick( () =>{
+				//this.plugin.settings.folders = this.plugin.settings.folders.filter(fold => fold.id != this.folder.id)
+				const folderList = settingsStore.getState().folders.filter(fold => fold.id != this.folder.id)
+				settingsStore.setState({folders:folderList})
+				this.settingsTab.display();
+				this.close()
+			} ) 
+            
+	} )
+	}
 
 	createDeleteFolderButton():void{
         const {contentEl} = this;
