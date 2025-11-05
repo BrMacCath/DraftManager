@@ -1,10 +1,19 @@
 # Draft Manager
 
-This plugin is to help order writing drafts in Obsidian and how to manage the final product. This plugin will allow for different draft styles
+This plugin is to help order writing drafts in Obsidian and how to manage the final product. This plugin will allow for different draft styles.
 
-# Current Capacity
+# Set up
 
-Right now we can move folders of files from one vault to the next.
+## Name vaults
+
+## Make Default draft conditions
+
+
+## Set up conditions for draft conditions
+
+# Moving Files
+
+## Move folder to new vault
 
 
 
@@ -21,6 +30,7 @@ This updates the frontmatter, states the completed draft version and creates the
 ## Peterson-Walt-Frontmatter
 
 
+# Move Type
 
 # Road map
 
