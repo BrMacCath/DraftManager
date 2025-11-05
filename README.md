@@ -30,7 +30,7 @@ There are two methods of moving files in this plugin. They require that you set 
 ## Move entire folder using a command
 
 If you want to move all the files within a folder without any changes, you can use a command to do do this. A gif is presented below.
-
+<img src="/Gifs/MoveFilesToVault.gif" />
 
 # Draft Styles
 
