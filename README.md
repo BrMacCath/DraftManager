@@ -2,19 +2,30 @@
 
 This plugin is to help order writing drafts in Obsidian and how to manage the final product. This plugin will allow for different draft styles.
 
+# What is the purpose of this plugin
+
+I think Obisidian is a great tool to store notes and to writing but I found that having a vault for both purposes led to me getting overwhelmed. 
+
+
 # Set up
 
 ## Name vaults
 
+State the vaults that you wish to be able to transfer files to. Right now there is no method to check that the vault listed is a valid vault. If you try to move files to a vault that does not exist you will just get an error message. A gif to show how to add vaults is below.
+
 ## Make Default draft conditions
 
+There is a selection of draft types that can be used with this plugin. Explanations of the draft styles are in the next section. 
 
-## Set up conditions for draft conditions
+### Go through each section
 
 # Moving Files
 
-## Move folder to new vault
+There are two methods of moving files in this plugin. They require that you set up which vaults you can move them to.
 
+## Move entire folder using a command
+
+If you want to move all the files within a folder without any changes, you can use a command to do do this. A gif is presented below.
 
 
 # Draft Styles
@@ -36,8 +47,8 @@ This updates the frontmatter, states the completed draft version and creates the
 
 - [x] Create a settings file.
 - [x] Be able to add data to the settings tab.
-- [ ] Be able to create a draft folder for an actual folder.
-- [ ] Convert markdown into tex files. Regular expressions will be useful here.
+- [ ] Have a gif to show how to use each command of the notes.
+- [ ] Fully integrate the Folder Management section with the ability to move files to other vaults.
 
 
 # Attributions
