@@ -12,12 +12,15 @@ I think Obisidian is a great tool to store notes and to writing but I found that
 ## Name vaults
 
 State the vaults that you wish to be able to transfer files to. Right now there is no method to check that the vault listed is a valid vault. If you try to move files to a vault that does not exist you will just get an error message. A gif to show how to add vaults is below.
+<img src="/Gifs/AddVault.gif" />
 
 ## Make Default draft conditions
 
 There is a selection of draft types that can be used with this plugin. Explanations of the draft styles are in the next section. 
 
 ### Go through each section
+
+### File prep to use the draft conditions
 
 # Moving Files
 
@@ -49,6 +52,8 @@ This updates the frontmatter, states the completed draft version and creates the
 - [x] Be able to add data to the settings tab.
 - [ ] Have a gif to show how to use each command of the notes.
 - [ ] Fully integrate the Folder Management section with the ability to move files to other vaults.
+- [ ] Allow for the ability to export latex.
+    - Include the ability to export a bib file too.
 
 
 # Attributions
