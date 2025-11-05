@@ -1,4 +1,5 @@
 # Draft Manager
+[![Version](https://img.shields.io/github/v/release/BrMacCath/DraftManager?include_prereleases&label=latest&logo=github&labelColor=green)](https://github.com/BrMacCath/DraftManager/releases)
 
 This plugin is to help order writing drafts in Obsidian and how to manage the final product. This plugin will allow for different draft styles.
 
