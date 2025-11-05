@@ -24,21 +24,15 @@ export default class DraftManagerPlugin extends Plugin {
 		this.addCommand({id:"MoveFolder",name:"Move folder to new Vault",callback: async()=>{
 			new moveFolderToVaultModal(this.app,this.settings,this).open();
 		}})
-		this.addCommand({id:"testCommandDm",name:"Test Command",callback: async()=>{
-			console.log("Test");
-			
-		}})
-
+		
 	}
 
 	onunload() {
 
 	}
-
 	async loadSettings() {
 		this.settings = Object.assign({}, DEFAULT_SETTINGS, await this.loadData());
 	}
-
 	async saveSettings() {
 		await this.saveData(this.settings);
 	}
