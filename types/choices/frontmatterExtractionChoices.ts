@@ -1,0 +1,1 @@
+export const frontmatterExtractionChoices = ['Ignore frontmatter','Include frontmatter']

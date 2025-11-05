@@ -10,4 +10,6 @@ export default interface draftConditions{
     draftNumSignifier: string;
     draftStorage: string;
 	draftFileIndicator: string;
+    includeFrontMatter: string;
+    moveType: string;
 }

@@ -1,0 +1,1 @@
+export const moveTypeChoices:string[] = ["As Is","Last Version"];
