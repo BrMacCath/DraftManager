@@ -10,7 +10,7 @@ I think Obisidian is a great tool to store notes and to writing but I found that
 
 # Set up
 
-## Name vaults
+## Name vaults that you can move files to
 
 State the vaults that you wish to be able to transfer files to. Right now there is no method to check that the vault listed is a valid vault. If you try to move files to a vault that does not exist you will just get an error message. A gif to show how to add vaults is below.
 <img src="/Gifs/AddVault.gif" />
@@ -44,8 +44,31 @@ This updates the frontmatter, states the completed draft version and creates the
 
 ## Peterson-Walt-Frontmatter
 
+# Frontmatter
+This will decide how the frontmatter of each option will be taken.
 
 # Move Type
+
+This will decide how the content of the file will be taken
+
+## As Is
+
+Take the entire file.
+
+## Last Version
+
+This uses the last version of your writing. It will get rid of things that are not Frontmatter.
+
+# Folder Updates
+
+With the folder updates section, you can control how you want files to be processed and in what order.
+
+## GUI
+Here you can drag files and folders into the order that you want. Note that this does not allow you to move files or folders into new folders.
+
+## Compile output
+
+Here you can use the files in a folder to be combined to make a new file in one of the files. This can be the entire file or just a piece of it.
 
 # Road map
 
@@ -56,8 +79,11 @@ This updates the frontmatter, states the completed draft version and creates the
 - [ ] Allow for the ability to export latex.
     - Include the ability to export a bib file too.
 
-
 # Attributions
 
 I copied the obsidian Icon from the quickadd plugin.
 I copied the file suggest from  Liam's Periodic Notes Plugin: https://github.com/liamcain/obsidian-periodic-notes . I did change the input options for a few suggests but it was more of a copy and replace than a new idea.
+
+# Support
+
+<a href="https://www.buymeacoffee.com/brmaccath" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" style="height: 60px !important;width: 217px !important;" ></a>
