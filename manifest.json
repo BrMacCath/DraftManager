@@ -1,10 +1,11 @@
 {
 	"id": "draft-manager",
 	"name": "Draft Manager",
-	"version": "1.0.1",
+	"version": "1.0.2",
 	"minAppVersion": "0.15.0",
 	"description": "Allow you to create drafts of your writing and move where they are located.",
 	"author": "Brian Collery",
 	"authorUrl": "https://github.com/BrMacCath",
+	"fundingUrl": "https://www.buymeacoffee.com/brmaccath",
 	"isDesktopOnly": false
 }

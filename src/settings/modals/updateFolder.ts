@@ -6,6 +6,7 @@ import { buttonCssClassName,  deleteCssName } from "types/cssStylings/cssClassNa
 import type DraftManagerPlugin from "src/main";
 import { fillOutFolderStructure } from "../functions/Folder/fillOutFolderStructure";
 import { settingsStore } from "types/zustand/store";
+import { moveFilesToVaultBasedOnConditions } from "../functions/URI/moveFilesToVaultBasedOnConditions";
 
 export class UpdateFolder extends Modal {
 	plugin: DraftManagerPlugin;
@@ -64,6 +65,10 @@ export class UpdateFolder extends Modal {
 			}
 		).addButton((btn)=>{
 			btn.setButtonText("Move files to vault")
+			btn.onClick(() =>{
+				// FolderArrangement and vault
+				moveFilesToVaultBasedOnConditions(this.folder,vaultChosen)
+			} )
 		})
 
 	}

@@ -14,7 +14,7 @@
 
 	import type FileArrangement from "types/FolderTypes/fileArrangement";
 	import type FolderArrangement from "types/FolderTypes/folderArrangement";
-    import { draftOptions } from "types/choices/draftOptions";
+    import { draftStyleOptions } from "types/choices/draftStyleOptions";
 </script>
 
 
@@ -29,7 +29,7 @@
         {fileData.draftConditions.draftStyle}
     </div>
     <select bind:value={fileData.draftConditions.draftStyle} onchange={saveChanges}>
-        {#each draftOptions as style}
+        {#each draftStyleOptions as style}
             <option value={style}>{style}</option>
         {/each}
     </select>

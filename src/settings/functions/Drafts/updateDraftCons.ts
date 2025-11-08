@@ -1,15 +1,15 @@
 import { Setting } from "obsidian"
 import type draftConditions from "types/choices/draftConditions";
 import { DraftTab } from "../../tabs/settingTab";
-import { draftOptions } from "types/choices/draftOptions";
+import { draftStyleOptions } from "types/choices/draftStyleOptions";
 import { hideCssName } from "types/cssStylings/cssClassNames";
 export function UpdateDraftCons(draftConditions:draftConditions,settingsTab:DraftTab,containerEl:HTMLElement,folder:string){
     new Setting(containerEl).setName(folder + " Draft Conditions").setHeading();
     new Setting(containerEl).setName("Draft Style")
         .setDesc("Choose how you wish Drafts to be made")
         .addDropdown((dropdown) =>{
-            for (let i=0; i< draftOptions.length;i++){
-                dropdown.addOption(draftOptions[i],draftOptions[i])
+            for (let i=0; i< draftStyleOptions.length;i++){
+                dropdown.addOption(draftStyleOptions[i],draftStyleOptions[i])
             }
             dropdown.setValue(draftConditions.draftStyle);
             dropdown.onChange(async (value) =>{

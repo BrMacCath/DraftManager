@@ -1,1 +1,0 @@
-export const draftOptions:string[] = ["Blank","Copy","Peterson"];

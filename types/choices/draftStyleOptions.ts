@@ -1,0 +1,1 @@
+export const draftStyleOptions:string[] = ["Blank","Copy","Peterson"];

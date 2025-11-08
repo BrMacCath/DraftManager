@@ -1,0 +1,1 @@
+export const frontmatterEndIndicator ="\n---\n"
