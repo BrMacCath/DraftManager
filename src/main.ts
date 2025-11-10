@@ -5,6 +5,9 @@ import { DraftTab } from './settings/tabs/settingTab';
 import {  moveFolderToVaultModal } from './settings/modals/moveFolderToVaultModal';
 import { settingsStore } from 'types/zustand/store';
 import { draftStyleOptions } from 'types/choices/draftStyleOptions';
+import { createFromDraft } from './settings/functions/Drafts/createFromDraft';
+import { extractCurrentDraft } from './settings/functions/Drafts/extractCurrentDraft';
+import { createDraftTitle } from './settings/functions/Drafts/createDraftTitle';
 // Remember to rename these classes and interfaces!
 
 export default class DraftManagerPlugin extends Plugin {
@@ -57,7 +60,7 @@ export default class DraftManagerPlugin extends Plugin {
 				return;
 			}
 
-			let draftStyle= metadata.filter( (property)=>{
+			let draftStyle= metadata.filter( (property:any)=>{
 				return property["key"] == draftStyleIndicator;
 			} );
 
@@ -83,17 +86,34 @@ export default class DraftManagerPlugin extends Plugin {
 					
 				return;
 			}
-			console.log(editor)
-			console.log(ctx)
+			
 			const rawData = ctx.data;
-			console.log(rawData)
-			// This file has to have frontmatter or this program
-			// would have terminated.
-			//const endOfFronmatterIndicator
+			//createFromDraft(rawData,this.settings.defaultFolderConditions.paragraphSeparator)
+			
+			const PetersonStyle = ""
 
-			// new draft version. (content, draftStyle)
-			// let newDraft = createNewDraft(content,draftNum,style) 
-			// Create the new draft version.
+			// Try Extract data and then decide if you can move on from there.
+			const line = editor.getLine(editor.lastLine())
+			console.log(line)
+			// This puts text at the end of the document
+			const [continueForward, draft]= extractCurrentDraft(editor.getValue(),draftNum[0][["value"]])
+			if(!continueForward){
+				new Notice("Cannot find current drafts heading " + createDraftTitle(draftNum[0][["value"]]))
+				return;
+			}
+
+			console.log(draft)
+			if(draftStyle[0]["value"] =="Peterson"){
+				// Create draft
+			}
+			else if(draftStyle[0]["value"] =="Blank") {
+
+
+			}else if(draftStyle[0]["value"] =="Copy"){
+
+			}
+			//editor.replaceRange("test",{line:editor.lastLine(),ch:line.length})
+			
 			this.app.fileManager.processFrontMatter(ctx.file,(frontmatter)=>{
 			//	frontmatter["DraftNum"] = frontmatter["DraftNum"] + 1;
 			})

@@ -48,6 +48,5 @@ export function createFromDraft(draft:string,paragraphSeparator:string,oldDraftN
     let newContent = "";
     newContent += `\n\n## Complete ${stringifyNumber(oldDraftNum)} Draft\n\n` + completeDraft.join("\n\n")+"\n\n";
     newContent += `# ${stringifyNumber(oldDraftNum+1)} Draft\n\n` + newDraft.join(paragraphSeparator +"\n");
-    draft += newContent;
-    return draft;
+    return newContent;
 }
