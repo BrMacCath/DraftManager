@@ -8,6 +8,7 @@ import { draftStyleOptions } from 'types/choices/draftStyleOptions';
 import { createFromDraft } from './settings/functions/Drafts/createFromDraft';
 import { extractCurrentDraft } from './settings/functions/Drafts/extractCurrentDraft';
 import { createDraftTitle } from './settings/functions/Drafts/createDraftTitle';
+import { createPetersonDraft } from './settings/functions/Drafts/createPetersonDraft';
 // Remember to rename these classes and interfaces!
 
 export default class DraftManagerPlugin extends Plugin {
@@ -96,18 +97,28 @@ export default class DraftManagerPlugin extends Plugin {
 			const line = editor.getLine(editor.lastLine())
 			console.log(line)
 			// This puts text at the end of the document
-			const [continueForward, draft]= extractCurrentDraft(editor.getValue(),draftNum[0][["value"]])
+			const [continueForward, currentDraft]= extractCurrentDraft(editor.getValue(),draftNum[0]["value"])
 			if(!continueForward){
 				new Notice("Cannot find current drafts heading " + createDraftTitle(draftNum[0][["value"]]))
 				return;
 			}
 
-			console.log(draft)
+			console.log(currentDraft)
 			if(draftStyle[0]["value"] =="Peterson"){
 				// Create draft
+				if(draftNum[0][["value"]]>1){
+					//content += blah
+					const newContent = createPetersonDraft(currentDraft,draftNum[0]["value"],this.settings.defaultFolderConditions)
+					console.log(newContent)
+				} else{
+					//const newContent = createPetersonFirstDraft(currentDraft,draftNum[0]["value"],this.settings.defaultFolderConditions)
+				}
 			}
 			else if(draftStyle[0]["value"] =="Blank") {
-
+				const newLine = "\n";
+				const newTitle = createDraftTitle(draftNum[0][["value"]] +1)
+				const newContent = newLine+ newLine + newTitle+ newLine+newLine;
+				
 
 			}else if(draftStyle[0]["value"] =="Copy"){
 
