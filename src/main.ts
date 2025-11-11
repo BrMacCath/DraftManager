@@ -9,6 +9,7 @@ import { createFromDraft } from './settings/functions/Drafts/createFromDraft';
 import { extractCurrentDraft } from './settings/functions/Drafts/extractCurrentDraft';
 import { createDraftTitle } from './settings/functions/Drafts/createDraftTitle';
 import { createPetersonDraft } from './settings/functions/Drafts/createPetersonDraft';
+import { createFromPetersonFirstDraft } from './settings/functions/Drafts/createFromPetersonFirstDraft';
 // Remember to rename these classes and interfaces!
 
 export default class DraftManagerPlugin extends Plugin {
@@ -95,38 +96,35 @@ export default class DraftManagerPlugin extends Plugin {
 
 			// Try Extract data and then decide if you can move on from there.
 			const line = editor.getLine(editor.lastLine())
-			console.log(line)
 			// This puts text at the end of the document
 			const [continueForward, currentDraft]= extractCurrentDraft(editor.getValue(),draftNum[0]["value"])
 			if(!continueForward){
 				new Notice("Cannot find current drafts heading " + createDraftTitle(draftNum[0][["value"]]))
 				return;
 			}
-
-			console.log(currentDraft)
+			let newContent = "";
 			if(draftStyle[0]["value"] =="Peterson"){
 				// Create draft
 				if(draftNum[0][["value"]]>1){
 					//content += blah
-					const newContent = createPetersonDraft(currentDraft,draftNum[0]["value"],this.settings.defaultFolderConditions)
-					console.log(newContent)
+					newContent = createPetersonDraft(currentDraft,draftNum[0]["value"],this.settings.defaultFolderConditions)
 				} else{
-					//const newContent = createPetersonFirstDraft(currentDraft,draftNum[0]["value"],this.settings.defaultFolderConditions)
+					newContent = createFromPetersonFirstDraft(currentDraft,this.settings.defaultFolderConditions)
 				}
 			}
 			else if(draftStyle[0]["value"] =="Blank") {
 				const newLine = "\n";
 				const newTitle = createDraftTitle(draftNum[0][["value"]] +1)
-				const newContent = newLine+ newLine + newTitle+ newLine+newLine;
-				
-
-			}else if(draftStyle[0]["value"] =="Copy"){
-
+				newContent = newLine+ newLine + newTitle+ newLine+newLine;
+			}else{
+				new Notice("Draft style is not recognised.")
+				return;
 			}
-			//editor.replaceRange("test",{line:editor.lastLine(),ch:line.length})
+			console.log(newContent)
+			editor.replaceRange(newContent,{line:editor.lastLine(),ch:line.length})
 			
 			this.app.fileManager.processFrontMatter(ctx.file,(frontmatter)=>{
-			//	frontmatter["DraftNum"] = frontmatter["DraftNum"] + 1;
+				frontmatter["DraftNum"] = frontmatter["DraftNum"] + 1;
 			})
 			// Attach the new draft version.
 

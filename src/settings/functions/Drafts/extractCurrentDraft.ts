@@ -1,9 +1,8 @@
 import { createDraftTitle } from "./createDraftTitle";
 
 
-export function extractCurrentDraft(content:string,draftNum:number) {
+export function extractCurrentDraft(content:string,draftNum:number):[boolean,string] {
     const previousDraftTitle = createDraftTitle(draftNum);
-    console.log(previousDraftTitle)
     const titleInd = content.indexOf(previousDraftTitle);
     if (titleInd ==-1){
         const continueForward = false;
