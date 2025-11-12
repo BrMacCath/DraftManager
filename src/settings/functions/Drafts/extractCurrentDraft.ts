@@ -1,4 +1,6 @@
 import { createDraftTitle } from "./createDraftTitle";
+import { inLineRemoval } from "./inLineRemoval";
+import { removeDoubleSpacing } from "./removeDoubleSpacing";
 
 
 export function extractCurrentDraft(content:string,draftNum:number):[boolean,string] {
@@ -10,6 +12,6 @@ export function extractCurrentDraft(content:string,draftNum:number):[boolean,str
     }
     const continueForward = true;
     
-    const currentDraft = content.slice(titleInd + previousDraftTitle.length);
+    const currentDraft = removeDoubleSpacing(inLineRemoval(content.slice(titleInd + previousDraftTitle.length)));
     return [continueForward, currentDraft];
 }

@@ -5,7 +5,6 @@ import { DraftTab } from './settings/tabs/settingTab';
 import {  moveFolderToVaultModal } from './settings/modals/moveFolderToVaultModal';
 import { settingsStore } from 'types/zustand/store';
 import { draftStyleOptions } from 'types/choices/draftStyleOptions';
-import { createFromDraft } from './settings/functions/Drafts/createFromDraft';
 import { extractCurrentDraft } from './settings/functions/Drafts/extractCurrentDraft';
 import { createDraftTitle } from './settings/functions/Drafts/createDraftTitle';
 import { createPetersonDraft } from './settings/functions/Drafts/createPetersonDraft';
@@ -80,7 +79,8 @@ export default class DraftManagerPlugin extends Plugin {
 				if(style == draftStyle[0]["value"]){
 					listedStyle = true
 				}
-			} )
+			} );
+
 			if(!listedStyle){
 				new Notice("The style listed in your page, " + draftStyle[0]["value"]
 					+ ", is not selected from one of the options allowed: " 
@@ -89,13 +89,6 @@ export default class DraftManagerPlugin extends Plugin {
 				return;
 			}
 			
-			const rawData = ctx.data;
-			//createFromDraft(rawData,this.settings.defaultFolderConditions.paragraphSeparator)
-			
-			const PetersonStyle = ""
-
-			// Try Extract data and then decide if you can move on from there.
-			const line = editor.getLine(editor.lastLine())
 			// This puts text at the end of the document
 			const [continueForward, currentDraft]= extractCurrentDraft(editor.getValue(),draftNum[0]["value"])
 			if(!continueForward){
@@ -106,7 +99,6 @@ export default class DraftManagerPlugin extends Plugin {
 			if(draftStyle[0]["value"] =="Peterson"){
 				// Create draft
 				if(draftNum[0][["value"]]>1){
-					//content += blah
 					newContent = createPetersonDraft(currentDraft,draftNum[0]["value"],this.settings.defaultFolderConditions)
 				} else{
 					newContent = createFromPetersonFirstDraft(currentDraft,this.settings.defaultFolderConditions)
@@ -120,20 +112,13 @@ export default class DraftManagerPlugin extends Plugin {
 				new Notice("Draft style is not recognised.")
 				return;
 			}
-			console.log(newContent)
-			editor.replaceRange(newContent,{line:editor.lastLine(),ch:line.length})
+			const endOfPage = editor.getLine(editor.lastLine())
+			editor.replaceRange(newContent,{line:editor.lastLine(),ch:endOfPage.length})
 			
 			this.app.fileManager.processFrontMatter(ctx.file,(frontmatter)=>{
 				frontmatter["DraftNum"] = frontmatter["DraftNum"] + 1;
 			})
-			// Attach the new draft version.
-
-			// Edit frontmatter.
-			// this.app.fileManager.processFrontMatter()
-			
-
 		}})
-
 
 	}
 
