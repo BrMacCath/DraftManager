@@ -38,10 +38,6 @@ If you want to move all the files within a folder without any changes, you can u
 
 This draft style updates the frontmatter and adds the next draft number title to the page.
 
-## Copy
-
-This updates the frontmatter, states the completed draft version and creates the title for the next draft.
-
 ## Peterson-Walt-Frontmatter
 
 # Frontmatter
