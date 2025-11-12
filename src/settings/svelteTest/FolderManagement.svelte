@@ -117,6 +117,7 @@
 	import AdjustFolders from "./adjustFolders.svelte";
 	import FileProperties from "./FileProperties.svelte";
     import FolderProperties from "./FolderProperties.svelte";
+    import { Setting } from "obsidian";
     let type = "folder" +folderArrangement.id
 </script>
 
@@ -205,6 +206,7 @@ changeFileList([]);
 {#if currentSelection.folder}
 {@const folderData:FolderArrangement = currentSelection}
 <FolderProperties {folderData} {fileList} {saveChanges}></FolderProperties>
+
 
 {/if}
 
