@@ -72,7 +72,7 @@ export default class DraftManagerPlugin extends Plugin {
 				)
 				return;
 			}
-			const draftStyle = draftNumTemp[0]["value"]
+			const draftStyle = draftStyleTemp[0]["value"]
 			let listedStyle = false;
 			
 			
