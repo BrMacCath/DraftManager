@@ -2,6 +2,7 @@
     interface Props{
         fileData: FileArrangement;
         saveChanges: ()=>void;
+
     }
 
     let {
@@ -13,8 +14,10 @@
     // Could manage this outside the svelte situation
 
 	import type FileArrangement from "types/FolderTypes/fileArrangement";
-	import type FolderArrangement from "types/FolderTypes/folderArrangement";
     import { draftStyleOptions } from "types/choices/draftStyleOptions";
+    import { Setting } from "obsidian";
+
+    //new Setting
 </script>
 
 

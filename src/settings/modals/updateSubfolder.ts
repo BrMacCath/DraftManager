@@ -21,7 +21,7 @@ export class UpdateSubFolder extends Modal {
     onOpen(): void {
         const tabIndent = 10;
         const {contentEl} = this;
-        this.svelteTest = mount(FolderManagement, { target:this.contentEl,props:{tabs:tabIndent, folderArrangement:this.folderArrangement} }  )
+        this.svelteTest = mount(FolderManagement, { target:this.contentEl,props:{tabs:tabIndent, folderArrangement:this.folderArrangement,contentEl:contentEl} }  )
 
     }
 

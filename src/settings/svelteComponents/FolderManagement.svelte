@@ -2,11 +2,13 @@
     interface Props{
         tabs: number;
         folderArrangement: FolderArrangement;
+        contentEl: HTMLElement;
     }
 
     let {
         tabs,
         folderArrangement,
+        contentEl
     }:Props =$props();
     let dragDisabled = $state(true);
     let subFiles = $state(folderArrangement.subFiles);
@@ -117,7 +119,6 @@
 	import AdjustFolders from "./adjustFolders.svelte";
 	import FileProperties from "./FileProperties.svelte";
     import FolderProperties from "./FolderProperties.svelte";
-    import { Setting } from "obsidian";
     let type = "folder" +folderArrangement.id
 </script>
 
@@ -205,7 +206,7 @@ changeFileList([]);
 <div>
 {#if currentSelection.folder}
 {@const folderData:FolderArrangement = currentSelection}
-<FolderProperties {folderData} {fileList} {saveChanges}></FolderProperties>
+<FolderProperties {folderData} {fileList} {contentEl} {saveChanges}></FolderProperties>
 
 
 {/if}
