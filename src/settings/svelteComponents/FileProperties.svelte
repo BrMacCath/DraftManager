@@ -9,13 +9,8 @@
         fileData=$bindable(),
         saveChanges
     }:Props =$props();
-    // let folderChildren:TFolder[] =folder.children.filter((abfile) =>{return abfile instanceof TFolder});
-    // let fileChildren:TFile[] =folder.children.filter((abfile) =>{return abfile instanceof TFile});
-    // Could manage this outside the svelte situation
 
 	import type FileArrangement from "types/FolderTypes/fileArrangement";
-    import { draftStyleOptions } from "types/choices/draftStyleOptions";
-    import { Setting } from "obsidian";
 
     //new Setting
 </script>
@@ -26,10 +21,19 @@
     <div>
         Name: {fileData.file}
     </div>
+
+    <!-- Handle move type of data -->
+    <!-- Select option that goes through the list. -->
+    <div>
+
+    </div>
+
+
     <!-- Placement: Let this be moved up and down -->
     <div>
         Placement buttons
     </div>
+    
     
 
 

@@ -3,7 +3,7 @@ import { DraftTab } from "../tabs/settingTab";
 import { mount,unmount } from "svelte";
 import type DraftManagerPlugin from "src/main";
 import type FolderArrangement from "types/FolderTypes/folderArrangement";
-import FolderManagement from "../svelteTest/FolderManagement.svelte";
+import FolderManagement from "../svelteComponents/FolderManagement.svelte";
 
 
 export class UpdateSubFolder extends Modal {

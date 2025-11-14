@@ -24,15 +24,41 @@
 <div>
     <!-- State the folder you are adjusting -->
     <div>
-        Name: {folderData.folder}
+       <h1> Name: {folderData.folder} </h1>
     </div>
-    <!-- Placement -->
+    <!-- Placement display hoerizontal -->
+    Sort out placement logic here.
     <div>
-        Sort out placement logic here.
+        <!-- Display vertical -->
+        <div>
+            <div>
+                Purpose
+            </div>
+            <div>
+                desciption
+            </div>
+        </div>
+        <!-- Display horizontal -->
+        <div>
+            Buttons
+        </div>
+        
     </div>
+    <!-- move Type of data -->
+    <div>
+        This will handle the move type of data.
+    </div>
+
     <!-- Compile output -->
-    <div>
-        Compile output Options
-    </div>
+     {#if fileList.length >0}
+        <div>
+            <select bind:value={folderData.compileOutPut} onchange={saveChanges}>
+            <option value="">No compile option</option>
+            {#each fileList as file }
+                <option value={file.file}>{file.file}</option>
+            {/each}
+            </select>
+        </div>
+    {/if}
 
 </div>
