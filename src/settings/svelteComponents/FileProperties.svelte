@@ -22,20 +22,15 @@
 
 
 <div>
+    <!-- Make this a title -->
     <div>
         Name: {fileData.file}
     </div>
+    <!-- Placement: Let this be moved up and down -->
     <div>
-        {fileData.draftConditions.haveTopicFrontMatter}
+        Placement buttons
     </div>
-    <div>
-        {fileData.draftConditions.draftStyle}
-    </div>
-    <select bind:value={fileData.draftConditions.draftStyle} onchange={saveChanges}>
-        {#each draftStyleOptions as style}
-            <option value={style}>{style}</option>
-        {/each}
-    </select>
+    
 
 
 </div>

@@ -93,9 +93,18 @@
 		display: flex;
 	}
 	
-.textAlign{
+
+.btn{
+	background: none;
+	color: inherit;
+	border: none;
+	padding: 0;
+	font: inherit;
+	cursor: pointer;
+	outline: inherit;
 	text-align: left;
 	left: 0;
+	height: 16px;
 }
 </style>
 
@@ -120,7 +129,7 @@
 				 <ObsidianIcon iconId="folder" size={16} />
 
 			</div>
-			<div><button class="textAlign"  onclick={()=>{{
+			<div><button class="btn"  onclick={()=>{{
 				changeSelection(subFolder)
 				changeFileList(Folder.subFiles)
 			}}}>{subFolder.folder}</button></div>
@@ -160,7 +169,7 @@
 			> 
 				<ObsidianIcon iconId="file" size={16} />
 			</div>
-			<div><button class="textAlign" onclick={()=>changeSelection(subfile)}>{removeExtension(subfile.file)}</button></div>
+			<div><button class="btn" onclick={()=>changeSelection(subfile)}>{removeExtension(subfile.file)}</button></div>
 			
 			
   	</div>

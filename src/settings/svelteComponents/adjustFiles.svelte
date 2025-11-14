@@ -56,9 +56,16 @@
 		display: flex;
 	}
 	
-.textAlign{
-	text-align: left;
-	left: 0;
+
+.btn{
+	background: none;
+	color: inherit;
+	border: none;
+	padding: 0;
+	font: inherit;
+	cursor: pointer;
+	outline: inherit;
+	height: 16px;
 }
 </style>
 
@@ -80,7 +87,7 @@
 			> 
 				<ObsidianIcon iconId="file" size={16} />
 			</div>
-			<div><button class="textAlign" onclick={()=>changeSelection(subfile)}>{removeExtension(subfile.file)}</button></div>
+			<div><button class="btn" onclick={()=>changeSelection(subfile)}>{removeExtension(subfile.file)}</button></div>
 			
 			
   	</div>

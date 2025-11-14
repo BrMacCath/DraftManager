@@ -135,18 +135,32 @@
 		cursor: grab;
 		position: absolute;
 		display: flex;
+        left: 0;
+        padding-right: 0;
 	}
 	
-.textAlign{
-	text-align: left;
-	left: 0;
+
+.btn{
+	background: none;
+	color: inherit;
+	border: none;
+	padding: 0;
+	font: inherit;
+	cursor: pointer;
+	outline: none;
+    height: 16px;
+    padding-left: 0;
+}
+.text-inline{
+    display: inline-block;
 }
 </style>
+
 <div>
 <h1 >Update <button onclick={()=>{changeSelection(folderArrangement);
 changeFileList([]);
 }}
-    
+    class= "btn"
     >{folderArrangement.folder}</button></h1>
 </div> 
 <section
@@ -157,35 +171,38 @@ changeFileList([]);
 {#each subFolders as subFolder,index(subFolder.id)}
 		<div animate:flip={{ duration: flipDurationMs }} >
             <div class="div-animate">
-			<div 
-			class="handle" 
-			tabindex={dragDisabled ? 0 : -1}
-			onmousedown={startDrag} 
-			ontouchstart={startDrag} 
-			onmouseup={stopDrag} 
-			ontouchend={stopDrag}
-			 role="button"
-		
-			 > 
-				 <ObsidianIcon iconId="folder" size={16} />
+                <!-- https://stackoverflow.com/questions/18361951/making-two-divs-line-up-side-by-side-without-gap -->
+                <div class="text-inline">
+                    <div 
+                    class="handle" 
+                    tabindex={dragDisabled ? 0 : -1}
+                    onmousedown={startDrag} 
+                    ontouchstart={startDrag} 
+                    onmouseup={stopDrag} 
+                    ontouchend={stopDrag}
+                    role="button"
+                
+                    > 
+                        <ObsidianIcon iconId="folder" size={16} />
 
-			</div>
-			<div><button class="textAlign" 
-                onclick={()=>{changeSelection(subFolder)
-                    changeFileList(subFiles)
-                }}
-                >{subFolder.folder}</button></div>
-            </div>
-            <div style="margin-left:{tabs}px">
-			<AdjustFolders bind:Folder={subFolders[index]} {dragDisabled} {tabs} {currentSelection} 
-                {startDrag}
-                {stopDrag}
-                {saveChanges}
-                {changeSelection} 
-                {changeFileList}
-                >
-            </AdjustFolders>  
-            </div>
+                    </div>
+                    <div><button class="btn" 
+                        onclick={()=>{changeSelection(subFolder)
+                            changeFileList(subFiles)
+                        }}
+                        >{subFolder.folder}</button></div>
+                    </div>
+                </div>
+                <div style="margin-left:{tabs}px">
+                <AdjustFolders bind:Folder={subFolders[index]} {dragDisabled} {tabs} {currentSelection} 
+                    {startDrag}
+                    {stopDrag}
+                    {saveChanges}
+                    {changeSelection} 
+                    {changeFileList}
+                    >
+                </AdjustFolders>  
+                </div>
 			
   	</div>
     
@@ -206,7 +223,7 @@ changeFileList([]);
 <div>
 {#if currentSelection.folder}
 {@const folderData:FolderArrangement = currentSelection}
-<FolderProperties {folderData} {fileList} {contentEl} {saveChanges}></FolderProperties>
+<FolderProperties {folderData} {fileList}  {saveChanges}></FolderProperties>
 
 
 {/if}
