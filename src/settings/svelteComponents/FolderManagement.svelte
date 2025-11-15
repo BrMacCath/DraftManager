@@ -161,7 +161,7 @@
 changeFileList([]);
 }}
     class= "btn"
-    >{folderArrangement.folder}</button></h1>
+    >{folderArrangement.name}</button></h1>
 </div> 
 <section
     use:dndzone={{ items:subFolders, dragDisabled, flipDurationMs,dropFromOthersDisabled:true,type }}
@@ -190,7 +190,7 @@ changeFileList([]);
                         onclick={()=>{changeSelection(subFolder)
                             changeFileList(subFiles)
                         }}
-                        >{subFolder.folder}</button></div>
+                        >{subFolder.name}</button></div>
                     </div>
                 </div>
                 <div style="margin-left:{tabs}px">
@@ -221,14 +221,14 @@ changeFileList([]);
 
 
 <div>
-{#if currentSelection.folder}
+{#if currentSelection.name}
 {@const folderData:FolderArrangement = currentSelection}
 <FolderProperties {folderData} {fileList}  {saveChanges}></FolderProperties>
 
 
 {/if}
 
-{#if currentSelection.file}
+{#if currentSelection.name}
 
 {@const fileData:FileArrangement = currentSelection}
 <FileProperties {fileData} {saveChanges}></FileProperties>

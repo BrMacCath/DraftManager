@@ -1,5 +1,7 @@
 <script lang="ts">
-	import type FileArrangement from "types/FolderTypes/fileArrangement";
+import { extractTypeChoices } from "types/choices/extractTypeChoices";
+import { moveTypeChoices } from "types/choices/moveTypeChoices";
+import type FileArrangement from "types/FolderTypes/fileArrangement";
     interface Props{
         folderData: FolderArrangement;
         fileList: FileArrangement[];
@@ -16,15 +18,15 @@
     // Could manage this outside the svelte situation
     
 	import type FolderArrangement from "types/FolderTypes/folderArrangement";
-    
-
+	import ExtractTypeComponent from "./Snippets/ExtractTypeComponent.svelte";
+	import MoveTypeComponent from "./Snippets/MoveTypeComponent.svelte";
 </script>
 
 
 <div>
     <!-- State the folder you are adjusting -->
     <div>
-       <h1> Name: {folderData.folder} </h1>
+       <h1> Name: {folderData.name} </h1>
     </div>
     <!-- Placement display hoerizontal -->
     Sort out placement logic here.
@@ -45,17 +47,17 @@
         
     </div>
     <!-- move Type of data -->
-    <div>
-        This will handle the move type of data.
-    </div>
+    <MoveTypeComponent bind:moveType={folderData.moveType} {saveChanges}></MoveTypeComponent>
+    <!-- Make these a svelte component -->
+    <ExtractTypeComponent bind:extractType={folderData.extractType} {saveChanges} ></ExtractTypeComponent>
 
     <!-- Compile output -->
      {#if fileList.length >0}
-        <div>
+        <div> Compile Output:
             <select bind:value={folderData.compileOutPut} onchange={saveChanges}>
             <option value="">No compile option</option>
             {#each fileList as file }
-                <option value={file.file}>{file.file}</option>
+                <option value={file.name}>{file.name}</option>
             {/each}
             </select>
         </div>

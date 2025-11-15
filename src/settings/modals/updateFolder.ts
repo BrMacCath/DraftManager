@@ -28,7 +28,7 @@ export class UpdateFolder extends Modal {
 
     createSubfolderConditions():void{
         const {contentEl} = this;
-		new Setting(contentEl).setName("" +this.folder.folder + " conditions").setHeading();
+		new Setting(contentEl).setName("" +this.folder.name + " conditions").setHeading();
         let subFoldArrange = new Setting(contentEl);
         subFoldArrange.setName("Update Subfolders")
             .setDesc("Change Subfolder Conditions")
@@ -76,7 +76,7 @@ export class UpdateFolder extends Modal {
 
     checkFolderCanBeAdded(new_folder:string,cb:SearchComponent,oldName:string):void{
 		for(let i = 0; i <this.plugin.settings.folders.length; i++){
-			if (new_folder == this.plugin.settings.folders[i].folder){
+			if (new_folder == this.plugin.settings.folders[i].name){
 				new Notice("This folder is already on the list");
                 cb.setValue(oldName);
 				return;

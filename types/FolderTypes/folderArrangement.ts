@@ -5,10 +5,12 @@ import type FileArrangement from "./fileArrangement";
 // may be added multiple times and sometimes we
 // will need to distingush where it is.
 export default interface FolderArrangement {
-    folder: string;
+    name: string;
     draftConditions: draftConditions;
     subFolders: FolderArrangement[];
     subFiles: FileArrangement[];
     compileOutPut: string;
     id: string;
+    moveType: string;
+    extractType: string;
 }

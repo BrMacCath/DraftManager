@@ -20,12 +20,12 @@ export function fillOutFolderStructure(folderTFile:TFolder,defaultDraftCondition
     });
     let subFiles:FileArrangement[]=[];
     tFiles.forEach((file)=>{
-        subFiles.push({file:file.name,id:v4(),draftConditions:defaultDraftConditions})
+        subFiles.push({name:file.name,id:v4(),draftConditions:defaultDraftConditions,moveType:"As Is",extractType:"Content"})
     })
     
     const unique_id = v4();
     const compileOutPut ="";
     
-    return {folder:folderTFile.name,subFolders:subFolders,subFiles:subFiles,compileOutPut:compileOutPut,id:v4(),draftConditions:defaultFolderDraftConditions}
+    return {name:folderTFile.name,subFolders:subFolders,subFiles:subFiles,compileOutPut:compileOutPut,id:v4(),draftConditions:defaultFolderDraftConditions,moveType:"As Is",extractType:"Content"}
 
 }

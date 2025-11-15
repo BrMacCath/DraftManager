@@ -2,7 +2,9 @@
 import type draftConditions from "types/choices/draftConditions";
 
 export default interface FileArrangement{
-    file:string;
+    name:string;
     id:string;
     draftConditions: draftConditions;
+    moveType: string;
+    extractType:string;
 }

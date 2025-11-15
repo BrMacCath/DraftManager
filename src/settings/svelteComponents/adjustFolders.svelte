@@ -132,7 +132,7 @@
 			<div><button class="btn"  onclick={()=>{{
 				changeSelection(subFolder)
 				changeFileList(Folder.subFiles)
-			}}}>{subFolder.folder}</button></div>
+			}}}>{subFolder.name}</button></div>
 			</div>
 			<div style="margin-left: {tabs}px">
 			<AdjustFolders bind:Folder={subFolders[index]} {dragDisabled} {tabs} {currentSelection}
@@ -169,7 +169,7 @@
 			> 
 				<ObsidianIcon iconId="file" size={16} />
 			</div>
-			<div><button class="btn" onclick={()=>changeSelection(subfile)}>{removeExtension(subfile.file)}</button></div>
+			<div><button class="btn" onclick={()=>changeSelection(subfile)}>{removeExtension(subfile.name)}</button></div>
 			
 			
   	</div>

@@ -16,13 +16,13 @@ export class chooseFolder extends Modal{
     onOpen(): void {
         const containerEl=this.modalEl;
         new Setting(containerEl).setName("Select Folder").setHeading();
-        let folderTextName = this.settings.folders[0].folder;
+        let folderTextName = this.settings.folders[0].name;
         new Setting(containerEl).setName("Select your folder")
         .setDesc("Choose which folder you wish to add from your list.")
         .addSearch((cb)=>{
             new folderListSuggest(this.app, cb.inputEl,this.settings.folders);
                 cb.setPlaceholder("Example: folder1/folder2")
-                    .setValue(this.settings.folders[0].folder)
+                    .setValue(this.settings.folders[0].name)
                     .onChange((new_folder) => {
                         // Trim folder and Strip ending slash if there
                         new_folder = new_folder.trim()
@@ -35,7 +35,7 @@ export class chooseFolder extends Modal{
             btn.setButtonText("Folder Button").onClick(() =>{
                 let folderDraftConditions:draftConditions = this.settings.folders[0].draftConditions;
                 for (let i =0; i < this.settings.folders.length;i++){
-                    if(this.settings.folders[i].folder == folderTextName){
+                    if(this.settings.folders[i].name == folderTextName){
                         folderDraftConditions = this.settings.folders[i].draftConditions;
                     }
                 }

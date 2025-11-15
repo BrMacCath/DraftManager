@@ -6,7 +6,7 @@ import { v4 } from "uuid";
 
 export function checkFolderCanBeAdded(new_folder:string,plugin:DraftManagerPlugin):void{
     for(let i = 0; i <plugin.settings.folders.length; i++){
-        if (new_folder == plugin.settings.folders[i].folder){
+        if (new_folder == plugin.settings.folders[i].name){
             new Notice("This folder is already on the list");
             return;
         }
@@ -19,7 +19,7 @@ export function checkFolderCanBeAdded(new_folder:string,plugin:DraftManagerPlugi
 
     // This is assigning not just the values but the memory too.
     const folderCopy:draftConditions = this.plugin.settings.defaultFolder;
-    plugin.settings.folders.push({folder:tfold.name,id:v4(),draftConditions:this.plugin.settings.defaultFolder,compileOutPut:"",subFiles:[],subFolders:[]});
+    plugin.settings.folders.push({name:tfold.name,id:v4(),draftConditions:this.plugin.settings.defaultFolder,compileOutPut:"",subFiles:[],subFolders:[],moveType:"As Is",extractType:"Content"});
     plugin.saveSettings();
     //plugin.settings.display();
 }

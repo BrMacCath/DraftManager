@@ -1,0 +1,1 @@
+export const extractTypeChoices:string[] = ["As Is","content","Last Version"];

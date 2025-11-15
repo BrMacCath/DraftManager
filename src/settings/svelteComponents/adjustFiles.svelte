@@ -87,7 +87,7 @@
 			> 
 				<ObsidianIcon iconId="file" size={16} />
 			</div>
-			<div><button class="btn" onclick={()=>changeSelection(subfile)}>{removeExtension(subfile.file)}</button></div>
+			<div><button class="btn" onclick={()=>changeSelection(subfile)}>{removeExtension(subfile.name)}</button></div>
 			
 			
   	</div>
