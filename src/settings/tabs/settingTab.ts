@@ -25,7 +25,7 @@ export class DraftTab extends PluginSettingTab {
 		settingsStore.getState().folders.forEach( (folder) => {
 		
 	
-			new Setting(containerEl).setName(folder.folder).addButton( (btn)=> {
+			new Setting(containerEl).setName(folder.name).addButton( (btn)=> {
 				// Create a folder modal that allows you to edit it.
 				btn.setButtonText("Update Folder").onClick(() => {
 					new UpdateFolder(this.app,this.plugin,folder,this).open()
@@ -62,7 +62,7 @@ export class DraftTab extends PluginSettingTab {
 	async checkFolderCanBeAdded(new_folder:string,plugin:DraftManagerPlugin):Promise<void>{
 		console.log("Got into folder function: Starting")
 		for(let i = 0; i <plugin.settings.folders.length; i++){
-			if (new_folder == plugin.settings.folders[i].folder){
+			if (new_folder == plugin.settings.folders[i].name){
 				new Notice("This folder is already on the list");
 				return;
 			}

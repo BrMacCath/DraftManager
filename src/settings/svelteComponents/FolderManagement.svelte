@@ -30,11 +30,8 @@
         currentSelection = selection
     }
     function changeFileList(tempFileList:FileArrangement[]){
-        console.log("changeFile opened")
         // const tempFileList:FileArrangement[] =fileList
-        console.log(fileList)
         fileList = tempFileList
-        console.log(fileList)
         
     }
 
@@ -101,7 +98,6 @@
             fold.subFiles = subFiles;
             newFold.push(fold);
         })    
-        console.log("Here")
 		settingsStore.setState({folders: newFold});
     }
 
@@ -117,8 +113,10 @@
 	import { dndzone, SHADOW_PLACEHOLDER_ITEM_ID } from "svelte-dnd-action";
 	import { flip } from "svelte/animate";
 	import AdjustFolders from "./adjustFolders.svelte";
-	import FileProperties from "./FileProperties.svelte";
-    import FolderProperties from "./FolderProperties.svelte";
+	import MoveTypeComponent from "./Snippets/MoveTypeComponent.svelte";
+	import ExtractTypeComponent from "./Snippets/ExtractTypeComponent.svelte";
+	import NameComponent from "./Snippets/NameComponent.svelte";
+	import PlacementComponent from "./Snippets/PlacementComponent.svelte";
     let type = "folder" +folderArrangement.id
 </script>
 
@@ -219,19 +217,22 @@ changeFileList([]);
      type={"Files" +folderArrangement.id} ></AdjustFiles>
 </div>
 
-
 <div>
-{#if currentSelection.name}
-{@const folderData:FolderArrangement = currentSelection}
-<FolderProperties {folderData} {fileList}  {saveChanges}></FolderProperties>
 
 
-{/if}
+    <!-- Adjust placement -->
+    <NameComponent name={currentSelection.name} ></NameComponent>
 
-{#if currentSelection.name}
+    <!-- Placement -->
+    <PlacementComponent {currentSelection} ></PlacementComponent>
+    <!-- Adjust properties file -->
+    <MoveTypeComponent bind:moveType={currentSelection.moveType} {saveChanges}></MoveTypeComponent>
+    <!-- Make these a svelte component -->
+    <ExtractTypeComponent bind:extractType={currentSelection.extractType} {saveChanges} ></ExtractTypeComponent>
 
-{@const fileData:FileArrangement = currentSelection}
-<FileProperties {fileData} {saveChanges}></FileProperties>
+    <!-- Compile Output -->
+     {#if currentSelection.compileOutput}
+        This text appears if this is a folder.
+     {/if}
 
-{/if}
 </div>

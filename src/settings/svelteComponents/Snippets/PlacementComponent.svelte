@@ -1,17 +1,30 @@
-<script lang="ts" generics="DataType">
+<script lang="ts">
+	import type FileArrangement from "types/FolderTypes/fileArrangement";
+
     interface Props{
-        choice: DataType;
-        choiceList: DataType[];
-        saveChanges: ()=> void;
+        currentSelection: FileArrangement|FileArrangement;
+        // choiceList: FileArrangement[]|FileArrangement[];
+        // saveChanges: ()=> void;
     }
 
     let {
-        choice,
-        choiceList,
-        saveChanges
+        currentSelection,
+        // choiceList,
+        // saveChanges
     }: Props =$props();
 </script>
 
 <div>
-    Placement {choice.name}
+    <div>
+        <div>
+            Placement {currentSelection.name}
+        </div>
+        <div>
+            Descriptions
+        </div>
+    </div>
+    <div>
+        Buttons
+    </div>
+    
 </div>

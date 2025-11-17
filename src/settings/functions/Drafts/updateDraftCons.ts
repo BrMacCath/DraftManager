@@ -3,6 +3,8 @@ import type draftConditions from "types/choices/draftConditions";
 import { DraftTab } from "../../tabs/settingTab";
 import { draftStyleOptions } from "types/choices/draftStyleOptions";
 import { hideCssName } from "types/cssStylings/cssClassNames";
+import { moveTypeChoices } from "types/choices/moveTypeChoices";
+import { extractTypeChoices } from "types/choices/extractTypeChoices";
 export function UpdateDraftCons(draftConditions:draftConditions,settingsTab:DraftTab,containerEl:HTMLElement,folder:string){
     new Setting(containerEl).setName(folder + " Draft Conditions").setHeading();
     new Setting(containerEl).setName("Draft Style")
@@ -18,6 +20,32 @@ export function UpdateDraftCons(draftConditions:draftConditions,settingsTab:Draf
             })
         })
 
+
+    new Setting(containerEl).setName("Export Type")
+        .setDesc("How do you wish detail to be extracted from this file")
+        .addDropdown((dropdown) =>{
+            for (let i=0; i<extractTypeChoices.length;i++){
+                dropdown.addOption(extractTypeChoices[i],extractTypeChoices[i])
+            }
+            dropdown.setValue(draftConditions.moveType);
+            dropdown.onChange(async (value) =>{
+                draftConditions.moveType = value;
+                await settingsTab.plugin.saveSettings();
+            })
+        })
+
+    new Setting(containerEl).setName("Move Type")
+        .setDesc("What will the default move type be")
+        .addDropdown((dropdown) =>{
+            for (let i=0; i<moveTypeChoices.length;i++){
+                dropdown.addOption(moveTypeChoices[i],moveTypeChoices[i])
+            }
+            dropdown.setValue(draftConditions.moveType);
+            dropdown.onChange(async (value) =>{
+                draftConditions.moveType = value;
+                await settingsTab.plugin.saveSettings();
+            })
+        })
     
     // new Setting(containerEl).setName("New line signifier")
     //     .setDesc("How to indicate a new line in your draft").addText((cb) =>{
@@ -55,30 +83,17 @@ export function UpdateDraftCons(draftConditions:draftConditions,settingsTab:Draf
     //             await settingsTab.plugin.saveSettings();
     //         })
     //     } );
-    // new Setting(containerEl).setName("Unformatted Drafts Location")
-    //     .setDesc("Where will you store the unformatted drafts").addText((cb) =>{
-    //         cb.setValue(draftConditions.draftStorage).onChange(async(value)=>{
-    //             draftConditions.draftStorage = value;
-    //             await settingsTab.plugin.saveSettings();
-    //         })
-    //     } );
 
-    // new Setting(containerEl).setName("Draft File Signifier")
-    //     .setDesc("How to indicate a file is a unformatted draft file").addText((cb) =>{
-    //         cb.setValue(draftConditions.draftFileIndicator).onChange(async(value)=>{
-    //             draftConditions.draftFileIndicator = value;
-    //             await settingsTab.plugin.saveSettings();
-    //         })
             
     //     } )
-    new Setting(containerEl).setName("Topic Front Matter.")
-        .setDesc("Do you wish to have frontmatter for each topic.").addToggle((cb) =>{
-            cb.setValue(draftConditions.haveTopicFrontMatter).onChange(async(value)=>{
-                draftConditions.haveTopicFrontMatter = value;
-                //frontmatterTopicSetting.settingEl.classList.toggle(hideCssName);
-                await settingsTab.plugin.saveSettings();
-            })
-        } )
+    // new Setting(containerEl).setName("Topic Front Matter.")
+    //     .setDesc("Do you wish to have frontmatter for each topic.").addToggle((cb) =>{
+    //         cb.setValue(draftConditions.haveTopicFrontMatter).onChange(async(value)=>{
+    //             draftConditions.haveTopicFrontMatter = value;
+    //             //frontmatterTopicSetting.settingEl.classList.toggle(hideCssName);
+    //             await settingsTab.plugin.saveSettings();
+    //         })
+    //     } )
 
     // let frontmatterTopicSetting =new Setting(containerEl);
     // frontmatterTopicSetting.setName("FrontMatter Topic Separator Signifier")

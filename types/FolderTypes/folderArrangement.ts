@@ -9,7 +9,7 @@ export default interface FolderArrangement {
     draftConditions: draftConditions;
     subFolders: FolderArrangement[];
     subFiles: FileArrangement[];
-    compileOutPut: string;
+    compileOutput: string;
     id: string;
     moveType: string;
     extractType: string;

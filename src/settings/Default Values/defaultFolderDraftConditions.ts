@@ -6,5 +6,5 @@ import { moveTypeChoices } from "types/choices/moveTypeChoices";
 // this with this.settings.draft conditions but I use this as a placeholder
 // to test new features.
 export let defaultFolderDraftConditions:draftConditions=  {draftStyle:"Peterson",haveComments:true, commentSignifier:"*",rewriteLineSignifier:">",
-			draftStorage: "Drafts",	draftFileIndicator:"DRAFTS ",haveTopicFrontMatter: false,topicFrontMatterSeparator:"*---*",paragraphSeparator:"+---+",draftNumSignifier:"draftNum",
+			haveTopicFrontMatter: false,topicFrontMatterSeparator:"*---*",paragraphSeparator:"+---+",draftNumSignifier:"draftNum",
 			includeFrontMatter: frontmatterExtractionChoices[0],moveType: moveTypeChoices[0]}
