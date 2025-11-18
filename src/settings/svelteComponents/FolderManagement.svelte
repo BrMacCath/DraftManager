@@ -17,6 +17,7 @@
     let currentSelection:FolderArrangement|FileArrangement = $state(folderArrangement.folder)
     let fileList:FileArrangement[] = $state([])
     let organisingList:FileArrangement[]|FolderArrangement[] = $state([folderArrangement.folder])
+    let currentSelectionisFolder:boolean = $state(true)
 
     const startDrag = () => {
 		dragDisabled = false;
@@ -37,6 +38,9 @@
     }
     function changeOrganisingList(tempOrgList:FileArrangement[]|FolderArrangement[]){
         organisingList = tempOrgList;
+    }
+    function changeFolderStatus(status:boolean){
+        currentSelectionisFolder = status
     }
 
     function handleFinalise(e:any){
@@ -193,6 +197,7 @@ changeOrganisingList([])
                         onclick={()=>{changeSelection(subFolder)
                             changeFileList(subFiles)
                             changeOrganisingList(subFolders)
+                            changeFolderStatus(true)
                         }}
                         >{subFolder.name}</button></div>
                     </div>
@@ -205,6 +210,7 @@ changeOrganisingList([])
                     {changeSelection} 
                     {changeFileList}
                     {changeOrganisingList}
+                    {changeFolderStatus}
                     >
                 </AdjustFolders>  
                 </div>
@@ -217,6 +223,7 @@ changeOrganisingList([])
     <AdjustFiles {subFiles} {dragDisabled} {currentSelection} {handleConfigureChoice} 
     {handleFinalise} {startDrag}
      {stopDrag} {changeSelection}
+     {changeFolderStatus}
      type={"Files" +folderArrangement.id} {changeOrganisingList} ></AdjustFiles>
 </div>
 
@@ -230,7 +237,7 @@ changeOrganisingList([])
 
     <ExtractTypeComponent bind:extractType={currentSelection.extractType} {saveChanges} ></ExtractTypeComponent>
    
-     {#if currentSelection.compileOutput}
+     {#if currentSelectionisFolder}
         This text appears if this is a folder.
      {/if}
 

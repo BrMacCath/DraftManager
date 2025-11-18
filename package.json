@@ -1,6 +1,6 @@
 {
 	"name": "Draft Manager",
-	"version": "1.0.2",
+	"version": "1.0.3",
 	"description": "Apply draft techniques to files and control the location of the end result.",
 	"main": "main.js",
 	"scripts": {

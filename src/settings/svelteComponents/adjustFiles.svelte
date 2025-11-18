@@ -16,6 +16,7 @@
 		type:string;
 		changeSelection:(selection:FolderArrangement|FileArrangement) => void;
 		changeOrganisingList:(organisingList:FileArrangement[]|FileArrangement[])=>void;
+		changeFolderStatus:(status:boolean)=>void;
     }
 
     let {
@@ -28,7 +29,8 @@
 		stopDrag,
 		type,
 		changeSelection,
-		changeOrganisingList
+		changeOrganisingList,
+		changeFolderStatus
     }:Props =$props();
 
 	const flipDurationMs = 200;
@@ -91,6 +93,7 @@
 			</div>
 			<div><button class="btn" onclick={()=>{changeSelection(subfile)
 				changeOrganisingList(subFiles)
+				changeFolderStatus(false)
 			}
 			}>{removeExtension(subfile.name)}</button></div>
 			
