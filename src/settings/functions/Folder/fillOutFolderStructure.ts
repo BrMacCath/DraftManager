@@ -23,7 +23,6 @@ export function fillOutFolderStructure(folderTFile:TFolder,defaultDraftCondition
         subFiles.push({name:file.name,id:v4(),draftConditions:defaultDraftConditions,moveType:"As Is",extractType:"Content"})
     })
     
-    const unique_id = v4();
     const compileOutPut ="";
     
     return {name:folderTFile.name,subFolders:subFolders,subFiles:subFiles,compileOutput:compileOutPut,id:v4(),draftConditions:defaultFolderDraftConditions,moveType:"As Is",extractType:"Content"}

@@ -10,4 +10,5 @@ export default interface draftConditions{
     draftNumSignifier: string;
     includeFrontMatter: string;
     moveType: string;
+    extractType: string;
 }

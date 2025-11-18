@@ -1,1 +1,1 @@
-export const extractTypeChoices:string[] = ["As Is","content","Last Version"];
+export const extractTypeChoices:string[] = ["As Is","Content","Last Version"];

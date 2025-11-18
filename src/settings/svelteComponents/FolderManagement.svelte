@@ -15,6 +15,7 @@
     let subFolders = $state(folderArrangement.subFolders);
     let currentSelection:FolderArrangement|FileArrangement = $state(folderArrangement)
     let fileList:FileArrangement[] = $state([])
+    let organisingList:FileArrangement[]|FolderArrangement[] = $state([folderArrangement])
 
     const startDrag = () => {
 		dragDisabled = false;
@@ -32,7 +33,9 @@
     function changeFileList(tempFileList:FileArrangement[]){
         // const tempFileList:FileArrangement[] =fileList
         fileList = tempFileList
-        
+    }
+    function changeOrganisingList(tempOrgList:FileArrangement[]|FolderArrangement[]){
+        organisingList = tempOrgList;
     }
 
     function handleFinalise(e:any){
@@ -103,11 +106,9 @@
 
     const flipDurationMs = 200;
    
-    
 	import type FolderArrangement from "types/FolderTypes/folderArrangement";
     import AdjustFiles from "./adjustFiles.svelte";
 	import ObsidianIcon from "./ObsidianIcon.svelte";
-
 	import { settingsStore } from "types/zustand/store";
 	import type FileArrangement from "types/FolderTypes/fileArrangement";
 	import { dndzone, SHADOW_PLACEHOLDER_ITEM_ID } from "svelte-dnd-action";
@@ -135,8 +136,7 @@
 		display: flex;
         left: 0;
         padding-right: 0;
-	}
-	
+	}	
 
 .btn{
 	background: none;
@@ -157,6 +157,7 @@
 <div>
 <h1 >Update <button onclick={()=>{changeSelection(folderArrangement);
 changeFileList([]);
+changeOrganisingList([])
 }}
     class= "btn"
     >{folderArrangement.name}</button></h1>
@@ -187,6 +188,7 @@ changeFileList([]);
                     <div><button class="btn" 
                         onclick={()=>{changeSelection(subFolder)
                             changeFileList(subFiles)
+                            changeOrganisingList(subFolders)
                         }}
                         >{subFolder.name}</button></div>
                     </div>
@@ -198,39 +200,32 @@ changeFileList([]);
                     {saveChanges}
                     {changeSelection} 
                     {changeFileList}
+                    {changeOrganisingList}
                     >
                 </AdjustFolders>  
                 </div>
-			
   	</div>
-    
-
 	{/each}    
 
 </section> 
-
 
 <div style="margin-left:0px">
     <AdjustFiles {subFiles} {dragDisabled} {currentSelection} {handleConfigureChoice} 
     {handleFinalise} {startDrag}
      {stopDrag} {changeSelection}
-     type={"Files" +folderArrangement.id} ></AdjustFiles>
+     type={"Files" +folderArrangement.id} {changeOrganisingList} ></AdjustFiles>
 </div>
 
 <div>
 
-
-    <!-- Adjust placement -->
     <NameComponent name={currentSelection.name} ></NameComponent>
 
-    <!-- Placement -->
-    <PlacementComponent {currentSelection} ></PlacementComponent>
-    <!-- Adjust properties file -->
-    <MoveTypeComponent bind:moveType={currentSelection.moveType} {saveChanges}></MoveTypeComponent>
-    <!-- Make these a svelte component -->
-    <ExtractTypeComponent bind:extractType={currentSelection.extractType} {saveChanges} ></ExtractTypeComponent>
+    <PlacementComponent {currentSelection} {organisingList} {saveChanges} ></PlacementComponent>
 
-    <!-- Compile Output -->
+    <MoveTypeComponent bind:moveType={currentSelection.moveType} {saveChanges}></MoveTypeComponent>
+
+    <ExtractTypeComponent bind:extractType={currentSelection.extractType} {saveChanges} ></ExtractTypeComponent>
+   
      {#if currentSelection.compileOutput}
         This text appears if this is a folder.
      {/if}

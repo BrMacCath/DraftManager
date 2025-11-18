@@ -15,6 +15,7 @@
 		stopDrag: ()=>void;
 		type:string;
 		changeSelection:(selection:FolderArrangement|FileArrangement) => void;
+		changeOrganisingList:(organisingList:FileArrangement[]|FileArrangement[])=>void;
     }
 
     let {
@@ -26,7 +27,8 @@
 		startDrag,
 		stopDrag,
 		type,
-		changeSelection
+		changeSelection,
+		changeOrganisingList
     }:Props =$props();
 
 	const flipDurationMs = 200;
@@ -87,7 +89,10 @@
 			> 
 				<ObsidianIcon iconId="file" size={16} />
 			</div>
-			<div><button class="btn" onclick={()=>changeSelection(subfile)}>{removeExtension(subfile.name)}</button></div>
+			<div><button class="btn" onclick={()=>{changeSelection(subfile)
+				changeOrganisingList(subFiles)
+			}
+			}>{removeExtension(subfile.name)}</button></div>
 			
 			
   	</div>

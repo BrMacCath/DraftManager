@@ -21,15 +21,16 @@ export function UpdateDraftCons(draftConditions:draftConditions,settingsTab:Draf
         })
 
 
-    new Setting(containerEl).setName("Export Type")
+    new Setting(containerEl).setName("Extract Type")
         .setDesc("How do you wish detail to be extracted from this file")
         .addDropdown((dropdown) =>{
             for (let i=0; i<extractTypeChoices.length;i++){
                 dropdown.addOption(extractTypeChoices[i],extractTypeChoices[i])
             }
-            dropdown.setValue(draftConditions.moveType);
+            dropdown.setValue(draftConditions.extractType
+            );
             dropdown.onChange(async (value) =>{
-                draftConditions.moveType = value;
+                draftConditions.extractType = value;
                 await settingsTab.plugin.saveSettings();
             })
         })

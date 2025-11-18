@@ -16,6 +16,7 @@
         saveChanges: ()=>void;
         changeSelection:(selection:FolderArrangement|FileArrangement) => void;
 		changeFileList:(fileList:FileArrangement[])=>void;
+		changeOrganisingList:(organisingList:FileArrangement[]|FileArrangement[])=>void;
     }
 
     let {
@@ -27,7 +28,8 @@
 		stopDrag,
         saveChanges,
         changeSelection,
-		changeFileList
+		changeFileList,
+		changeOrganisingList
 
     }:Props =$props();
 
@@ -132,6 +134,7 @@
 			<div><button class="btn"  onclick={()=>{{
 				changeSelection(subFolder)
 				changeFileList(Folder.subFiles)
+				changeOrganisingList(subFolders)
 			}}}>{subFolder.name}</button></div>
 			</div>
 			<div style="margin-left: {tabs}px">
@@ -140,7 +143,8 @@
                 {stopDrag}
                 {saveChanges} 
                 {changeSelection}
-				{changeFileList}>
+				{changeFileList}
+				{changeOrganisingList}>
             </AdjustFolders>  
             </div>
   	</div>
@@ -169,7 +173,9 @@
 			> 
 				<ObsidianIcon iconId="file" size={16} />
 			</div>
-			<div><button class="btn" onclick={()=>changeSelection(subfile)}>{removeExtension(subfile.name)}</button></div>
+			<div><button class="btn" onclick={()=>{changeSelection(subfile)
+				changeOrganisingList(subFiles)}
+				}>{removeExtension(subfile.name)}</button></div>
 			
 			
   	</div>

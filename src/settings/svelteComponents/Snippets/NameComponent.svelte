@@ -6,6 +6,10 @@
         name
     }:Props=$props()
 </script>
+<style>
+    .header{
+        margin-bottom: 0%;
+    }
+</style>
 
-
-<h1>Adjust {name} Properties</h1>
+<h1 class="header">Adjust {name} Properties</h1>
