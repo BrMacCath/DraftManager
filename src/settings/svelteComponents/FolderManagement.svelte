@@ -1,7 +1,7 @@
 <script lang="ts">
     interface Props{
         tabs: number;
-        folderArrangement: FolderArrangement;
+        folderArrangement: BaseFolderArrangement;
         contentEl: HTMLElement;
     }
 
@@ -10,12 +10,13 @@
         folderArrangement,
         contentEl
     }:Props =$props();
+    
     let dragDisabled = $state(true);
-    let subFiles = $state(folderArrangement.subFiles);
-    let subFolders = $state(folderArrangement.subFolders);
-    let currentSelection:FolderArrangement|FileArrangement = $state(folderArrangement)
+    let subFiles = $state(folderArrangement.folder.subFiles);
+    let subFolders = $state(folderArrangement.folder.subFolders);
+    let currentSelection:FolderArrangement|FileArrangement = $state(folderArrangement.folder)
     let fileList:FileArrangement[] = $state([])
-    let organisingList:FileArrangement[]|FolderArrangement[] = $state([folderArrangement])
+    let organisingList:FileArrangement[]|FolderArrangement[] = $state([folderArrangement.folder])
 
     const startDrag = () => {
 		dragDisabled = false;
@@ -47,14 +48,15 @@
         );
         // Always re-disable dragging when the sort finalizes
         dragDisabled = true;
-        let newFold:FolderArrangement[] = [];
+        let newFold:BaseFolderArrangement[] = [];
+        // Pushing folder Arrangement instead of 
         settingsStore.getState().folders.forEach((fold)=>{
             if(fold.id != folderArrangement.id){
                 newFold.push(fold)
                 return ;
             }
             // sanitized is sometimes going wrong.
-            fold.subFiles = sanitized;
+            fold.folder.subFiles = sanitized;
             newFold.push(fold);
         })        
 		settingsStore.setState({folders: newFold});
@@ -75,14 +77,14 @@
         // Always re-disable dragging when the sort finalizes
         dragDisabled = true;
 
-        let newFold:FolderArrangement[] = [];
+        let newFold:BaseFolderArrangement[] = [];
         settingsStore.getState().folders.forEach((fold)=>{
             if(fold.id != folderArrangement.id){
                 newFold.push(fold)
                 return ;
             }
             // sanitized is sometimes going wrong.
-            fold.subFolders = sanitized;
+            fold.folder.subFolders = sanitized;
             newFold.push(fold);
         })    
         
@@ -90,15 +92,16 @@
     }
 
     function saveChanges(){
-        let newFold:FolderArrangement[] = [];
+        let newFold:BaseFolderArrangement[] = [];
         settingsStore.getState().folders.forEach((fold)=>{
             if(fold.id != folderArrangement.id){
                 newFold.push(fold)
                 return ;
             }
+    
             // sanitized is sometimes going wrong.
-            fold.subFolders = subFolders;
-            fold.subFiles = subFiles;
+            fold.folder.subFolders = subFolders;
+            fold.folder.subFiles = subFiles;
             newFold.push(fold);
         })    
 		settingsStore.setState({folders: newFold});
@@ -118,6 +121,7 @@
 	import ExtractTypeComponent from "./Snippets/ExtractTypeComponent.svelte";
 	import NameComponent from "./Snippets/NameComponent.svelte";
 	import PlacementComponent from "./Snippets/PlacementComponent.svelte";
+	import type { BaseFolderArrangement } from "types/FolderTypes/BaseFolderArrangement";
     let type = "folder" +folderArrangement.id
 </script>
 
@@ -155,12 +159,12 @@
 </style>
 
 <div>
-<h1 >Update <button onclick={()=>{changeSelection(folderArrangement);
+<h1 >Update <button onclick={()=>{changeSelection(folderArrangement.folder);
 changeFileList([]);
 changeOrganisingList([])
 }}
     class= "btn"
-    >{folderArrangement.name}</button></h1>
+    >{folderArrangement.folder.name}</button></h1>
 </div> 
 <section
     use:dndzone={{ items:subFolders, dragDisabled, flipDurationMs,dropFromOthersDisabled:true,type }}

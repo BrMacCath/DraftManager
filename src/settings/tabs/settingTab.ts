@@ -8,6 +8,8 @@ import type DraftManagerPlugin from "src/main";
 import { fillOutFolderStructure } from "../functions/Folder/fillOutFolderStructure";
 import type FolderArrangement from "types/FolderTypes/folderArrangement";
 import { settingsStore } from "types/zustand/store";
+import type { BaseFolderArrangement } from "types/FolderTypes/BaseFolderArrangement";
+import { v4 } from "uuid";
 export class DraftTab extends PluginSettingTab {
 	plugin: DraftManagerPlugin;
 
@@ -25,7 +27,7 @@ export class DraftTab extends PluginSettingTab {
 		settingsStore.getState().folders.forEach( (folder) => {
 		
 	
-			new Setting(containerEl).setName(folder.name).addButton( (btn)=> {
+			new Setting(containerEl).setName(folder.displayName).addButton( (btn)=> {
 				// Create a folder modal that allows you to edit it.
 				btn.setButtonText("Update Folder").onClick(() => {
 					new UpdateFolder(this.app,this.plugin,folder,this).open()
@@ -60,20 +62,14 @@ export class DraftTab extends PluginSettingTab {
 	}
 
 	async checkFolderCanBeAdded(new_folder:string,plugin:DraftManagerPlugin):Promise<void>{
-		console.log("Got into folder function: Starting")
-		for(let i = 0; i <plugin.settings.folders.length; i++){
-			if (new_folder == plugin.settings.folders[i].name){
-				new Notice("This folder is already on the list");
-				return;
-			}
-		}
 		// This is assigning not just the values but the memory too.
 		const tfold:TFolder|null = this.app.vault.getFolderByPath(new_folder);
 		if( !(tfold instanceof TFolder)){
 			return;
 		}
-		const foldArrange:FolderArrangement = fillOutFolderStructure(tfold,plugin.settings.defaultFolderConditions)
-		settingsStore.setState({folders: [...settingsStore.getState().folders,foldArrange]})
+		const folder:FolderArrangement = fillOutFolderStructure(tfold,plugin.settings.defaultFolderConditions)
+		const baseFolder:BaseFolderArrangement ={folder:folder,id:v4(),displayName:tfold.name,basePath:tfold.path}
+		settingsStore.setState({folders: [...settingsStore.getState().folders,baseFolder]})
 		this.display()
 	}
 

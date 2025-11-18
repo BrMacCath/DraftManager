@@ -4,14 +4,15 @@ import { mount,unmount } from "svelte";
 import type DraftManagerPlugin from "src/main";
 import type FolderArrangement from "types/FolderTypes/folderArrangement";
 import FolderManagement from "../svelteComponents/FolderManagement.svelte";
+import type { BaseFolderArrangement } from "types/FolderTypes/BaseFolderArrangement";
 
 
 export class UpdateSubFolder extends Modal {
     plugin: DraftManagerPlugin;
     svelteTest:ReturnType<typeof FolderManagement> | undefined;
     settingsTab:DraftTab;
-    folderArrangement:FolderArrangement;
-    constructor(app: App,plugin: DraftManagerPlugin,folderArrangement:FolderArrangement,settingsTab:DraftTab) {
+    folderArrangement:BaseFolderArrangement;
+    constructor(app: App,plugin: DraftManagerPlugin,folderArrangement:BaseFolderArrangement,settingsTab:DraftTab) {
             super(app);
             this.plugin = plugin;
             this.folderArrangement=folderArrangement;

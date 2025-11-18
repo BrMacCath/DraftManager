@@ -1,9 +1,9 @@
-import type FolderArrangement from "../../types/FolderTypes/folderArrangement";
 import type draftConditions from "types/choices/draftConditions";
 import { defaultFolderDraftConditions } from "./Default Values/defaultFolderDraftConditions";
+import type { BaseFolderArrangement } from "types/FolderTypes/BaseFolderArrangement";
 
 export default interface DraftManagerSettings {
-	folders: FolderArrangement[];
+	folders: BaseFolderArrangement[];
 	defaultFolderConditions:draftConditions;
 	vaultList: string[];
 }

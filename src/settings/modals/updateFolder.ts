@@ -6,13 +6,15 @@ import { buttonCssClassName,  deleteCssName } from "types/cssStylings/cssClassNa
 import type DraftManagerPlugin from "src/main";
 import { fillOutFolderStructure } from "../functions/Folder/fillOutFolderStructure";
 import { settingsStore } from "types/zustand/store";
-import { moveFilesToVaultBasedOnConditions } from "../functions/URI/moveFilesToVaultBasedOnConditions";
+import { moveFolderArrangementToVault } from "src/MoveConditions/moveFolderArrangementToVault";
+import type { BaseFolderArrangement } from "types/FolderTypes/BaseFolderArrangement";
+import { v4 } from "uuid";
 
 export class UpdateFolder extends Modal {
 	plugin: DraftManagerPlugin;
-	folder: FolderArrangement;
+	folder: BaseFolderArrangement;
 	settingsTab: DraftTab;
-	constructor(app: App,plugin: DraftManagerPlugin,folder:FolderArrangement,settingsTab:DraftTab) {
+	constructor(app: App,plugin: DraftManagerPlugin,folder:BaseFolderArrangement,settingsTab:DraftTab) {
 		super(app);
 		this.plugin = plugin;
 		this.folder = folder;
@@ -28,7 +30,7 @@ export class UpdateFolder extends Modal {
 
     createSubfolderConditions():void{
         const {contentEl} = this;
-		new Setting(contentEl).setName("" +this.folder.name + " conditions").setHeading();
+		new Setting(contentEl).setName("" +this.folder.displayName + " conditions").setHeading();
         let subFoldArrange = new Setting(contentEl);
         subFoldArrange.setName("Update Subfolders")
             .setDesc("Change Subfolder Conditions")
@@ -67,7 +69,7 @@ export class UpdateFolder extends Modal {
 			btn.setButtonText("Move files to vault")
 			btn.onClick(() =>{
 				// FolderArrangement and vault
-				moveFilesToVaultBasedOnConditions(this.folder,vaultChosen)
+				moveFolderArrangementToVault(this.folder.folder,vaultChosen,this.plugin.app,this.folder.basePath)
 			} )
 		})
 
@@ -75,20 +77,15 @@ export class UpdateFolder extends Modal {
 
 
     checkFolderCanBeAdded(new_folder:string,cb:SearchComponent,oldName:string):void{
-		for(let i = 0; i <this.plugin.settings.folders.length; i++){
-			if (new_folder == this.plugin.settings.folders[i].name){
-				new Notice("This folder is already on the list");
-                cb.setValue(oldName);
-				return;
-			}
-		}
         const foldName = this.app.vault.getFolderByPath(new_folder);
         if( !(foldName instanceof TFolder) ){
+			new Notice("Folder abstract file not found")
             return;
         }
- 
-        this.folder= fillOutFolderStructure(foldName,this.plugin.settings.defaultFolderConditions);
-		settingsStore.setState({folders:[...settingsStore.getState().folders,this.folder]})
+		
+        const folder= fillOutFolderStructure(foldName,this.plugin.settings.defaultFolderConditions);
+		const baseFolder:BaseFolderArrangement= {folder:folder,id:v4(),displayName:foldName.name,basePath:foldName.path}
+		settingsStore.setState({folders:[...settingsStore.getState().folders,baseFolder]})
 		this.settingsTab.display();
 	}
 
