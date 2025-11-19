@@ -1,4 +1,4 @@
-import { TFile, type App } from "obsidian";
+import { Notice, TFile, type App } from "obsidian";
 import { overwriteFileInVault } from "src/settings/functions/URI/overwriteFileInVault";
 import type FileArrangement from "types/FolderTypes/fileArrangement";
 import type FolderArrangement from "types/FolderTypes/folderArrangement";
@@ -24,10 +24,20 @@ export function moveFolderArrangementToVault(folderArrangement:FolderArrangement
         }
         const tFile:TFile = temp
         if(!tFile){
-            console.log("Couldn't find " + file.name)
+            new Notice("Couldn't find " + file.name)
             return
         }
-        await overwriteFileInVault(tFile,vault,app)
+
+        const asIs ="As Is"
+
+        if(file.moveType ==asIs){
+            await overwriteFileInVault(tFile,vault,app)
+            return;
+        }
+        // Extract current Draft
+        
+
+
     }
     )
 

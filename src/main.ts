@@ -9,6 +9,7 @@ import { extractCurrentDraft } from './settings/functions/Drafts/extractCurrentD
 import { createDraftTitle } from './settings/functions/Drafts/createDraftTitle';
 import { createPetersonDraft } from './settings/functions/Drafts/createPetersonDraft';
 import { createFromPetersonFirstDraft } from './settings/functions/Drafts/createFromPetersonFirstDraft';
+import { extractFrontMatter } from './draftFunctionality/extractFrontMatter';
 // Remember to rename these classes and interfaces!
 
 export default class DraftManagerPlugin extends Plugin {
@@ -29,6 +30,15 @@ export default class DraftManagerPlugin extends Plugin {
 		this.addCommand({id:"MoveFolder",name:"Move folder to new Vault",callback: async()=>{
 			new moveFolderToVaultModal(this.app,this.settings,this).open();
 		}})
+		this.addCommand({id:"test",name:"test func",editorCallback: async(editor:Editor)=>{
+			console.log("Here")
+			const temp =extractFrontMatter(editor.getValue());
+			console.log(extractFrontMatter(editor.getValue()))
+			console.log(temp[0])
+			console.log(temp[1])
+			console.log(temp[2])
+		}})
+
 		this.addCommand({id:"UpdatePage",name:"Update Page", editorCallback: async(editor:Editor,ctx:MarkdownFileInfo)=>{
 			// Figure out meta data
 			const completeFrontmatterIndicator = "complete";
