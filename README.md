@@ -1,5 +1,5 @@
 # Draft Manager
-[![Version](https://img.shields.io/github/v/release/BrMacCath/DraftManager?include_prereleases&label=latest&logo=github&labelColor=green)](https://github.com/BrMacCath/DraftManager/releases)
+[![Version](https://img.shields.io/github/v/release/BrMacCath/DraftManager?include_prereleases&label=latest&logo=github&labelColor=green)](https://github.com/BrMacCath/DraftManager/releases)  [![Downloads](https://img.shields.io/badge/dynamic/json?logo=obsidian&color=%23483699&label=downloads&query=%24%5B%22draft-manager%22%5D.downloads&url=https%3A%2F%2Fraw.githubusercontent.com%2Fobsidianmd%2Fobsidian-releases%2Fmaster%2Fcommunity-plugin-stats.json)](https://obsidian.md/plugins?search=Draft%20Manager) 
 
 This plugin is to help order writing drafts in Obsidian and how to manage the final product. This plugin will allow for different draft styles.
 
@@ -77,7 +77,7 @@ Here you can use the files in a folder to be combined to make a new file in one 
 
 # Attributions
 
-I copied the obsidian Icon from the quickadd plugin.
+I copied the obsidian Icon svelte component from the quickadd plugin.
 I copied the file suggest from  Liam's Periodic Notes Plugin: https://github.com/liamcain/obsidian-periodic-notes . I did change the input options for a few suggests but it was more of a copy and replace than a new idea.
 
 # Support

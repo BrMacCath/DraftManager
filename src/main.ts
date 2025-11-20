@@ -10,6 +10,7 @@ import { createDraftTitle } from './settings/functions/Drafts/createDraftTitle';
 import { createPetersonDraft } from './settings/functions/Drafts/createPetersonDraft';
 import { createFromPetersonFirstDraft } from './settings/functions/Drafts/createFromPetersonFirstDraft';
 import { extractFrontMatter } from './draftFunctionality/extractFrontMatter';
+import { extractFinalVersion } from './settings/functions/Drafts/extractFinalVersion';
 // Remember to rename these classes and interfaces!
 
 export default class DraftManagerPlugin extends Plugin {
@@ -31,12 +32,21 @@ export default class DraftManagerPlugin extends Plugin {
 			new moveFolderToVaultModal(this.app,this.settings,this).open();
 		}})
 		this.addCommand({id:"test",name:"test func",editorCallback: async(editor:Editor)=>{
-			console.log("Here")
-			const temp =extractFrontMatter(editor.getValue());
-			console.log(extractFrontMatter(editor.getValue()))
-			console.log(temp[0])
-			console.log(temp[1])
-			console.log(temp[2])
+			const [keepGoing,complete,draftNum] =extractFrontMatter(editor.getValue());
+			console.log(extractFrontMatter(editor.getValue()));
+			if(!keepGoing){return}
+			let text = ""
+			let continueForward = true
+			if(complete){
+				const [continueForward, temp]= extractFinalVersion(editor.getValue())
+				text += temp
+			}
+			else{ 
+				const [continueForward, temp]= extractCurrentDraft(editor.getValue(),draftNum)
+				
+				text += temp
+			}
+			console.log(text)
 		}})
 
 		this.addCommand({id:"UpdatePage",name:"Update Page", editorCallback: async(editor:Editor,ctx:MarkdownFileInfo)=>{
