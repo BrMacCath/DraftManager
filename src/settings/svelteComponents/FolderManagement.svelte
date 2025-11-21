@@ -126,6 +126,7 @@
 	import NameComponent from "./SubComponents/NameComponent.svelte";
 	import PlacementComponent from "./SubComponents/PlacementComponent.svelte";
 	import type { BaseFolderArrangement } from "types/FolderTypes/BaseFolderArrangement";
+	import CompileOutputComponent from "./SubComponents/CompileOutputComponent.svelte";
     let type = "folder" +folderArrangement.id
 </script>
 
@@ -238,7 +239,7 @@ changeOrganisingList([])
     <ExtractTypeComponent bind:extractType={currentSelection.extractType} {saveChanges} ></ExtractTypeComponent>
    
      {#if currentSelectionisFolder}
-        This text appears if this is a folder.
+        <CompileOutputComponent folder={currentSelection} {fileList} {saveChanges}></CompileOutputComponent>
      {/if}
 
 </div>

@@ -9,6 +9,7 @@ import { settingsStore } from "types/zustand/store";
 import { moveFolderArrangementToVault } from "src/MoveConditions/moveFolderArrangementToVault";
 import type { BaseFolderArrangement } from "types/FolderTypes/BaseFolderArrangement";
 import { v4 } from "uuid";
+import { extractFolderArrangementToVault } from "src/ExtractConditions/extractFolderArrangementConditions";
 
 export class UpdateFolder extends Modal {
 	plugin: DraftManagerPlugin;
@@ -94,10 +95,9 @@ export class UpdateFolder extends Modal {
 		new Setting(contentEl).setName("Apply folder conditions.")
 		.setDesc("Apply draft conditions.")
 		.addButton((cb) =>{
-			cb.setButtonText("Apply").onClick( () =>{
+			cb.setButtonText("Apply").onClick( async() =>{
 				//this.plugin.settings.folders = this.plugin.settings.folders.filter(fold => fold.id != this.folder.id)
-				const folderList = settingsStore.getState().folders.filter(fold => fold.id != this.folder.id)
-				settingsStore.setState({folders:folderList})
+				await extractFolderArrangementToVault(this.folder.folder,this.app,this.folder.basePath)
 				this.settingsTab.display();
 				this.close()
 			} ) 

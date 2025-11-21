@@ -1,1 +1,1 @@
-export const moveTypeChoices:string[] = ["As Is","Last Version","Do not move"];
+export const moveTypeChoices:string[] = ["As Is","Do not move","Last Version"];
