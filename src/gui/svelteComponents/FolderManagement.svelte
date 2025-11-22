@@ -121,12 +121,12 @@
 	import { dndzone, SHADOW_PLACEHOLDER_ITEM_ID } from "svelte-dnd-action";
 	import { flip } from "svelte/animate";
 	import AdjustFolders from "./adjustFolders.svelte";
-	import MoveTypeComponent from "./SubComponents/MoveTypeComponent.svelte";
-	import ExtractTypeComponent from "./SubComponents/ExtractTypeComponent.svelte";
-	import NameComponent from "./SubComponents/NameComponent.svelte";
-	import PlacementComponent from "./SubComponents/PlacementComponent.svelte";
+	import MoveTypeComponent from "../svelteSelectors/MoveTypeComponent.svelte";
+	import ExtractTypeComponent from "../svelteSelectors/ExtractTypeComponent.svelte";
+	import NameComponent from "./svelteDisplay/NameComponent.svelte";
+	import PlacementComponent from "../svelteSelectors/PlacementComponent.svelte";
 	import type { BaseFolderArrangement } from "types/FolderTypes/BaseFolderArrangement";
-	import CompileOutputComponent from "./SubComponents/CompileOutputComponent.svelte";
+	import CompileOutputComponent from "../svelteSelectors/CompileOutputComponent.svelte";
     let type = "folder" +folderArrangement.id
 </script>
 
