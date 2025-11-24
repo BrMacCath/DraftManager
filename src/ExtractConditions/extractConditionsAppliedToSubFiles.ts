@@ -1,62 +1,62 @@
 import type FileArrangement from "types/FolderTypes/fileArrangement";
 import { extractLastVersionContent } from "src/extractLastVersionContent";
 import { App, Notice, TFile } from "obsidian";
-import { removeFrontMatter } from "./removeFrontmatter";
+import { removeFrontMatter } from "./removeFrontMatter";
 
-export function extractConditionsAppliedToSubFiles(subFiles:FileArrangement[],app:App,basePath:string):string{
-    let str =""
+export async function extractConditionsAppliedToSubFiles(subFiles:FileArrangement[],app:App,basePath:string):Promise<string>{
+    
     const doNotUse= "Don't Use"
-    console.log("BasePath:: " + basePath)
-    console.log(subFiles.length)
-    subFiles.forEach(async (file,index)=>{
-        console.log(file.extractType)
-        console.log(basePath+"/"+file.name)
-        console.log(index)
+    console.log("Inside extract conditions")
+    console.log(basePath)
+    let tempStrs =[];
+    for(let i = 0;i++;i <subFiles.length ){
+        const file = subFiles[i]
         if(file.extractType == doNotUse){
-            return;
+            continue;
         }
-
-        const temp = await app.vault.getAbstractFileByPath(basePath+"/"+file.name)
+        const temp = app.vault.getAbstractFileByPath(basePath+"/"+file.name)
         if(  !(temp instanceof TFile) ){
-            return;
+            console.log("Not file")
+            continue;
         }
         const tFile:TFile = temp
         if(!tFile){
             new Notice("Couldn't find " + file.name)
-            return
+            continue
         }
-        console.log(await app.vault.cachedRead(tFile))
-
         const asIs ="As Is"
         if(file.extractType == asIs){
-            const tempStr= await app.vault.cachedRead(tFile);
-            str += tempStr;
-            return;
-        }
-        
+            const tempStr= await app.vault.read(tFile);
+            tempStrs.push(tempStr);
+            continue;
+        } 
         // Extract current Draft
         const lastVersion = "Last Version"
         
         if(file.extractType == lastVersion){
-            const selection = extractLastVersionContent(await app.vault.cachedRead(tFile));
-            str += selection;
-            return;
+            const selection = extractLastVersionContent(await app.vault.read(tFile));
+            tempStrs.push(selection)
+            continue;
         }
         const content = "Content"
         if(file.extractType == content){
-            const tempStr = removeFrontMatter(await app.vault.cachedRead(tFile))
-            str += tempStr;
-            console.log("Inside content case")
+            console.log("Inside Content")
+            const tempStr = removeFrontMatter(await app.vault.read(tFile))
+            console.log(tempStr)
+            tempStrs.push(tempStr)
+          
+        }  
+    }
+    let str =""
+    Promise.all(tempStrs)
+        .then((results)=>{
+            str = results.join("\n\n")
             console.log(str)
-            return;
         }
-        console.log("No extract conditions found")
-        console.log(file.extractType)
-        console.log(file.extractType == content)
-        return;
-    })
-    console.log("End of extract")
-    console.log(str)
+    )
+        .catch((err)=>{
+            console.log(err)
+        })
     return str;
 
 }

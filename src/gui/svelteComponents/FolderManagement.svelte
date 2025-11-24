@@ -115,7 +115,7 @@
    
 	import type FolderArrangement from "types/FolderTypes/folderArrangement";
     import AdjustFiles from "./adjustFiles.svelte";
-	import ObsidianIcon from "./ObsidianIcon.svelte";
+	import ObsidianIcon from "../svelteDisplay/ObsidianIcon.svelte";
 	import { settingsStore } from "types/zustand/store";
 	import type FileArrangement from "types/FolderTypes/fileArrangement";
 	import { dndzone, SHADOW_PLACEHOLDER_ITEM_ID } from "svelte-dnd-action";
@@ -123,7 +123,7 @@
 	import AdjustFolders from "./adjustFolders.svelte";
 	import MoveTypeComponent from "../svelteSelectors/MoveTypeComponent.svelte";
 	import ExtractTypeComponent from "../svelteSelectors/ExtractTypeComponent.svelte";
-	import NameComponent from "./svelteDisplay/NameComponent.svelte";
+	import NameComponent from "../svelteDisplay/NameComponent.svelte";
 	import PlacementComponent from "../svelteSelectors/PlacementComponent.svelte";
 	import type { BaseFolderArrangement } from "types/FolderTypes/BaseFolderArrangement";
 	import CompileOutputComponent from "../svelteSelectors/CompileOutputComponent.svelte";

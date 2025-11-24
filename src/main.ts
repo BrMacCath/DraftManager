@@ -1,4 +1,4 @@
-import {Editor, Notice, Plugin, type MarkdownFileInfo} from 'obsidian';
+import {Editor, Notice, Plugin, TAbstractFile, TFile, type MarkdownFileInfo} from 'obsidian';
 import type DraftManagerPluginSettings from 'src/settings/DraftManagerPluginSettings';
 import { DEFAULT_SETTINGS } from 'src/settings/DraftManagerPluginSettings';
 import { DraftTab } from './settings/tabs/settingTab';
@@ -11,6 +11,11 @@ import { createPetersonDraft } from './settings/functions/Drafts/createPetersonD
 import { createFromPetersonFirstDraft } from './settings/functions/Drafts/createFromPetersonFirstDraft';
 import { extractFrontMatter } from './draftFunctionality/extractFrontMatter';
 import { extractFinalVersion } from './settings/functions/Drafts/extractFinalVersion';
+import { extractFolderArrangementToVault } from './ExtractConditions/extractFolderArrangementConditions';
+import type FolderArrangement from 'types/FolderTypes/folderArrangement';
+import type FileArrangement from 'types/FolderTypes/fileArrangement';
+import { extractConditionsAppliedToSubFiles } from './ExtractConditions/extractConditionsAppliedToSubFiles';
+import { removeFrontMatter } from './ExtractConditions/removeFrontMatter';
 // Remember to rename these classes and interfaces!
 
 export default class DraftManagerPlugin extends Plugin {
@@ -32,22 +37,34 @@ export default class DraftManagerPlugin extends Plugin {
 			new moveFolderToVaultModal(this.app,this.settings,this).open();
 		}})
 		this.addCommand({id:"test",name:"test func",editorCallback: async(editor:Editor)=>{
-			const [keepGoing,complete,draftNum] =extractFrontMatter(editor.getValue());
-			console.log(extractFrontMatter(editor.getValue()));
-			if(!keepGoing){return}
-			let text = ""
-			let continueForward = true
-			if(complete){
-				const [continueForward, temp]= extractFinalVersion(editor.getValue())
-				text += temp
-			}
-			else{ 
-				const [continueForward, temp]= extractCurrentDraft(editor.getValue(),draftNum)
-				
-				text += temp
-			}
+			const folderSelect = this.settings.folders[2]
+			const folderArrangement = folderSelect.folder
+			
+			const basePath = folderSelect.basePath
+			
+			
+			const subFolders:FolderArrangement[] = folderArrangement.subFolders;
+			console.log("Track: " +folderArrangement.name)
+			// Go through it line by line for one of them. See where the mistake is.
+			const subFolder = subFolders[0];
+			const newPath = basePath +"/" +subFolder.name 
+			const subFile = subFolder.subFiles[0]
+			console.log(subFile)
+			const text = await this.app.vault.getAbstractFileByPath(newPath + "/" + subFile.name)
+
 			console.log(text)
-		}})
+			const temp = await this.app.vault.read(text)
+			console.log(temp)
+
+			const formatText = removeFrontMatter(temp)
+			console.log(formatText)
+			const compileOutputName = basePath + "/" + subFolder.compileOutput
+			const newLoc = await this.app.vault.getAbstractFileByPath(compileOutputName)
+
+			await this.app.vault.modify(newLoc,formatText)
+
+
+	}})
 
 		this.addCommand({id:"UpdatePage",name:"Update Page", editorCallback: async(editor:Editor,ctx:MarkdownFileInfo)=>{
 			// Figure out meta data

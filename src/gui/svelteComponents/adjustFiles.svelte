@@ -2,7 +2,7 @@
 	import type FileArrangement from "types/FolderTypes/fileArrangement";
     import { dndzone } from 'svelte-dnd-action';
 	import { flip } from 'svelte/animate';
-	import ObsidianIcon from "./ObsidianIcon.svelte";
+	import ObsidianIcon from "../svelteDisplay/ObsidianIcon.svelte";
 	import type FolderArrangement from "types/FolderTypes/folderArrangement";
 //https://svelte.dev/tutorial/kit/the-form-element
     interface Props{
