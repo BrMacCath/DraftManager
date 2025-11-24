@@ -15,15 +15,16 @@ export async function extractFolderArrangementToVault(folderArrangement:FolderAr
     for(let j=0;j <subFolders.length;j++){
         const subFolder = subFolders[j]
         const subFiles:FileArrangement[] = subFolder.subFiles;
-        let str = await extractConditionsAppliedToSubFiles(subFiles,app,basePath+"/" + subFolder.name);
-        console.log(str)
         const compileOutputFilePath = basePath +"/" + subFolder.compileOutput;
         const compileOutPutTFile:TAbstractFile|null = app.vault.getAbstractFileByPath(compileOutputFilePath)
         
         if( !(compileOutPutTFile instanceof TFile) ){
             return;
         }
-        await app.vault.modify(compileOutPutTFile,str)
+
+
+        let str = await extractConditionsAppliedToSubFiles(subFiles,app,basePath+"/" + subFolder.name,compileOutPutTFile);
+        
     } 
 
 }

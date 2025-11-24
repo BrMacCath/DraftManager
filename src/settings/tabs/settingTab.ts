@@ -21,7 +21,7 @@ export class DraftTab extends PluginSettingTab {
 	display(): void {
 		const {containerEl} = this;;
 		containerEl.empty();
-		new Setting(containerEl).setName("Plugin Settings").setHeading();
+		new Setting(containerEl).setName("Plugin options").setHeading();
 		new Setting(containerEl).setName("Choose which folders.").setHeading();
 		//this.add_template_folder_setting();
 		settingsStore.getState().folders.forEach( (folder) => {

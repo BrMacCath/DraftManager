@@ -16,7 +16,7 @@ export class moveFolderToVaultModal extends Modal{
         }
     onOpen() {
         const containerEl = this.modalEl;
-        new Setting(containerEl).setName("Move Folder to New Vault").setHeading();
+        new Setting(containerEl).setName("Move folder to new vault").setHeading();
         
         let folderTextName ="";
         new Setting(containerEl).setName("Select your folder")
@@ -35,7 +35,7 @@ export class moveFolderToVaultModal extends Modal{
                 cb.containerEl.addClass(templateSearchCssName);
             })
         let vaultSelected = "";
-        new Setting(containerEl).setName("Choose Vault")
+        new Setting(containerEl).setName("Choose vault")
             .setDesc("Selet the vault to add the files to.")
             .addDropdown((dropdown) =>{
                 for (let i=0; i< this.settings.vaultList.length;i++){
@@ -48,7 +48,7 @@ export class moveFolderToVaultModal extends Modal{
                 })
             })
         new Setting(containerEl).addButton((btn)=>{
-            btn.setButtonText("Move Folder")
+            btn.setButtonText("Move folder")
             btn.onClick(() =>{
                 const tFold:TFolder|null =  this.app.vault.getFolderByPath(folderTextName);
                 if(tFold instanceof TFolder){

@@ -3,14 +3,15 @@ import { extractLastVersionContent } from "src/extractLastVersionContent";
 import { App, Notice, TFile } from "obsidian";
 import { removeFrontMatter } from "./removeFrontMatter";
 
-export async function extractConditionsAppliedToSubFiles(subFiles:FileArrangement[],app:App,basePath:string):Promise<string>{
-    
+export async function extractConditionsAppliedToSubFiles(subFiles:FileArrangement[],app:App,basePath:string,compileTFile:TFile):Promise<string>{
     const doNotUse= "Don't Use"
     console.log("Inside extract conditions")
     console.log(basePath)
     let tempStrs =[];
     for(let i = 0;i++;i <subFiles.length ){
+        
         const file = subFiles[i]
+        console.log(file)
         if(file.extractType == doNotUse){
             continue;
         }
@@ -49,9 +50,11 @@ export async function extractConditionsAppliedToSubFiles(subFiles:FileArrangemen
     }
     let str =""
     Promise.all(tempStrs)
-        .then((results)=>{
+        .then(async(results)=>{
             str = results.join("\n\n")
+            await app.vault.modify(compileTFile,str)
             console.log(str)
+            // Here is where I should modify the files
         }
     )
         .catch((err)=>{
