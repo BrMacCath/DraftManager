@@ -40,10 +40,7 @@ export class chooseFileFromFolder extends Modal{
                 createDraft(fileName,this.draftConditions,this.app);
                 const leaf =this.app.workspace.getLeaf(false);
                 const tFileLeaf = this.app.vault.getFileByPath(fileName)
-                if( tFileLeaf == null ){
-
-                }
-                else{
+                if( tFileLeaf != null){
                     leaf.openFile(tFileLeaf);
                     this.close();
                 }

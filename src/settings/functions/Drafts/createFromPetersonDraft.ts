@@ -3,7 +3,7 @@ import { splitParagraphsNoFrontMatter } from "../ParagraphFunctions/splitParagra
 import { splitParagraphsFrontMatter } from "../ParagraphFunctions/splitParagraphsFrontMatter";
 import { createDraftTitle } from "./createDraftTitle";
 
-export function createFromPetersonDraft(content:string,paragraphSeparator:string,newDraftNum:number, topicFrontMatterSeparator:string,haveTopicFrontMatter:Boolean,rewriteLineSignifier:string,commentLineSignifier:string=""){
+export function createFromPetersonDraft(content:string,paragraphSeparator:string,newDraftNum:number, topicFrontMatterSeparator:string,haveTopicFrontMatter:boolean,rewriteLineSignifier:string,commentLineSignifier:string=""){
     const newLineSeperator = "\n"+commentLineSignifier + " \n" + rewriteLineSignifier +" \n\n";
     // Select the content from the current draft.
    

@@ -33,7 +33,7 @@ export default class DraftManagerPlugin extends Plugin {
 		// This adds a settings tab so the user can configure various aspects of the plugin
 		this.addSettingTab(new DraftTab(this.app, this));
 		
-		this.addCommand({id:"MoveFolder",name:"Move folder to new Vault",callback: async()=>{
+		this.addCommand({id:"MoveFolder",name:"Move folder to new vault",callback: ()=>{
 			new moveFolderToVaultModal(this.app,this.settings,this).open();
 		}})
 		this.addCommand({id:"test",name:"test func",editorCallback: async()=>{

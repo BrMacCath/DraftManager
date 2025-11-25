@@ -3,7 +3,7 @@ import { stringifyNumber } from "./stringifyNumber";
 import { splitParagraphsNoFrontMatter } from "../ParagraphFunctions/splitParagraphsNoFrontMatter";
 import { splitParagraphsFrontMatter } from "../ParagraphFunctions/splitParagraphsFrontMatter";
 
-export function createFromDraft(draft:string,paragraphSeparator:string,oldDraftNum:number, topicFrontMatterSeparator:string,haveTopicFrontMatter:Boolean,rewriteLineSignifier:string,commentLineSignifier:string=""){
+export function createFromDraft(draft:string,paragraphSeparator:string,oldDraftNum:number, topicFrontMatterSeparator:string,haveTopicFrontMatter:boolean,rewriteLineSignifier:string,commentLineSignifier:string=""){
     const newLineSeperator = "\n"+commentLineSignifier + " \n" + rewriteLineSignifier +" \n\n";
     // Select the content from the current draft.
     const currentDraftTitle = createDraftTitle(oldDraftNum);

@@ -4,7 +4,7 @@ import { Notice } from "obsidian";
 // First it should have a completed draft added onto the end of the draft.
 // Second it should add onto the 
 // Return [frontmatter,content]
-export function createFromFirstDraft(draft:string,paragraphSeparator:string, topicFrontMatterSeparator:string,haveTopicFrontMatter:Boolean,rewriteLineNotifier:string,commentLineSignifier:string=""){
+export function createFromFirstDraft(draft:string,paragraphSeparator:string, topicFrontMatterSeparator:string,haveTopicFrontMatter:boolean,rewriteLineNotifier:string,commentLineSignifier:string=""){
     const newLineSeperator = "\n"+commentLineSignifier + " \n" + rewriteLineNotifier +" \n\n";
     let paragraphs = draft.split(paragraphSeparator);
     let splitParagraph: [string,string[]][] = [];
