@@ -26,9 +26,9 @@ export class UpdateSubFolder extends Modal {
 
     }
 
-    onClose() {
+    async onClose() {
 		if(this.svelteTest){
-            unmount(this.svelteTest);
+            await unmount(this.svelteTest);
         }
         const {contentEl} = this;
         

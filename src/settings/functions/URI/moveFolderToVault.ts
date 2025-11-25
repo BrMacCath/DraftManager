@@ -3,9 +3,9 @@ import { overwriteFileInVault } from "./overwriteFileInVault";
 
 export function moveFolderToVault(tFolder:TFolder,vault:string,app:App){
     const foldChildren = tFolder?.children;
-    foldChildren.forEach( (tFile) =>{
+    foldChildren.forEach( async(tFile) =>{
         if (tFile instanceof TFile){
-            overwriteFileInVault(tFile,vault,app)
+            await overwriteFileInVault(tFile,vault,app)
             //Move file
         }
         if(tFile instanceof TFolder){
