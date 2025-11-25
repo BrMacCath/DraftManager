@@ -61,7 +61,7 @@ export class DraftTab extends PluginSettingTab {
 		createVaultTab(containerEl,this.plugin,this);
 	}
 
-	async checkFolderCanBeAdded(new_folder:string,plugin:DraftManagerPlugin):Promise<void>{
+	checkFolderCanBeAdded(new_folder:string,plugin:DraftManagerPlugin):void{
 		// This is assigning not just the values but the memory too.
 		const tfold:TFolder|null = this.app.vault.getFolderByPath(new_folder);
 		if( !(tfold instanceof TFolder)){
