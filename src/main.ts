@@ -31,7 +31,7 @@ export default class DraftManagerPlugin extends Plugin {
 			new moveFolderToVaultModal(this.app,this.settings,this).open();
 		}})
 
-		this.addCommand({id:"UpdatePage",name:"Update Page", editorCallback: async(editor:Editor,ctx:MarkdownFileInfo)=>{
+		this.addCommand({id:"UpdatePage",name:"Update page", editorCallback: (editor:Editor,ctx:MarkdownFileInfo)=>{
 			// Figure out meta data
 			const completeFrontmatterIndicator = "complete";
 			const draftNumIndicator = "draftNum";

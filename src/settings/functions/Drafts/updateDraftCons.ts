@@ -2,13 +2,12 @@ import { Setting } from "obsidian"
 import type draftConditions from "types/choices/draftConditions";
 import { DraftTab } from "../../tabs/settingTab";
 import { draftStyleOptions } from "types/choices/draftStyleOptions";
-import { hideCssName } from "types/cssStylings/cssClassNames";
 import { moveTypeChoices } from "types/choices/moveTypeChoices";
 import { extractTypeChoices } from "types/choices/extractTypeChoices";
 export function UpdateDraftCons(draftConditions:draftConditions,settingsTab:DraftTab,containerEl:HTMLElement,folder:string){
-    new Setting(containerEl).setName(folder + " Draft Conditions").setHeading();
-    new Setting(containerEl).setName("Draft Style")
-        .setDesc("Choose how you wish Drafts to be made")
+    new Setting(containerEl).setName(folder + " Draft conditions").setHeading();
+    new Setting(containerEl).setName("Draft style")
+        .setDesc("Choose how you wish drafts to be made")
         .addDropdown((dropdown) =>{
             for (let i=0; i< draftStyleOptions.length;i++){
                 dropdown.addOption(draftStyleOptions[i],draftStyleOptions[i])
@@ -21,7 +20,7 @@ export function UpdateDraftCons(draftConditions:draftConditions,settingsTab:Draf
         })
 
 
-    new Setting(containerEl).setName("Extract Type")
+    new Setting(containerEl).setName("Extract type")
         .setDesc("How do you wish detail to be extracted from this file")
         .addDropdown((dropdown) =>{
             for (let i=0; i<extractTypeChoices.length;i++){
@@ -35,7 +34,7 @@ export function UpdateDraftCons(draftConditions:draftConditions,settingsTab:Draf
             })
         })
 
-    new Setting(containerEl).setName("Move Type")
+    new Setting(containerEl).setName("Move type")
         .setDesc("What will the default move type be")
         .addDropdown((dropdown) =>{
             for (let i=0; i<moveTypeChoices.length;i++){

@@ -5,7 +5,7 @@ export function splitContent(text:string):[string,string] {
   const meta_data_end = "\n---\n";
   const start_file = text.slice(0, 3);
   if (meta_data_start != start_file) {
-    new Notice("Front Matter is missing");
+    new Notice("Front matter is missing");
     // This needs to be an error function instead of just a notice
     return ["",""]
   }

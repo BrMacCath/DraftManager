@@ -1,4 +1,4 @@
-import { DocBlock, DocNode, DocParamBlock, DocParamCollection, DocPlainText, DocSection, ParserContext, TSDocParser } from "@microsoft/tsdoc";
+import { DocBlock, DocNode,  DocParamCollection, DocPlainText, DocSection,  TSDocParser } from "@microsoft/tsdoc";
 
 import { TJDocFile, TJDocFileArgument } from "./TJDocFile";
 
@@ -138,7 +138,7 @@ function generate_jsdoc_return(
         const returnValue = returnSection.content.nodes[0].getChildNodes()[0].text.trim();
         return returnValue;   
     } catch (error) {
-        return "";
+        return `${error}`;
     }
 }
 
