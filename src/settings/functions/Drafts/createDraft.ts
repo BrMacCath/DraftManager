@@ -1,7 +1,6 @@
 import { App, TFile } from "obsidian"
 import { splitContent } from "./splitContent";
 import { updateFrontmatter } from "./updateFrontmatter";
-import { stringifyNumber } from "./stringifyNumber";
 import { createFromFirstDraft } from "./createFromFirstDraft";
 import { createFromDraft } from "./createFromDraft";
 import type draftConditions from "types/choices/draftConditions";
@@ -17,16 +16,7 @@ export default async function createDraft(fileName:string,draftConditions:draftC
     const rewriteLineSignfier = draftConditions.rewriteLineSignifier;
     const commentLineSignifier =  draftConditions.commentSignifier;
     // Update frontmatter through adding a new draft number
-    let [frontMatter,oldDraftNum] = updateFrontmatter(tempFrontMatter, draftNumSignifier)
-    // Isolate draft
-    const previousDraftTitle = stringifyNumber(oldDraftNum);
-    const newDraftTitle = stringifyNumber(oldDraftNum+1); 
-    // Separate sections into paragarphs
-    // If it is the first situation
-    const titleInd = content.indexOf(previousDraftTitle);
-    const sections = content.slice(titleInd + previousDraftTitle.length);
-    
-    
+    let [frontMatter,oldDraftNum] = updateFrontmatter(tempFrontMatter, draftNumSignifier)    
 
     if (oldDraftNum == 1){
         // Here we add the new title for the 
