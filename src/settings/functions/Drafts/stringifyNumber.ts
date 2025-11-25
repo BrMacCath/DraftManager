@@ -1,4 +1,4 @@
-var special = [
+const special = [
   "Zeroth",
   "First",
   "Second",
@@ -20,7 +20,7 @@ var special = [
   "Eighteenth",
   "Nineteenth",
 ];
-var deca = [
+const deca = [
   "twent",
   "thirt",
   "fort",
