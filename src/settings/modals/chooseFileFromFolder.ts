@@ -36,7 +36,7 @@ export class chooseFileFromFolder extends Modal{
                 // @ts-ignore
                 cb.containerEl.addClass(templateSearchCssName);
         }).addButton((btn)=>{
-            btn.setButtonText("Folder Button").onClick(() =>{
+            btn.setButtonText("Folder button").onClick(() =>{
                 createDraft(fileName,this.draftConditions,this.app);
                 const leaf =this.app.workspace.getLeaf(false);
                 const tFileLeaf = this.app.vault.getFileByPath(fileName)

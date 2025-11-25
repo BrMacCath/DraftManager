@@ -29,7 +29,7 @@ export class DraftTab extends PluginSettingTab {
 	
 			new Setting(containerEl).setName(folder.displayName).addButton( (btn)=> {
 				// Create a folder modal that allows you to edit it.
-				btn.setButtonText("Update Folder").onClick(() => {
+				btn.setButtonText("Update folder").onClick(() => {
 					new UpdateFolder(this.app,this.plugin,folder,this).open()
 				});
                 btn.setClass(buttonCssClassName);
@@ -51,7 +51,7 @@ export class DraftTab extends PluginSettingTab {
                 // @ts-ignore
                 cb.containerEl.addClass(templateSearchCssName);
 		}).addButton((btn)=>{
-			btn.setButtonText("Add Folder").onClick(async () =>{
+			btn.setButtonText("Add folder").onClick(async () =>{
 				await this.checkFolderCanBeAdded(folderTextName,this.plugin)
 			}  )
             btn.setClass(buttonCssClassName);

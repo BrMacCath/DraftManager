@@ -6,12 +6,12 @@ import type { DraftTab } from "src/settings/tabs/settingTab";
 import { settingsStore } from "types/zustand/store";
 
 export function createVaultTab(html:HTMLElement,  plugin: DraftManagerPlugin,settingTab:DraftTab){
-    html.createEl("h2").setText("Vault Transfer Management");
+    html.createEl("h2").setText("Vault transfer management");
     new Setting(html).setName("Vaults that we can transfer files to").setHeading();
     settingsStore.getState().vaultList.forEach( (vault) =>{
         new Setting(html).setName(vault).addButton( (btn)=> {
         // Create a folder modal that allows you to edit it.
-        btn.setButtonText("Delete Vault").onClick(() => {
+        btn.setButtonText("Delete vault").onClick(() => {
             // Delete vault action
             const newList = settingsStore.getState().vaultList.filter((name)=>{
                 return name != vault;
@@ -37,7 +37,7 @@ export function createVaultTab(html:HTMLElement,  plugin: DraftManagerPlugin,set
        
         
     }).addButton((btn)=>{
-        btn.setButtonText("Add Vault").onClick(() =>{
+        btn.setButtonText("Add vault").onClick(() =>{
             checkVaultCanBeAdded(vaultName,plugin.settings,plugin);
             settingTab.display();
         }  )

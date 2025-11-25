@@ -15,7 +15,7 @@ export class chooseFolder extends Modal{
     }
     onOpen(): void {
         const containerEl=this.modalEl;
-        new Setting(containerEl).setName("Select Folder").setHeading();
+        new Setting(containerEl).setName("Select folder").setHeading();
         let folderTextName = this.settings.folders[0].folder.name;
         new Setting(containerEl).setName("Select your folder")
         .setDesc("Choose which folder you wish to add from your list.")

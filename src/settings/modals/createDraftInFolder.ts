@@ -18,7 +18,7 @@ export class createDraftInFolder extends Modal{
     }
     onOpen(): void {
         const containerEl=this.modalEl;
-        new Setting(containerEl).setName("Select File from " + this.folder).setHeading();
+        new Setting(containerEl).setName("Select file from " + this.folder).setHeading();
         let fileTextName = "";
         new Setting(containerEl).setName("Select your folder")
         .setDesc("Choose which folder you wish to add from your list.")
@@ -28,7 +28,7 @@ export class createDraftInFolder extends Modal{
             })
         })
         .addButton((btn)=>{
-            btn.setButtonText("Create Draft").onClick(() =>{
+            btn.setButtonText("Create draft").onClick(() =>{
                 createDraft(this.folder,this.draftConditions,this.app);
             }  )
             btn.setClass(buttonCssClassName);
