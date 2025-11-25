@@ -6,12 +6,11 @@ import { removeFrontMatter } from "./removeFrontMatter";
 export async function extractConditionsAppliedToSubFiles(subFiles:FileArrangement[],app:App,basePath:string,compileTFile:TFile):Promise<string>{
     const doNotUse= "Don't Use"
     console.log("Inside extract conditions")
-    console.log(basePath)
     let tempStrs =[];
-    for(let i = 0;i++;i <subFiles.length ){
+    console.log(subFiles)
+    for(let i = 0;i <subFiles.length;i++ ){
         
         const file = subFiles[i]
-        console.log(file)
         if(file.extractType == doNotUse){
             continue;
         }
@@ -43,17 +42,17 @@ export async function extractConditionsAppliedToSubFiles(subFiles:FileArrangemen
         if(file.extractType == content){
             console.log("Inside Content")
             const tempStr = removeFrontMatter(await app.vault.read(tFile))
-            console.log(tempStr)
             tempStrs.push(tempStr)
           
         }  
     }
     let str =""
+    
     Promise.all(tempStrs)
         .then(async(results)=>{
+            console.log(results)
             str = results.join("\n\n")
             await app.vault.modify(compileTFile,str)
-            console.log(str)
             // Here is where I should modify the files
         }
     )

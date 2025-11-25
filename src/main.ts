@@ -36,7 +36,7 @@ export default class DraftManagerPlugin extends Plugin {
 		this.addCommand({id:"MoveFolder",name:"Move folder to new Vault",callback: async()=>{
 			new moveFolderToVaultModal(this.app,this.settings,this).open();
 		}})
-		this.addCommand({id:"test",name:"test func",editorCallback: async(editor:Editor)=>{
+		this.addCommand({id:"test",name:"test func",editorCallback: async()=>{
 			const folderSelect = this.settings.folders[2]
 			const folderArrangement = folderSelect.folder
 			
@@ -50,7 +50,7 @@ export default class DraftManagerPlugin extends Plugin {
 			const newPath = basePath +"/" +subFolder.name 
 			const subFile = subFolder.subFiles[0]
 			console.log(subFile)
-			const text = await this.app.vault.getAbstractFileByPath(newPath + "/" + subFile.name)
+			const text = this.app.vault.getAbstractFileByPath(newPath + "/" + subFile.name)
 
 			console.log(text)
 			const temp = await this.app.vault.read(text)
@@ -59,7 +59,7 @@ export default class DraftManagerPlugin extends Plugin {
 			const formatText = removeFrontMatter(temp)
 			console.log(formatText)
 			const compileOutputName = basePath + "/" + subFolder.compileOutput
-			const newLoc = await this.app.vault.getAbstractFileByPath(compileOutputName)
+			const newLoc = this.app.vault.getAbstractFileByPath(compileOutputName)
 
 			await this.app.vault.modify(newLoc,formatText)
 

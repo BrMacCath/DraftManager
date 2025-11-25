@@ -33,8 +33,8 @@ export class UpdateFolder extends Modal {
         const {contentEl} = this;
 		new Setting(contentEl).setName("" +this.folder.displayName + " conditions").setHeading();
         let subFoldArrange = new Setting(contentEl);
-        subFoldArrange.setName("Update Subfolders")
-            .setDesc("Change Subfolder Conditions")
+        subFoldArrange.setName("Update subfolders")
+            .setDesc("Change subfolder conditions")
             .addButton((cb) => {
                 cb.setButtonText("Update");
                 cb.setClass(buttonCssClassName);
@@ -54,7 +54,7 @@ export class UpdateFolder extends Modal {
 		}
 		const {contentEl} = this;
 		let vaultChosen = vaultList[0];
-		new Setting(contentEl).setName("Move to another Vault")
+		new Setting(contentEl).setName("Move to another vault")
 		.setDesc("Select from the dropdown")
 		.addDropdown(
 			(dropdown)=>{
@@ -107,7 +107,7 @@ export class UpdateFolder extends Modal {
 
 	createDeleteFolderButton():void{
         const {contentEl} = this;
-        new Setting(contentEl).setName("Delete Folder?")
+        new Setting(contentEl).setName("Delete folder?")
 		.setDesc("Do you wish to delete this folder?")
 		.addButton((cb) =>{
 			cb.setButtonText("Delete").onClick( () =>{
