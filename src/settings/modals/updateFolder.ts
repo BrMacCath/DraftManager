@@ -1,4 +1,3 @@
-import type FolderArrangement from "types/FolderTypes/folderArrangement";
 import { DraftTab } from "../tabs/settingTab";
 import { Modal,App,Setting,Notice,SearchComponent,  TFolder } from "obsidian";
 import { UpdateSubFolder } from "./updateSubfolder";

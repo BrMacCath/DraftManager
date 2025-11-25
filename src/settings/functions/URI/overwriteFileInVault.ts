@@ -7,7 +7,6 @@ export async function overwriteFileInVault(tFile:TFile,vault:string,app:App){
     const setFileParameter= "file="+ encodeURIComponent(tFile.path);
     const setModeParameter= "overwrite";
     const content = await app.vault.cachedRead(tFile);
-    const encodedContent = encodeURIComponent(content);
     const setContentParameter= "content="+encodeURIComponent(await app.vault.cachedRead(tFile));
 
     const parameters =[setModeParameter,setVaultParameter,setFileParameter,setContentParameter]
