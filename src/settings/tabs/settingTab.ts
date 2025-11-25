@@ -1,4 +1,4 @@
-import { PluginSettingTab,App,Setting, Notice, TFolder } from "obsidian";
+import { PluginSettingTab,App,Setting, TFolder } from "obsidian";
 import { FolderSuggest } from "../suggesters/folderSuggester";
 import { UpdateFolder } from "../modals/updateFolder";
 import { UpdateDraftCons } from "../functions/Drafts/updateDraftCons";
