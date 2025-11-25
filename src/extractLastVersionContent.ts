@@ -4,7 +4,6 @@ import { extractFinalVersion } from "./settings/functions/Drafts/extractFinalVer
 
 export function extractLastVersionContent(content:string):string{
     const [keepGoing,complete,draftNum] =extractFrontMatter(content);
-    console.log([keepGoing,complete,draftNum])
     if(!keepGoing){return ""}
     let text = ""
     let continueForward = true

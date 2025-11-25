@@ -32,7 +32,7 @@ export function createFromPetersonFirstDraft(draft:string,draftConditions:draftC
             splitParagraph.push([temp[0],paraContent])
         }  )
     }
-    console.log("Got through the separation of content")
+
     // Complete Draft
     let completeDraft:string[] = []
     let newDraft:string[] = []

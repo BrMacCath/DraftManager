@@ -9,9 +9,7 @@ export function moveFolderArrangementToVault(folderArrangement:FolderArrangement
     // Process each file within the folder arrangement.
     const subFolders:FolderArrangement[] = folderArrangement.subFolders;
     const doNotMove= "Do not move"
-    console.log(folderArrangement.name)
     subFolders.forEach((subFolder)=>{
-        console.log(folderArrangement.name)
         moveFolderArrangementToVault(subFolder,vault,app,basePath +"/"+ folderArrangement.name)
     })
 

@@ -16,13 +16,13 @@ export class chooseFolder extends Modal{
     onOpen(): void {
         const containerEl=this.modalEl;
         new Setting(containerEl).setName("Select Folder").setHeading();
-        let folderTextName = this.settings.folders[0].name;
+        let folderTextName = this.settings.folders[0].folder.name;
         new Setting(containerEl).setName("Select your folder")
         .setDesc("Choose which folder you wish to add from your list.")
         .addSearch((cb)=>{
             new folderListSuggest(this.app, cb.inputEl,this.settings.folders);
                 cb.setPlaceholder("Example: folder1/folder2")
-                    .setValue(this.settings.folders[0].name)
+                    .setValue(this.settings.folders[0].folder.name)
                     .onChange((new_folder) => {
                         // Trim folder and Strip ending slash if there
                         new_folder = new_folder.trim()
@@ -32,11 +32,11 @@ export class chooseFolder extends Modal{
                 // @ts-ignore
                 cb.containerEl.addClass(templateSearchCssName);
         }).addButton((btn)=>{
-            btn.setButtonText("Folder Button").onClick(() =>{
-                let folderDraftConditions:draftConditions = this.settings.folders[0].draftConditions;
+            btn.setButtonText("Folder button").onClick(() =>{
+                let folderDraftConditions:draftConditions = this.settings.folders[0].folder.draftConditions;
                 for (let i =0; i < this.settings.folders.length;i++){
-                    if(this.settings.folders[i].name == folderTextName){
-                        folderDraftConditions = this.settings.folders[i].draftConditions;
+                    if(this.settings.folders[i].folder.name == folderTextName){
+                        folderDraftConditions = this.settings.folders[i].folder.draftConditions;
                     }
                 }
                 new chooseSubFolder(this.app,this.settings,this.plugin,folderTextName,folderDraftConditions).open()

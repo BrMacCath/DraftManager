@@ -19,7 +19,7 @@ export class chooseSubFolder extends Modal{
     }
     onOpen(): void {
         const containerEl=this.modalEl;
-        new Setting(containerEl).setName("Select Folder from " + this.folder).setHeading();
+        new Setting(containerEl).setName("Select folder from " + this.folder).setHeading();
         let folderTextName = "";
         new Setting(containerEl).setName("Select your folder")
         .setDesc("Choose which folder you wish to add from your list.")
@@ -36,7 +36,7 @@ export class chooseSubFolder extends Modal{
                 // @ts-ignore
                 cb.containerEl.addClass(templateSearchCssName);
         }).addButton((btn)=>{
-            btn.setButtonText("Folder Button").onClick(() =>{
+            btn.setButtonText("Folder button").onClick(() =>{
                 // This will need to be figured out later.
                 new chooseFileFromFolder(this.app,this.settings,this.plugin,folderTextName,this.draftConditions).open()
                 this.close()

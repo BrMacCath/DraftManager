@@ -21,6 +21,8 @@
 		"builtin-modules": "3.3.0",
 		"esbuild": "^0.25.5",
 		"esbuild-svelte": "^0.9.3",
+		"eslint": "^8.57.1",
+		"eslint-plugin-obsidianmd": "^0.1.9",
 		"obsidian": "latest",
 		"prettier": "^3.5.3",
 		"svelte": "^5.34.7",

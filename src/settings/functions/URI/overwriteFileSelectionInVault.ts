@@ -11,7 +11,6 @@ export async function overwriteFileSelectionInVault(tFile:TFile,vault:string,app
     const selection = extractLastVersionContent(content)
     
     const setContentParameter= "content="+encodeURIComponent(selection);
-    console.log(setContentParameter)
     const parameters =[setModeParameter,setVaultParameter,setFileParameter,setContentParameter]
     const targetParameter ="_external";
 

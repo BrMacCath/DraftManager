@@ -11,7 +11,6 @@ export function createFromPetersonDraft(content:string,paragraphSeparator:string
     let paragraphs = content.split(paragraphSeparator);
     let splitParagraph: [string,string[]][] = [];
 
-    console.log(haveTopicFrontMatter)
     if(!haveTopicFrontMatter){
         splitParagraph =splitParagraphsNoFrontMatter(paragraphs,rewriteLineSignifier);
     }
@@ -46,7 +45,7 @@ export function createFromPetersonDraft(content:string,paragraphSeparator:string
     // New Draft
     let newContent = "";
     const newLine = "\n";
-    console.log(completeDraft)
+
     newContent += `\n\n## Complete ${stringifyNumber(newDraftNum-1)} Draft\n\n` + completeDraft.join("\n\n")+"\n\n";
     newContent += createDraftTitle(newDraftNum)+newLine+newLine + newDraft.join(paragraphSeparator +"\n");
     return newContent;

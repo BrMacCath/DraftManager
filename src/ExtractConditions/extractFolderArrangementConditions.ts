@@ -14,12 +14,9 @@ export async function extractFolderArrangementToVault(folderArrangement:FolderAr
         await extractFolderArrangementToVault(subFolder,app,basePath +"/"+ subFolder.name)
     })
 
-    subFolders.forEach((subFolder)=>{
-        console.log(subFolder.name)
-    })
+
     for(let j=0;j <subFolders.length;j++){
         const subFolder = subFolders[j]
-        console.log(subFolder)
         const subFiles:FileArrangement[] = subFolder.subFiles;
         const compileOutputFilePath = basePath +"/" + subFolder.compileOutput;
         const compileOutPutTFile:TAbstractFile|null = app.vault.getAbstractFileByPath(compileOutputFilePath)
