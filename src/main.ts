@@ -1,4 +1,4 @@
-import {Editor, Notice, Plugin, TAbstractFile, TFile, type MarkdownFileInfo} from 'obsidian';
+import {Editor, Notice, Plugin,  type MarkdownFileInfo} from 'obsidian';
 import type DraftManagerPluginSettings from 'src/settings/DraftManagerPluginSettings';
 import { DEFAULT_SETTINGS } from 'src/settings/DraftManagerPluginSettings';
 import { DraftTab } from './settings/tabs/settingTab';
@@ -9,13 +9,7 @@ import { extractCurrentDraft } from './settings/functions/Drafts/extractCurrentD
 import { createDraftTitle } from './settings/functions/Drafts/createDraftTitle';
 import { createPetersonDraft } from './settings/functions/Drafts/createPetersonDraft';
 import { createFromPetersonFirstDraft } from './settings/functions/Drafts/createFromPetersonFirstDraft';
-import { extractFrontMatter } from './draftFunctionality/extractFrontMatter';
-import { extractFinalVersion } from './settings/functions/Drafts/extractFinalVersion';
-import { extractFolderArrangementToVault } from './ExtractConditions/extractFolderArrangementConditions';
-import type FolderArrangement from 'types/FolderTypes/folderArrangement';
-import type FileArrangement from 'types/FolderTypes/fileArrangement';
-import { extractConditionsAppliedToSubFiles } from './ExtractConditions/extractConditionsAppliedToSubFiles';
-import { removeFrontMatter } from './ExtractConditions/removeFrontMatter';
+
 // Remember to rename these classes and interfaces!
 
 export default class DraftManagerPlugin extends Plugin {

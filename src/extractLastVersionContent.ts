@@ -6,13 +6,13 @@ export function extractLastVersionContent(content:string):string{
     const [keepGoing,complete,draftNum] =extractFrontMatter(content);
     if(!keepGoing){return ""}
     let text = ""
-    let continueForward = true
+
     if(complete){
-        const [continueForward, temp]= extractFinalVersion(content)
+        const [_, temp]= extractFinalVersion(content)
         text += temp;
     }
     else{ 
-        const [continueForward, temp]= extractCurrentDraft(content,draftNum)
+        const [_, temp]= extractCurrentDraft(content,draftNum)
         
         text += temp;
     }
