@@ -1,1 +1,3 @@
-export const draftStyleOptions:string[] = ["Blank","Peterson"];
+import { blankStr, petersonStr } from "./Constants/styleConstants";
+
+export const draftStyleOptions:string[] = [blankStr,petersonStr];
