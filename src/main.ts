@@ -63,7 +63,7 @@ export default class DraftManagerPlugin extends Plugin {
 				return;
 			}
 			const draftNum = draftNumTemp[0]["value"]
-			let draftStyleTemp= metadata.filter( (property:any)=>{
+			let draftStyleTemp= metadata.filter( (any)=>{
 				return property["key"] == draftStyleIndicator;
 			} );
 
