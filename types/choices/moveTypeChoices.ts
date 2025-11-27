@@ -1,1 +1,4 @@
-export const moveTypeChoices:string[] = ["As Is","Do not move","Last Version"];
+import { asIsStr, contentStr, doNotUseStr, lastVersionStr } from "./Constants/draftConstants";
+
+
+export const moveTypeChoices:string[] = [asIsStr,doNotUseStr,contentStr,lastVersionStr];

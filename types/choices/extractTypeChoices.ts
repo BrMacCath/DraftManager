@@ -1,1 +1,3 @@
-export const extractTypeChoices:string[] = ["As Is","Content","Don't Use","Last Version"];
+import { asIsStr, contentStr, doNotUseStr, lastVersionStr } from "./Constants/draftConstants";
+
+export const extractTypeChoices:string[] =  [asIsStr,doNotUseStr,contentStr,lastVersionStr];

@@ -2,6 +2,7 @@ import { Notice, TFile, type App } from "obsidian";
 
 import { overwriteFileInVault } from "src/settings/functions/URI/overwriteFileInVault";
 import { overwriteFileSelectionInVault } from "src/settings/functions/URI/overwriteFileSelectionInVault";
+import { asIsStr, lastVersionStr } from "types/choices/Constants/draftConstants";
 import type FileArrangement from "types/FolderTypes/fileArrangement";
 import type FolderArrangement from "types/FolderTypes/folderArrangement";
 
@@ -29,15 +30,12 @@ export function moveFolderArrangementToVault(folderArrangement:FolderArrangement
             return
         }
 
-        const asIs ="As Is"
-
-        if(file.moveType ==asIs){
+        if(file.moveType ==asIsStr){
             await overwriteFileInVault(tFile,vault,app)
             return;
         }
         // Extract current Draft
-        const lastVersion = "Last Version"
-        if(file.moveType ==lastVersion){
+        if(file.moveType ==lastVersionStr){
             overwriteFileSelectionInVault(tFile,vault,app)
             return
         }
