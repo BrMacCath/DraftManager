@@ -17,7 +17,7 @@ export class folderListSuggest extends TextInputSuggest<FolderArrangement> {
         const lowerCaseInputStr = inputStr.toLowerCase();
         abstractFiles.forEach((folder: FolderArrangement) => {
             if (
-                folder.folder.toLowerCase().contains(lowerCaseInputStr)
+                folder.name.toLowerCase().contains(lowerCaseInputStr)
             ) {
                 folders.push(folder);
             }
@@ -27,7 +27,7 @@ export class folderListSuggest extends TextInputSuggest<FolderArrangement> {
     }
 
     renderSuggestion(folder: FolderArrangement, el: HTMLElement): void {
-        const text = folder.folder.slice(this.sliceLength);
+        const text = folder.name.slice(this.sliceLength);
         if (text == ""){
             el.setText("/")
         }else{
@@ -36,7 +36,7 @@ export class folderListSuggest extends TextInputSuggest<FolderArrangement> {
 
     selectSuggestion(folder: FolderArrangement): void {
         // Get the TFile for this
-        this.inputEl.value = folder.folder;
+        this.inputEl.value = folder.name;
         this.inputEl.trigger("input");
         this.close();
     }
