@@ -33,12 +33,34 @@ If you want to move all the files within a folder without any changes, you can u
 
 # Draft Styles
 
+State that you need to mention the draft style and the version number.
+
+
 ## Blank
 
 This draft style updates the frontmatter and adds the next draft number title to the page.
 
 ## Peterson
 
+This draft style follows the draft style that is mentioned by Dr. Peterson in link. I will go through the link and then mention the changes I made for myself. The structure of this draft style to seperate each paragraph based around one topic and write 100-300 words per paragraph. After you have written a rough draft, you rewrite each sentence from the paragraph individually with a line underneath it to write a new version in. After you have rewritten each sentence, you combine them together to recreate the paragraph. You keep repeating this process until you have great paragraphs. I decided to automate a lot of the rewritting process by automating the splitting of each paragraph into its lines and the stiching of the rewriting back.
+
+I have made two adjustments to this process that you can ignore. In the paper Dr. Peterson talked about cultural context that the reader uses to understand text. I was unsure of what that meant ( I intent to reread that) but thinking about the context of the reader is a feature of the writing process that I did not have concretely inside this process for me. Others have found this sufficient so I made this optional but this seems like something that should run in the background but its affect is not obviously visable in the end result. This has a similar feeling to frontmatter in Obsidian. I decided to have writing "frontmatter" on each section and rewriting to try make sure my goals are aligned. Each paragraphs is separated by a paragraph separator. Then each paragraphs consists of two parts, the frontmatter and the content. 
+
+The second change is to have the frontmatter brought along. In Peterson's paper he does not keep rewriting this and, honestly, if you had to personally rewrite it each time, it would be a waste of time. I wanted to bring this along for two reasons. I want to examine my thinking as I am writing so I decided to make it easily accessible. I also really admire a lot of the people who learn in public. I have been very impressed by what people in that community have done and I want to do it too. So I want to show my misunderstandings and how they changed (or didn't). For this reason, I want to bring these things along.
+
+### In line comments
+
+I read some books about writing to try gain some understanding on how to approach topics. I read on writing well by author. A suggestion he had that I liked was inline comments. When he was a teacher, if a student had a piece of the line that he thought was incorrect, he would put it in parentheses and sy why he thinks it should be removed. I liked that a lot so I put it in this plugin. However, parenthesis are used in markdown for website links and other uses. I decided to change the parenthesis to {[ ]} as they do not have another use. Note that in line comments will apply to both writing styles.
+
+### First Version
+
+### Versions after the first
+
+### Final Version
+
+### In Line removal
+
+On writing well. Suggestions that the author took. Also, learning in public.
 
 # Move Type and extraction Type
 
@@ -65,13 +87,14 @@ With the folder updates section, you can control how you want files to be proces
 
 ## Compile output
 
+Here you can use the files in a folder to be combined to make a new file in one of the files. This can be the entire file or just a piece of it.
+
+
+Go though some examples.
 
 ## GUI
 Here you can drag files and folders into the order that you want. Note that this does not allow you to move files or folders into new folders.
 
-## Compile output
-
-Here you can use the files in a folder to be combined to make a new file in one of the files. This can be the entire file or just a piece of it.
 
 # Road map
 
