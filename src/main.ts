@@ -36,7 +36,7 @@ export default class DraftManagerPlugin extends Plugin {
 			const completeFrontmatterIndicator = "complete";
 			const draftNumIndicator = "draftNum";
 			const draftStyleIndicator= "draftStyle";
-
+			const unusedVar= ""
 			if(!ctx.file){
 				new Notice("No file found");
 				return;

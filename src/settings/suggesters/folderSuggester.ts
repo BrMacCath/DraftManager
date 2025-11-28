@@ -20,7 +20,6 @@ export class FolderSuggest extends TextInputSuggest<TFolder> {
                 folders.push(folder);
             }
         });
-        console.log(folders)
 
         return folders.slice(0, 1000);
     }

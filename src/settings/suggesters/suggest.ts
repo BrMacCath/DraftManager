@@ -158,7 +158,7 @@ export abstract class TextInputSuggest<T> implements ISuggestOwner<T> {
         }
     }
 
-    asyncopen(container: HTMLElement, inputEl: HTMLElement): void {
+    open(container: HTMLElement, inputEl: HTMLElement): void {
         this.app.keymap.pushScope(this.scope);
 
         container.appendChild(this.suggestEl);

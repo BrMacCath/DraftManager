@@ -18,10 +18,6 @@ State the vaults that you wish to be able to transfer files to. Right now there 
 
 There is a selection of draft types that can be used with this plugin. Explanations of the draft styles are in the next section. 
 
-### Go through each section
-
-### File prep to use the draft conditions
-
 # Moving Files
 
 There are two methods of moving files in this plugin. They require that you set up which vaults you can move them to.
@@ -33,7 +29,7 @@ If you want to move all the files within a folder without any changes, you can u
 
 # Draft Styles
 
-State that you need to mention the draft style and the version number.
+This plugin has draft styles: Blank and Peterson that you can use if you put them in the frontmatter. The default frontmatter property is draftStyle. You will also need to state the number on the draft that your page is on. The default frontmatter property is draftNum. If you want to have a complete version of a page, the default frontmatter property is complete. 
 
 
 ## Blank
