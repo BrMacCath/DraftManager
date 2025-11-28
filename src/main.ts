@@ -5,10 +5,10 @@ import { DraftTab } from './settings/tabs/settingTab';
 import {  moveFolderToVaultModal } from './settings/modals/moveFolderToVaultModal';
 import { settingsStore } from 'types/zustand/store';
 import { draftStyleOptions } from 'types/choices/draftStyleOptions';
-import { extractCurrentDraft } from './settings/functions/Drafts/extractCurrentDraft';
+import { extractCurrentDraft } from './settings/functions/Drafts/Extract/extractCurrentDraft';
 import { createDraftTitle } from './settings/functions/Drafts/createDraftTitle';
-import { createPetersonDraft } from './settings/functions/Drafts/createPetersonDraft';
-import { createFromPetersonFirstDraft } from './settings/functions/Drafts/createFromPetersonFirstDraft';
+import { createFromPetersonFirstDraft } from './settings/functions/Drafts/Peterson/createFromPetersonFirstDraft';
+import { createPetersonDraft } from './settings/functions/Drafts/Peterson/createPetersonDraft';
 
 // Remember to rename these classes and interfaces!
 

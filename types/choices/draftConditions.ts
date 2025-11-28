@@ -8,7 +8,6 @@ export default interface draftConditions{
     haveTopicFrontMatter:boolean;
     topicFrontMatterSeparator:string;
     draftNumSignifier: string;
-    includeFrontMatter: string;
     moveType: string;
     extractType: string;
 }

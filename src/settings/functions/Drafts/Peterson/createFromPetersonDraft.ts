@@ -1,7 +1,7 @@
-import { stringifyNumber } from "./stringifyNumber";
-import { splitParagraphsNoFrontMatter } from "../ParagraphFunctions/splitParagraphsNoFrontMatter";
-import { splitParagraphsFrontMatter } from "../ParagraphFunctions/splitParagraphsFrontMatter";
-import { createDraftTitle } from "./createDraftTitle";
+import { stringifyNumber } from "../stringifyNumber";
+import { splitParagraphsNoFrontMatter } from "../../ParagraphFunctions/splitParagraphsNoFrontMatter";
+import { splitParagraphsFrontMatter } from "../../ParagraphFunctions/splitParagraphsFrontMatter";
+import { createDraftTitle } from "../createDraftTitle";
 
 export function createFromPetersonDraft(content:string,paragraphSeparator:string,newDraftNum:number, topicFrontMatterSeparator:string,haveTopicFrontMatter:boolean,rewriteLineSignifier:string,commentLineSignifier:string=""){
     const newLineSeperator = "\n"+commentLineSignifier + " \n" + rewriteLineSignifier +" \n\n";

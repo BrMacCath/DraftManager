@@ -1,6 +1,6 @@
-import { createCompleteDraftTitle } from "./createCompleteDraftTitle";
-import { inLineRemoval } from "./inLineRemoval";
-import { removeDoubleSpacing } from "./removeDoubleSpacing";
+import { createCompleteDraftTitle } from "../createCompleteDraftTitle";
+import { inLineRemoval } from "../InLineEditing/inLineRemoval";
+import { removeDoubleSpacing } from "../InLineEditing/removeDoubleSpacing";
 
 
 export function extractCurrentDraft(content:string,draftNum:number):[boolean,string] {

@@ -1,5 +1,6 @@
 <script lang="ts">
-	import { extractTypeChoices } from "types/choices/extractTypeChoices";
+	import { contentChoices } from "types/choices/contentChoices";
+
 
     interface Props{
         extractType:string;
@@ -66,7 +67,7 @@
         </div>
         <div class="select">
             <select bind:value={extractType} onchange={handleChange}>
-            {#each extractTypeChoices as extractTypeChoice}
+            {#each contentChoices as extractTypeChoice}
                 <option value={extractTypeChoice}>{extractTypeChoice}</option>                
             {/each}
         </select>

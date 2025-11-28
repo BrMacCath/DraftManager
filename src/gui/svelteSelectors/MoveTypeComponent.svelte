@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { moveTypeChoices } from "types/choices/moveTypeChoices";
+	import { contentChoices } from "types/choices/contentChoices";
 
     interface Props{
         moveType:string;
@@ -66,7 +66,7 @@
         </div>
         <div class="select">
             <select bind:value={moveType} onchange={handleChange}>
-                {#each moveTypeChoices as moveTypeChoice}
+                {#each contentChoices as moveTypeChoice}
                     <option value={moveTypeChoice}>{moveTypeChoice}</option>                
                 {/each}
             </select>

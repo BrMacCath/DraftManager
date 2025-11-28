@@ -1,5 +1,5 @@
-import { inLineRemoval } from "./inLineRemoval";
-import { removeDoubleSpacing } from "./removeDoubleSpacing";
+import { inLineRemoval } from "../InLineEditing/inLineRemoval";
+import { removeDoubleSpacing } from "../InLineEditing/removeDoubleSpacing";
 
 
 export function extractFinalVersion(content:string):[boolean,string] {

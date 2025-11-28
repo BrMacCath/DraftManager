@@ -1,6 +1,6 @@
 import { extractFrontMatter } from "./draftFunctionality/extractFrontMatter";
-import { extractCurrentDraft } from "./settings/functions/Drafts/extractCurrentDraft";
-import { extractFinalVersion } from "./settings/functions/Drafts/extractFinalVersion";
+import { extractCurrentDraft } from "./settings/functions/Drafts/Extract/extractCurrentDraft";
+import { extractFinalVersion } from "./settings/functions/Drafts/Extract/extractFinalVersion";
 
 export function extractLastVersionContent(content:string):string{
     const [keepGoing,complete,draftNum] =extractFrontMatter(content);

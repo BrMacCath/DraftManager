@@ -20,7 +20,10 @@ export class chooseFolder extends Modal{
         new Setting(containerEl).setName("Select your folder")
         .setDesc("Choose which folder you wish to add from your list.")
         .addSearch((cb)=>{
-            new folderListSuggest(this.app, cb.inputEl,this.settings.folders);
+            const folders = this.settings.folders.map((fold)=>{
+                return fold.folder
+            } )
+            new folderListSuggest(this.app, cb.inputEl,folders);
                 cb.setPlaceholder("Example: folder1/folder2")
                     .setValue(this.settings.folders[0].folder.name)
                     .onChange((new_folder) => {
