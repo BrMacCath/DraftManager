@@ -7,7 +7,6 @@ This plugin is to help order writing drafts in Obsidian and how to manage the fi
 
 I think Obisidian is a great tool to store notes and to writing but I found that having a vault for both purposes led to me getting overwhelmed. 
 
-
 # Set up
 
 ## Name vaults that you can move files to
@@ -38,26 +37,34 @@ If you want to move all the files within a folder without any changes, you can u
 
 This draft style updates the frontmatter and adds the next draft number title to the page.
 
-## Peterson-Walt-Frontmatter
+## Peterson
 
-# Frontmatter
-This will decide how the frontmatter of each option will be taken.
 
-# Move Type
+# Move Type and extraction Type
 
-This will decide how the content of the file will be taken
-
+With each file there are two methods that we can apply to them. Move type will talk about how content from that file will be moved to the new vault. Extraction type decides how content from this file will be taken to make a new file. There are the same four options for each.
 ## As Is
 
 Take the entire file.
 
+## Content
+
+This takes the content of the file and ignores the frontmatter.
+
+## Do not use
+
+This tells the plugin to skip this file for the respected operation.
+
 ## Last Version
 
-This uses the last version of your writing. It will get rid of things that are not Frontmatter.
+This uses the last version of your writing. This will select either your last completed draft or the final version of your draft.
 
 # Folder Updates
 
 With the folder updates section, you can control how you want files to be processed and in what order.
+
+## Compile output
+
 
 ## GUI
 Here you can drag files and folders into the order that you want. Note that this does not allow you to move files or folders into new folders.
