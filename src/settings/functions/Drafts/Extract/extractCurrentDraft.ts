@@ -4,8 +4,10 @@ import { removeDoubleSpacing } from "../InLineEditing/removeDoubleSpacing";
 
 
 export function extractCurrentDraft(content:string,draftNum:number):[boolean,string] {
+    
+    const oldDraftNum = draftNum > 1 ? draftNum-1 : draftNum  
 
-    const previousDraftTitle = createCompleteDraftTitle(draftNum-1);
+    const previousDraftTitle = createCompleteDraftTitle(oldDraftNum);
     const titleInd = content.indexOf(previousDraftTitle);
     if (titleInd ==-1){
         const continueForward = false;

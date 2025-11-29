@@ -36,7 +36,7 @@ export default class DraftManagerPlugin extends Plugin {
 			const completeFrontmatterIndicator = "complete";
 			const draftNumIndicator = "draftNum";
 			const draftStyleIndicator= "draftStyle";
-			const unusedVar= ""
+			console.log("start1")
 			if(!ctx.file){
 				new Notice("No file found");
 				return;
@@ -46,12 +46,13 @@ export default class DraftManagerPlugin extends Plugin {
 			const completeStatusTemp = metadata.filter( (property)=>{
 				return property["key"] == completeFrontmatterIndicator
 			} )
+			console.log("start2")
 			if(completeStatusTemp.length ==1 && completeStatusTemp[0]["value"]){
 				// Don't update
 				new Notice("This page is listed as complete")
 				return;
 			}
-			
+			console.log("start 3")
 			let draftNumTemp = metadata.filter( (property)=>{
 				return property["key"] == draftNumIndicator;
 			} )
@@ -63,10 +64,10 @@ export default class DraftManagerPlugin extends Plugin {
 				return;
 			}
 			const draftNum = draftNumTemp[0]["value"]
-			let draftStyleTemp= metadata.filter( (any)=>{
+			let draftStyleTemp= metadata.filter( (property)=>{
 				return property["key"] == draftStyleIndicator;
 			} );
-
+			console.log("start 4")
 			if(draftStyleTemp.length != 1){
 				new Notice("The meta data for the draft style has been made incorrectly." 
 					+" You indicate your draft style"
