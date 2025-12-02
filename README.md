@@ -27,6 +27,8 @@ There are two methods of moving files in this plugin. They require that you set 
 If you want to move all the files within a folder without any changes, you can use a command to do do this. A gif is presented below.
 <img src="/Gifs/MoveFilesToVault.gif" />
 
+
+
 # Draft Styles
 
 This plugin has draft styles: Blank and Peterson that you can use if you put them in the frontmatter. The default frontmatter property is draftStyle. You will also need to state the number on the draft that your page is on. The default frontmatter property is draftNum. If you want to have a complete version of a page, the default frontmatter property is complete. 
@@ -38,7 +40,7 @@ This draft style updates the frontmatter and adds the next draft number title to
 
 ## Peterson
 
-This draft style follows the draft style that is mentioned by Dr. Peterson in link. I will go through the link and then mention the changes I made for myself. The structure of this draft style to seperate each paragraph based around one topic and write 100-300 words per paragraph. After you have written a rough draft, you rewrite each sentence from the paragraph individually with a line underneath it to write a new version in. After you have rewritten each sentence, you combine them together to recreate the paragraph. You keep repeating this process until you have great paragraphs. I decided to automate a lot of the rewritting process by automating the splitting of each paragraph into its lines and the stiching of the rewriting back.
+This draft style follows the draft style that is mentioned by Dr. Peterson in [his essay writing guide](https://jordanbpeterson.com/wp-content/uploads/2018/02/Essay_Writing_Guide.docx). The structure of this draft style to seperate each paragraph based around one topic and write 100-300 words per paragraph. After you have written a rough draft, you rewrite each sentence from the paragraph individually with a line underneath it to write a new version in. After you have rewritten each sentence, you combine them together to recreate the paragraph. You keep repeating this process until you have great paragraphs. I decided to automate a lot of the rewritting process by automating the splitting of each paragraph into its lines and the stiching of the rewriting back.
 
 I have made two adjustments to this process that you can ignore. In the paper Dr. Peterson talked about cultural context that the reader uses to understand text. I was unsure of what that meant ( I intent to reread that) but thinking about the context of the reader is a feature of the writing process that I did not have concretely inside this process for me. Others have found this sufficient so I made this optional but this seems like something that should run in the background but its affect is not obviously visable in the end result. This has a similar feeling to frontmatter in Obsidian. I decided to have writing "frontmatter" on each section and rewriting to try make sure my goals are aligned. Each paragraphs is separated by a paragraph separator. Then each paragraphs consists of two parts, the frontmatter and the content. 
 
@@ -50,20 +52,23 @@ I read some books about writing to try gain some understanding on how to approac
 
 ### First Version
 
+Gif
+
 ### Versions after the first
+
+Gif
 
 ### Final Version
 
-### In Line removal
-
-On writing well. Suggestions that the author took. Also, learning in public.
+Gif
 
 # Move Type and extraction Type
 
 With each file there are two methods that we can apply to them. Move type will talk about how content from that file will be moved to the new vault. Extraction type decides how content from this file will be taken to make a new file. There are the same four options for each.
+
 ## As Is
 
-Take the entire file.
+This uses all of the file including the frontmatter.
 
 ## Content
 
@@ -97,7 +102,8 @@ Here you can drag files and folders into the order that you want. Note that this
 - [x] Create a settings file.
 - [x] Be able to add data to the settings tab.
 - [ ] Have a gif to show how to use each command of the notes.
-- [ ] Fully integrate the Folder Management section with the ability to move files to other vaults.
+- [x] Fully integrate the Folder Management section with the ability to move files to other vaults.
+- [ ] Allow people to choose the sections they want to extract.
 - [ ] Allow for the ability to export latex.
     - Include the ability to export a bib file too.
 
